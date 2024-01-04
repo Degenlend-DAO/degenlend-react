@@ -1,25 +1,39 @@
 import React from 'react';
+import { Progress } from 'antd';
 
 
 const Dashboard = () => {
 <div>
-<div className="row">
-    <div>
-        Supply Balance
+    <div className="row">
+        <div className="column">
+            <h3>
+                Supply Balance
+            </h3>
+            <p>
+                0%
+            </p>
         </div>
 
-    <div>
-        Net APY
+        <div className="column">
+            Net APY
         </div>
-    <div>
-        Borrow Balance
+        <div className="column">
+            <h3>
+            Borrow Balance
+            </h3>
+            <p>
+                0%
+            </p>
+        </div>
     </div>
-</div>
-<div className='row'>
-<div>
-Borrow Limit
-</div>
-</div>
+    <div className='row'>
+        <div>
+        Borrow Limit
+            <div>
+                <Progress percent={30} status="active" />
+            </div>
+        </div>
+    </div>
 </div>
 }
 
