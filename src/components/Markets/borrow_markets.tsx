@@ -1,11 +1,19 @@
 import React from 'react';
-import { Avatar, Button, List } from 'antd';
+import { Avatar, Button, List, Col, Card, Row } from 'antd';
 
-const BorrowMarkets = () => {
-    <div className="column">
-        <h3>
-            Borrow Markets
-        </h3>
+const borrowMarkets = [
+    {
+        title: "USDC",
+        description: "Fully backed United States Dollar, on-chain",
+
+    }
+]
+
+
+const BorrowMarkets = () => <>{
+<Col span={12}>
+    <Card bordered={true} title="Borrow Markets">
+        <Row>
         <div className="row">
             <a>
                 Asset
@@ -20,10 +28,22 @@ const BorrowMarkets = () => {
                 Liquidity
             </a>
         </div>
-        <div className="row">
-            USDC Market
-        </div>
-    </div>
-}
+        </Row>
+        <Row>
+            <List itemLayout='horizontal'  
+            dataSource={borrowMarkets}
+            renderItem={(item) => <List.Item>
+                <List.Item.Meta 
+                title={ <h4>{item.title}</h4>} 
+                description={<p>
+                    {item.description}
+                    </p>}/>
+            </List.Item>}
+            />
+        </Row>
+    </Card>
+</Col>
+
+}</>
 
 export default BorrowMarkets
