@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Button, List } from 'antd';
+import { Avatar, Button, List, Col, Card, Row } from 'antd';
 
 const supplyMarkets = [
     {
@@ -9,43 +9,45 @@ const supplyMarkets = [
         walletBalance: "0",
         liquidity: ""
     },
-    {
-        title: "AthleteX Token",
-        description: "The token for AthleteX Markets",
-        apy: "8.7%",
-        walletBalance: "",
-        liquidity: ""
-    }
+    // {
+    //     title: "AthleteX Token",
+    //     description: "The token for AthleteX Markets",
+    //     apy: "8.7%",
+    //     walletBalance: "",
+    //     liquidity: ""
+    // }
 ]
 
-const SupplyMarkets = () => {
+const loadItemDetails = () => {
+    alert('do better!');
+}
 
-    const loadItemDetails = () => {
-
-    }
-
+const SupplyMarkets = () => <>{
 
     <div className="column">
-        <h3>
-            Supply Markets
-        </h3>
 
+    <Col span={12}>
+        <Card bordered={true} title="Supply Markets">
+        <Row>
         <List 
-            header={        <div className="row">
+            header={
+            <Row>
             <h4> Asset </h4>
             <h4> APY </h4>
             <h4> Wallet </h4>
             <h4> Collateral </h4>
-        </div>}
+            </Row>}
             itemLayout='horizontal'
             dataSource={supplyMarkets}
             renderItem={(item) => <List.Item>
-                <Button onClick={loadItemDetails}>
                 <List.Item.Meta title={ <h4>{item.title}</h4> } description={ <p>{item.description}</p> } />
-                </Button>
+
             </List.Item>}
         />
+        </Row>
+        </Card>
+    </Col>
     </div>
-}
+}</>
 
 export default SupplyMarkets
