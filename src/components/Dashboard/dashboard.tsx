@@ -3,11 +3,14 @@ import { Card, Col, Row, Statistic, Progress } from 'antd';
 import Header from '../Header/topNavigationBar';
 
 
+const bodyStyle: React.CSSProperties = {
+    backgroundColor: 'transparent',
+}
 
 const Dashboard = () => <>{
 <div>
     <Row gutter={16}>
-        <Col span={6}>
+        <Col span={6} offset={3}>
             <Card bordered={false}>
             <Statistic
                 title="Supply Balance"
@@ -42,9 +45,12 @@ const Dashboard = () => <>{
             </Card>
         </Col>
     </Row>
-    <Row gutter={12} >
-        <Col span={12}>
-        <Card bordered={true} title="Borrow Limit">
+    <Row  >
+        <Col span={24} >
+        <Card bordered={false} bodyStyle={bodyStyle} headStyle={bodyStyle} style={bodyStyle}>
+            <h3>
+                Borrow Limit
+            </h3>
             <Progress percent={30} status="active" />
         </Card>
         </Col>
