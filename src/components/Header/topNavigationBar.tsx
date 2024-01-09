@@ -26,8 +26,7 @@ const TopNavigationBar = () => {
         console.log('click ', e);
         setCurrent(e.key);
     }
-    return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />;
-
+    return <Menu onClick={onClick} theme='dark' selectedKeys={[current]} mode="horizontal" defaultSelectedKeys={['2']} items={items} style={{ flex: 1, minWidth: 0 }}/>;
 }
 
 export default TopNavigationBar
