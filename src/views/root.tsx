@@ -13,9 +13,9 @@ const { Header, Footer, Content } = Layout;
 const headerStyle: React.CSSProperties = {
     textAlign: 'center',
     color: '#fff',
-    height: 125,
+    height: 175,
     lineHeight: '64px',
-    backgroundColor: '#4096ff',
+    backgroundColor: '#021529',
     display: 'flex',
     alignItems: 'center',
   };
@@ -25,17 +25,18 @@ const headerStyle: React.CSSProperties = {
     minHeight: 120,
     lineHeight: '120px',
     color: '#fff',
-    backgroundColor: '#0958d9',
+    backgroundColor: '#F5F5F5',
     alignItems: 'center',
-
-    paddingInline: 150,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingInline: 80,
 
   };
 
   const footerStyle: React.CSSProperties = {
     textAlign: 'center',
     color: '#fff',
-    backgroundColor: '#4096ff',
+    backgroundColor: 'lightgrey',
   };
 
   const layoutStyle = {
@@ -48,8 +49,7 @@ const headerStyle: React.CSSProperties = {
   };  
 
   const Root: React.FC = () => <>
-      <Layout style={layoutStyle}>
-      <Header style={headerStyle}>
+            <Header style={headerStyle}>
         <Col span={6}>
         <h2> <a href="https://sx.technology/">DegenLend</a></h2>
         </Col>
@@ -61,22 +61,22 @@ const headerStyle: React.CSSProperties = {
 
         </Col>
       </Header>
+      <Layout style={layoutStyle}>
       <Content style={contentStyle}>
       <Dashboard />
-        <Space />
-        <Row>
-        <Col span={12}>
-            <BorrowMarkets />
-        </Col>
+        <Row gutter={16}>
         <Col span={12}>
             <SupplyMarkets />
         </Col>
+        <Col span={12}>
+            <BorrowMarkets />
+        </Col>
         </Row>
       </Content>
-      <Footer style={footerStyle}>
-        Created with love by AthleteX Team
-      </Footer>
     </Layout>
+    <Footer style={footerStyle}>
+        Created by AthleteX Team
+      </Footer>
   </>
 
   export default Root;
