@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Col, Row, Statistic, Progress } from 'antd';
+import Header from '../Header/topNavigationBar';
 
 
 
@@ -44,8 +45,8 @@ const Dashboard = () => <>{
     <Row gutter={12} >
         <Col span={12}>
         <Card bordered={true} title="Borrow Limit">
-                    <Progress percent={30} status="active" />
-                </Card>
+            <Progress percent={30} status="active" />
+        </Card>
         </Col>
     </Row>
 </div>
