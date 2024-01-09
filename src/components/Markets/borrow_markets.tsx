@@ -11,27 +11,27 @@ const borrowMarkets = [
 
 
 const BorrowMarkets = () => <>{
-<Col span={12}>
+
     <Card bordered={true} title="Borrow Markets">
-        <Row>
+        <Col>
             <List itemLayout='horizontal'  
             header={
-                <Row>
-                
-                    <h4>
-                        Asset
-                    </h4>
-                    <h4>
-                        APY
-                    </h4>
-                    <h4>
-                        Wallet
-                    </h4>
-                    <h4>
-                        Liquidity
-                    </h4>
-                
-                </Row>
+            <Row>
+            
+                <h4>
+                    Asset
+                </h4>
+                <h4>
+                    APY
+                </h4>
+                <h4>
+                    Wallet
+                </h4>
+                <h4>
+                    Liquidity
+                </h4>
+            
+            </Row>
             }
             dataSource={borrowMarkets}
             renderItem={(item) => 
@@ -43,9 +43,8 @@ const BorrowMarkets = () => <>{
                     </p>}/>
             </List.Item>}
             />
-        </Row>
+        </Col>
     </Card>
-</Col>
 
 }</>
 
