@@ -26,9 +26,8 @@ const SupplyMarkets = () => <>{
 
     <div className="column">
 
-    <Col span={12}>
+    <Col>
         <Card bordered={true} title="Supply Markets">
-        <Row>
         <List 
             header={
             <Row>
@@ -44,7 +43,6 @@ const SupplyMarkets = () => <>{
 
             </List.Item>}
         />
-        </Row>
         </Card>
     </Col>
     </div>
