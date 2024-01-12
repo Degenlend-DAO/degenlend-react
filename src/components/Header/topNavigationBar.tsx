@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, MenuProps, Col, Button, Modal, Card } from 'antd';
+import { Menu, MenuProps, Col, Button, Modal, Card, List } from 'antd';
 import { CaretRightOutlined, WalletFilled } from '@ant-design/icons';
 
 const { confirm } = Modal;
@@ -24,6 +24,49 @@ const items: MenuProps['items'] = [
     },
 ]
 
+const walletOptions = [
+    'Metamask',
+    'WalletConnect'
+]
+
+const connectWallet = () => {
+    confirm({
+        title: "Connect your Wallet to Continue",
+        content: <Card>
+            <List
+                bordered
+                dataSource={walletOptions}
+            />
+        </Card>,
+        onOk() {
+          console.log('OK');
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+    });
+}
+
+const buttonStyle: React.CSSProperties = {
+    color: 'white',
+    backgroundColor: '#EF8533',
+}
+
+const wcStyle: React.CSSProperties = {
+    color: 'white',
+    backgroundColor: '#556FFC',
+}
+
+const metamaskStyle: React.CSSProperties = {
+    color: 'white',
+    backgroundColor: '#EF8533',
+}
+
+// Connect to Metamask here
+const connectMetamask = () => {}
+
+const connectWalletConnect = () => {}
+
 
 
 const TopNavigationBar: React.FC = () => {
@@ -38,7 +81,7 @@ const TopNavigationBar: React.FC = () => {
         </Col>
         <Menu onClick={onClick} theme='dark' selectedKeys={[current]} mode="horizontal" defaultSelectedKeys={['2']} items={items} style={{ flex: 1, minWidth: 0 }}/>
         <Col span={6}>
-        <Button type="default" shape="round" icon={<CaretRightOutlined />} size="large">
+        <Button type="default" block shape="round" icon={<CaretRightOutlined />} size="large" style={buttonStyle} onClick={connectWallet}>
             Connect Wallet
         </Button>
 
