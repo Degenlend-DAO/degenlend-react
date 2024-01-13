@@ -24,28 +24,11 @@ const items: MenuProps['items'] = [
     },
 ]
 
+
 const walletOptions = [
     'Metamask',
     'WalletConnect'
 ]
-
-const connectWallet = () => {
-    confirm({
-        title: "Connect your Wallet to Continue",
-        content: <Card>
-            <List
-                bordered
-                dataSource={walletOptions}
-            />
-        </Card>,
-        onOk() {
-          console.log('OK');
-        },
-        onCancel() {
-          console.log('Cancel');
-        },
-    });
-}
 
 const buttonStyle: React.CSSProperties = {
     color: 'white',
@@ -71,6 +54,35 @@ const connectWalletConnect = () => {}
 
 const TopNavigationBar: React.FC = () => {
     const [ current, setCurrent ] = useState('dashboard');
+    const [ loadings, setLoadings ] = useState<boolean[]>([]);
+
+    
+    const enterLoading = (index: number) => {
+        setLoadings((prevLoadings) => {
+          const newLoadings = [...prevLoadings];
+          newLoadings[index] = true;
+          return newLoadings;
+        });
+    }
+
+
+    const connectWallet = () => {
+        confirm({
+            title: "Connect your Wallet to Continue",
+            content: 
+            <Card>
+                <List
+                    bordered
+                    dataSource={walletOptions}
+                />
+            </Card>,
+            onOk() {
+            },
+            onCancel() {
+            },
+        });
+    }
+
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);
         setCurrent(e.key);
@@ -81,10 +93,10 @@ const TopNavigationBar: React.FC = () => {
         </Col>
         <Menu onClick={onClick} theme='dark' selectedKeys={[current]} mode="horizontal" defaultSelectedKeys={['2']} items={items} style={{ flex: 1, minWidth: 0 }}/>
         <Col span={6}>
-        <Button type="default" block shape="round" icon={<CaretRightOutlined />} size="large" style={buttonStyle} onClick={connectWallet}>
+        <Button type="default" block shape="round" icon={<CaretRightOutlined />} size="large" style={buttonStyle} onClick={() => {connectWallet(); enterLoading(1);}} loading={loadings[1]}>
             Connect Wallet
         </Button>
-
+ 
         </Col>
      </>
 }
