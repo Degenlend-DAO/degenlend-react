@@ -13,7 +13,7 @@ const { Header, Footer, Content } = Layout;
 const headerStyle: React.CSSProperties = {
     textAlign: 'center',
     color: '#fff',
-    height: 175,
+    height: 75,
     lineHeight: '64px',
     backgroundColor: '#021529',
     display: 'flex',
@@ -49,17 +49,8 @@ const headerStyle: React.CSSProperties = {
   };  
 
   const Root: React.FC = () => <>
-            <Header style={headerStyle}>
-        <Col span={6}>
-        <h2> <a href="https://sx.technology/">DegenLend</a></h2>
-        </Col>
-          <TopNavigationBar />
-        <Col span={6}>
-        <Button type="default" shape="round" icon={<CaretRightOutlined />} size="large">
-            Connect Wallet
-          </Button>
-
-        </Col>
+          <Header style={headerStyle}>
+        <TopNavigationBar />
       </Header>
       <Layout style={layoutStyle}>
       <Content style={contentStyle}>
