@@ -78,7 +78,7 @@ const TopNavigationBar: React.FC = () => {
     const filteredWalletAddress = (address: string) => {
         
         const charArray = Array.from(address);
-        const filteredAddress = ` ${charArray[0]}${charArray[1]}${charArray[2]}${charArray[3]}${charArray[4]}...${charArray[charArray.length - 3]}${charArray[charArray.length - 2]}${charArray[charArray.length -1]}`;
+        const filteredAddress = `     ${charArray[0]}${charArray[1]}${charArray[2]}${charArray[3]}${charArray[4]}...${charArray[charArray.length - 3]}${charArray[charArray.length - 2]}${charArray[charArray.length -1]}     `;
 
 
         return filteredAddress;
@@ -86,10 +86,7 @@ const TopNavigationBar: React.FC = () => {
 
     const WalletWidget = (flag: boolean) => {
         if (flag == true) {
-            return               <Row>
-            <Col>
-                <img src='src/assets/target.png'></img> 23
-            </Col>
+            return   <Row>
             <Col>
             <Button type="text" block shape="round" size="large" onClick={() => { connectWallet(); } }>
                 {filteredWalletAddress(walletAddress)}
@@ -134,7 +131,7 @@ const TopNavigationBar: React.FC = () => {
         <h2> <a href="https://sx.technology/">DegenLend</a></h2>
         </Col>
         <Menu onClick={onClick} theme='dark' selectedKeys={[current]} mode="horizontal" defaultSelectedKeys={['2']} items={items} style={{ flex: 1, minWidth: 0, backgroundColor: '#2566D8' }}/>
-        <Col span={6}>
+        <Col span={6} offset={6}>
         {WalletWidget(isWalletConnected)}
         </Col>
      </>
