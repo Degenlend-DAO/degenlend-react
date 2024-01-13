@@ -15,7 +15,7 @@ const headerStyle: React.CSSProperties = {
     color: '#fff',
     height: 75,
     lineHeight: '64px',
-    backgroundColor: '#021529',
+    backgroundColor: '#2566D8',
     display: 'flex',
     alignItems: 'center',
   };

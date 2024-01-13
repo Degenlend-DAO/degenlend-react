@@ -32,7 +32,7 @@ const walletOptions = [
 
 const buttonStyle: React.CSSProperties = {
     color: 'white',
-    backgroundColor: '#EF8533',
+    backgroundColor: '#60C9B6',
 }
 
 const wcStyle: React.CSSProperties = {
@@ -91,7 +91,7 @@ const TopNavigationBar: React.FC = () => {
         <Col span={6}>
         <h2> <a href="https://sx.technology/">DegenLend</a></h2>
         </Col>
-        <Menu onClick={onClick} theme='dark' selectedKeys={[current]} mode="horizontal" defaultSelectedKeys={['2']} items={items} style={{ flex: 1, minWidth: 0 }}/>
+        <Menu onClick={onClick} theme='dark' selectedKeys={[current]} mode="horizontal" defaultSelectedKeys={['2']} items={items} style={{ flex: 1, minWidth: 0, backgroundColor: '#2566D8' }}/>
         <Col span={6}>
         <Button type="default" block shape="round" icon={<CaretRightOutlined />} size="large" style={buttonStyle} onClick={() => {connectWallet(); enterLoading(1);}} loading={loadings[1]}>
             Connect Wallet
