@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
 import { Menu, Card, List, Row, Col } from 'antd';
+import { useSDK } from '@metamask/sdk-react';
+
 import { CaretLeftOutlined } from '@ant-design/icons';
 
 
 
 const WalletCardContent: React.FC = () => {
+
+    const [account, setAccount] = useState<string>();
+    const { sdk, connected, connecting, provider, chainId } = useSDK();
     
-    const onClickMetamask = () => {
+    const onClickMetamask = async () => {
         //Metamask Business Logic
-        alert('Hello! Metamask here!' );
+        try {
+            const accounts = await window.ethereum!.request({ method: 'eth_requestAccounts' }).catch((err) => {
+                if (err.code === 4001) {
+                  // EIP-1193 userRejectedRequest error
+                  // If this happens, the user rejected the connection request.
+                  console.log('Please connect to MetaMask.');
+                } else {
+                  console.error(err);
+                }
+              });
+              setAccount(`${accounts}`);
+              console.log(`${accounts} type: ${typeof(accounts)}`)
+          } catch(err) {
+            console.warn(`failed to connect..`, err);
+          }
     }
 
     const onClickWalletConnect = () => {
