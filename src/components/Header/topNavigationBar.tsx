@@ -23,7 +23,7 @@ const items: MenuProps['items'] = [
 
 const buttonStyle: React.CSSProperties = {
     color: 'white',
-    backgroundColor: '#60C9B6',
+    backgroundColor: '#277AD6',
 }
 
 const modalStyle: React.CSSProperties = {
@@ -112,7 +112,7 @@ const TopNavigationBar: React.FC = () => {
     }
     return <>
         <Col span={6}>
-        <h2> <a href="https://sx.technology/">DegenLend</a></h2>
+        <h2> <a href="https://sx.technology/" style={{ color: "#60C9B6"}}>DegenLend</a></h2>
         </Col>
         <Menu onClick={onClick} theme='dark' selectedKeys={[current]} mode="horizontal" defaultSelectedKeys={['2']} items={items} style={{ flex: 1, minWidth: 0, backgroundColor: '#2566D8' }}/>
         <Col span={6} offset={6}>
