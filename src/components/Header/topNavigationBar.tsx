@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Menu, MenuProps, Col, Button, Modal, Card, List, Row } from 'antd';
 import { CaretRightOutlined, RiseOutlined, WalletFilled } from '@ant-design/icons';
+import { modalGlobalConfig } from 'antd/es/modal/confirm';
+import WalletCardContent from '../widgets/WalletCardContent';
 
 const { confirm } = Modal;
 
@@ -9,12 +11,6 @@ const items: MenuProps['items'] = [
         label: 'Dashboard',
         key: 'dashboard'
     },
-
-    ///Markets may be included in the future
-    // {
-    //     label: 'Markets',
-    //     key: 'markets'
-    // },
     {
         label: (
             <a href="https://snapshot.org/#/sportx.eth"  target="_blank" rel="noopener noreferrer">
@@ -25,30 +21,18 @@ const items: MenuProps['items'] = [
 ]
 
 
-const walletOptions = [
-    'Metamask',
-    'WalletConnect'
-]
-
 const buttonStyle: React.CSSProperties = {
     color: 'white',
     backgroundColor: '#60C9B6',
 }
 
-const wcStyle: React.CSSProperties = {
+const modalStyle: React.CSSProperties = {
     color: 'white',
-    backgroundColor: '#556FFC',
+    width: 'calc(65% - 8px)',
+    height: '300',
+    
 }
 
-const metamaskStyle: React.CSSProperties = {
-    color: 'white',
-    backgroundColor: '#EF8533',
-}
-
-// Connect to Metamask here
-const connectMetamask = () => {}
-
-const connectWalletConnect = () => {}
 
 
 
@@ -105,14 +89,13 @@ const TopNavigationBar: React.FC = () => {
 
     const connectWallet = () => {
         confirm({
-            title: "Connect your Wallet to Continue",
-            content: 
-            <Card>
-                <List
-                    bordered
-                    dataSource={walletOptions}
-                />
-            </Card>,
+            title: "Select a Wallet",
+            okText: " Connect",
+            cancelText: " Disconnect",
+            centered: true,
+            width: 600,
+            content: <WalletCardContent />,
+            style: modalStyle,
             onOk() {
                 setIsWalletConnected(true);
             },
@@ -120,6 +103,7 @@ const TopNavigationBar: React.FC = () => {
                 setIsWalletConnected(false);
             },
         });
+        
     }
 
     const onClick: MenuProps['onClick'] = (e) => {
