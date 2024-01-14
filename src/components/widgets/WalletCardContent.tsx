@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, Card, List, Row, Col, Skeleton } from 'antd';
 import { useSDK } from '@metamask/sdk-react';
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 
 import { CaretLeftOutlined } from '@ant-design/icons';
 import { setTimeout } from 'timers/promises';
@@ -10,7 +11,7 @@ const WalletCardContent: React.FC = () => {
     const [account, setAccount] = useState<string>();
     const [isActive, setActive ] = useState<boolean>(false);
     const { sdk, connected, connecting, provider, chainId } = useSDK();
-    
+    const { open } = useWeb3Modal();
     const onClickMetamask = async () => {
         //Metamask Business Logic
         try {
@@ -30,11 +31,7 @@ const WalletCardContent: React.FC = () => {
           }
     }
 
-    const onClickWalletConnect = () => {
-        // WalletConnect Business logic
-
-        alert('Hello! Wallet Connect here!');
-    }
+    const onClickWalletConnect = () => open();
 
     const { Meta } = Card
 
