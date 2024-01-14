@@ -42,12 +42,12 @@ const WalletCardContent: React.FC = () => {
 <div>
 <Row>
             <Col span={6}>
-                <Card hoverable style={{ width: 240 }} cover={<img alt="Metamask" src="http://tinyurl.com/8jttsvbw"></img>} onClick={onClickMetamask}>
+                <Card hoverable style={{ width: 240, height: 130 }} cover={<img alt="Metamask" src="http://tinyurl.com/8jttsvbw"></img>} onClick={onClickMetamask}>
                 </Card>
             </Col>
 
             <Col span={6} offset={6}>
-                <Card hoverable style={{ width: 240}} cover={<img alt="WalletConnect" src="http://tinyurl.com/2smfxt43"></img>} onClick={onClickWalletConnect}>
+                <Card hoverable style={{ width: 240, height: 130 }} cover={<img alt="WalletConnect" src="http://tinyurl.com/2smfxt43"></img>} onClick={onClickWalletConnect}>
                 </Card>
             </Col>
 </Row>
