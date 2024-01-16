@@ -13,37 +13,7 @@ const borrowMarkets = [
 const BorrowMarkets = () => <>{
 
     <Card bordered={true} title="Borrow Markets">
-        <Col>
-            <List itemLayout='horizontal'  
-            header={
-            <Row>
-            
-                <h4>
-                    Asset
-                </h4>
-                <h4>
-                    APY
-                </h4>
-                <h4>
-                    Wallet
-                </h4>
-                <h4>
-                    Liquidity
-                </h4>
-            
-            </Row>
-            }
-            dataSource={borrowMarkets}
-            renderItem={(item) => 
-            <List.Item>
-                <List.Item.Meta 
-                title={ <h4>{item.title}</h4>} 
-                description={<p>
-                    {item.description}
-                    </p>}/>
-            </List.Item>}
-            />
-        </Col>
+        <p> These markets are available for you to borrow against</p>
     </Card>
 
 }</>
