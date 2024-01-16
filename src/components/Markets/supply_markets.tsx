@@ -28,21 +28,7 @@ const SupplyMarkets = () => <>{
 
     <Col>
         <Card bordered={true} title="Supply Markets">
-        <List 
-            header={
-            <Row>
-            <h4> Asset </h4>
-            <h4> APY </h4>
-            <h4> Wallet </h4>
-            <h4> Collateral </h4>
-            </Row>}
-            itemLayout='horizontal'
-            dataSource={supplyMarkets}
-            renderItem={(item) => <List.Item>
-                <List.Item.Meta title={ <h4>{item.title}</h4> } description={ <p>{item.description}</p> } />
-
-            </List.Item>}
-        />
+            <p>These markets are available for you to borrow against</p>
         </Card>
     </Col>
     </div>
