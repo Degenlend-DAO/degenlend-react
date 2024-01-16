@@ -18,6 +18,7 @@ const Dashboard = () => <>{
                 precision={2}
                 valueStyle={{ color: '#3f8600' }}
                 prefix="$"
+                loading={true}
             />
             </Card>
         </Col>
@@ -29,6 +30,7 @@ const Dashboard = () => <>{
                 precision={2}
                 valueStyle={{ color: 'black' }}
                 suffix="%"
+                loading={true}
             />
             </Card>
         </Col>
@@ -41,6 +43,7 @@ const Dashboard = () => <>{
                 precision={2}
                 valueStyle={{ color: '#3f8600' }}
                 prefix="$"
+                loading={true}
             />
             </Card>
         </Col>
@@ -51,7 +54,7 @@ const Dashboard = () => <>{
             <h3>
                 Borrow Limit
             </h3>
-            <Progress percent={30} status="active" />
+            <Progress percent={38} status="active"   />
         </Card>
         </Col>
     </Row>
