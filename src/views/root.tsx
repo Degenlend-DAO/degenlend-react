@@ -66,7 +66,7 @@ const headerStyle: React.CSSProperties = {
       </Content>
     </Layout>
     <Footer style={footerStyle}>
-        Created by AthleteX Team
+        Created by Prediction Labs Team
       </Footer>
   </>
 
