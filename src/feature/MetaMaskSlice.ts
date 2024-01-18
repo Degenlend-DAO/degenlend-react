@@ -21,7 +21,6 @@ export const connectMetaMask = createAsyncThunk(
     'metaMask/connect',
     async () => {
         try {
-            console.log('calling');
             const accounts = await window.ethereum!.request({ method: 'eth_requestAccounts' }) as Account[];
             console.log(accounts);
             return accounts[0];

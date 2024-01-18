@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Button, Col, Modal } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 import WalletCardContent from '../widgets/WalletCardContent';
+import { Provider, useStore } from 'react-redux';
 
 
 const WalletCard: React.FC = () => {
     const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
     const [walletAddress, setWalletAddress] = useState<string>('0x0000000000000000000000000000000000000000'); //Put in place when adding metamask logic
     const [loadings, setLoadings] = useState<boolean[]>([]);
+    const store = useStore()
 
     const { confirm } = Modal;
 
@@ -35,7 +37,10 @@ const WalletCard: React.FC = () => {
             cancelText: "Cancel",
             centered: true,
             width: 600,
-            content: <WalletCardContent />,
+            content: 
+            <Provider store={store}>
+                <WalletCardContent />
+            </Provider>,
             style: modalStyle,
             onOk() {
                 setIsWalletConnected(true);
