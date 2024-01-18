@@ -8,7 +8,6 @@ import { Provider, useStore } from 'react-redux';
 const WalletCard: React.FC = () => {
     const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
     const [walletAddress, setWalletAddress] = useState<string>('0x0000000000000000000000000000000000000000'); //Put in place when adding metamask logic
-    const [loadings, setLoadings] = useState<boolean[]>([]);
     const store = useStore()
 
     const { confirm } = Modal;
@@ -37,10 +36,12 @@ const WalletCard: React.FC = () => {
             cancelText: "Cancel",
             centered: true,
             width: 600,
-            content: 
-            <Provider store={store}>
-                <WalletCardContent />
-            </Provider>,
+            closeIcon: true,
+            maskClosable: true,
+            content:
+                <Provider store={store}>
+                    <WalletCardContent />
+                </Provider>,
             style: modalStyle,
             onOk() {
                 setIsWalletConnected(true);
@@ -50,29 +51,14 @@ const WalletCard: React.FC = () => {
             },
         });
     }
-    const enterLoading = (index: number) => {
-        setLoadings((prevLoadings) => {
-            const newLoadings = [...prevLoadings];
-            newLoadings[index] = true;
-            return newLoadings;
-        });
-
-        setTimeout(() => {
-            setLoadings((prevLoadings) => {
-                const newLoadings = [...prevLoadings];
-                newLoadings[index] = false;
-                return newLoadings;
-            });
-        }, 6000);
-    };
 
     const WalletCard = (flag: boolean) => {
         if (flag) {
-            return <Button type="text" block shape="round" size="large" onClick={() => { connectWallet(); }}>
+            return <Button type="text" block shape="round" size="large" onClick={connectWallet}>
                 {filteredWalletAddress(walletAddress)}
             </Button>;
         } else {
-            return <Button type="default" block shape="round" icon={<CaretRightOutlined />} size="large" style={buttonStyle} onClick={() => { connectWallet(); enterLoading(1); }} loading={loadings[1]}>
+            return <Button type="default" block shape="round" icon={<CaretRightOutlined />} size="large" style={buttonStyle} onClick={connectWallet}>
                 Connect Wallet
             </Button>;
         }
