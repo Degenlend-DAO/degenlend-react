@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, MenuProps, Col, Button, Modal, Card, List, Row } from 'antd';
 import { CaretRightOutlined, RiseOutlined, WalletFilled } from '@ant-design/icons';
 import { modalGlobalConfig } from 'antd/es/modal/confirm';
-import WalletCard from '../widgets/WalletCard';
+import WalletCard from '../WalletCard/WalletCard';
 
 const { confirm } = Modal;
 

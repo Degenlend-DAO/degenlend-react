@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Modal } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
-import WalletCardContent from '../widgets/WalletCardContent';
+import WalletCardContent from './WalletCardContent';
 import { Provider, useStore } from 'react-redux';
 
 
