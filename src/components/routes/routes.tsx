@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import SupplyMarkets from '../Markets/supply_markets'
-import Dashboard from '../Dashboard/dashboard'
+import Dashboard from '../Dashboard/Dashboard'
 import Root from '../../views/root'
 
 const RoutesComponent = () => {
