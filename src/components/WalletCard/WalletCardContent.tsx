@@ -14,7 +14,7 @@ const WalletCardContent: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { open } = useWeb3Modal();
   const onClickMetaMask = () => {
-    dispatch(connectMetaMask);
+    dispatch(connectMetaMask());
   }
 
   const onClickWalletConnect = () => open();
