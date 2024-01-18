@@ -1,34 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, Card, List, Row, Col, Skeleton } from 'antd';
+import { Card, Row, Col, Skeleton } from 'antd';
 import { useSDK } from '@metamask/sdk-react';
 import { useWeb3Modal } from '@web3modal/wagmi/react'
-
-import { CaretLeftOutlined } from '@ant-design/icons';
-import { setTimeout } from 'timers/promises';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../app/Store';
+import { connectMetaMask } from '../../feature/MetaMaskSlice';
 
 
 const WalletCardContent: React.FC = () => {
   const [account, setAccount] = useState<string>('');
   const [isActive, setActive] = useState<boolean>(false);
   const { sdk, connected, connecting, provider, chainId } = useSDK();
+  const dispatch = useDispatch<AppDispatch>()
   const { open } = useWeb3Modal();
-  const onClickMetamask = async () => {
-    //Metamask Business Logic
-    try {
-      const accounts = await window.ethereum!.request({ method: 'eth_requestAccounts' }).catch((err) => {
-        if (err.code === 4001) {
-          // EIP-1193 userRejectedRequest error
-          // If this happens, the user rejected the connection request.
-          console.log('Please connect to MetaMask.');
-        } else {
-          console.error(err);
-        }
-      });
-      setAccount(`${accounts}`);
-      console.log(`${accounts} type: ${typeof (accounts)}`)
-    } catch (err) {
-      console.warn(`failed to connect..`, err);
-    }
+  const onClickMetaMask = () => {
+    dispatch(connectMetaMask);
   }
 
   const onClickWalletConnect = () => open();
@@ -52,7 +38,7 @@ const WalletCardContent: React.FC = () => {
       : <div>
         <Row>
           <Col span={6}>
-            <Card hoverable style={{ width: 240, height: 130 }} cover={<img alt="Metamask" src="http://tinyurl.com/8jttsvbw"></img>} onClick={onClickMetamask}></Card>
+            <Card hoverable style={{ width: 240, height: 130 }} cover={<img alt="Metamask" src="http://tinyurl.com/8jttsvbw"></img>} onClick={onClickMetaMask}></Card>
           </Col>
           <Col span={6} offset={6}>
             <Card hoverable style={{ width: 240, height: 130 }} cover={<img alt="WalletConnect" src="http://tinyurl.com/2smfxt43"></img>} onClick={onClickWalletConnect}></Card>
