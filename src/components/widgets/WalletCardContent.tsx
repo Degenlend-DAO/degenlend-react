@@ -8,7 +8,7 @@ import { setTimeout } from 'timers/promises';
 
 
 const WalletCardContent: React.FC = () => {
-  const [account, setAccount] = useState<string>();
+  const [account, setAccount] = useState<string>('');
   const [isActive, setActive] = useState<boolean>(false);
   const { sdk, connected, connecting, provider, chainId } = useSDK();
   const { open } = useWeb3Modal();

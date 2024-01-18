@@ -5,8 +5,8 @@ import WalletCardContent from '../widgets/WalletCardContent';
 
 
 const WalletCard: React.FC = () => {
-    const [isWalletConnected, setIsWalletConnected] = useState(false);
-    const [walletAddress, setWalletAddress] = useState('0x0000000000000000000000000000000000000000'); //Put in place when adding metamask logic
+    const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
+    const [walletAddress, setWalletAddress] = useState<string>('0x0000000000000000000000000000000000000000'); //Put in place when adding metamask logic
     const [loadings, setLoadings] = useState<boolean[]>([]);
 
     const { confirm } = Modal;

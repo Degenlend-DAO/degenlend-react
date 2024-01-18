@@ -23,7 +23,7 @@ const items: MenuProps['items'] = [
 
 
 const TopNavigationBar: React.FC = () => {
-    const [current, setCurrent] = useState('dashboard');
+    const [current, setCurrent] = useState<string>('dashboard');
 
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);
