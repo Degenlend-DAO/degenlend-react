@@ -26,11 +26,11 @@ const SupplyMarkets = () => <>{
 
     <div className="column">
 
-    <Col>
-        <Card bordered={true} title="Supply Markets">
-            <p>These markets are available for you to borrow against</p>
-        </Card>
-    </Col>
+        <Col>
+            <Card bordered={true} title="Supply Markets">
+                <p>These markets are available for you to borrow against</p>
+            </Card>
+        </Col>
     </div>
 }</>
 
