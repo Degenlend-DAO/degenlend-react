@@ -12,9 +12,10 @@ const WalletCard: React.FC = () => {
     const { confirm } = Modal;
 
     const filteredWalletAddress = (address: string) => {
-        const charArray = Array.from(address);
-        const filteredAddress = `     ${charArray[0]}${charArray[1]}${charArray[2]}${charArray[3]}${charArray[4]}...${charArray[charArray.length - 3]}${charArray[charArray.length - 2]}${charArray[charArray.length - 1]}     `;
-        return filteredAddress;
+        const size = address.length;
+        const prefix = address.substring(0, 5);
+        const suffix = address.substring(size - 5);
+        return `${prefix}...${suffix}`;
     }
 
     const buttonStyle: React.CSSProperties = {
