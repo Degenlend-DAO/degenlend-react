@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom'
-import RoutesComponent from './components/routes/routes';
+import RoutesComponent from './components/routes/Routes';
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
 
 import { WagmiConfig } from 'wagmi'
