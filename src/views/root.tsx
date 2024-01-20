@@ -2,7 +2,7 @@ import React from 'react'
 import { Layout, Button, Row, Col, Space } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 
-import Dashboard from '../components/Dashboard/Dashboard';
+import Dashboard from '../components/Dashboard/dashboard';
 import BorrowMarkets from '../components/Markets/BorrowMarkets';
 import SupplyMarkets from '../components/Markets/SupplyMarkets';
 import TopNavigationBar from '../components/Header/TopNavigationBar';
