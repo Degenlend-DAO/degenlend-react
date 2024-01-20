@@ -30,7 +30,7 @@ export const connectMetaMask = createAsyncThunk(
     }
 );
 
-export const metaMaskSlice = createSlice({
+export const metaMaskSlice: any = createSlice({
     name: 'metaMask',
     initialState,
     reducers: {},
