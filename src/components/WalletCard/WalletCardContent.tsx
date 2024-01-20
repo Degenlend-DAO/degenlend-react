@@ -5,6 +5,7 @@ import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/Store';
 import { connectMetaMask } from '../../feature/MetaMaskSlice';
+import { connectWalletConnect } from '../../feature/WalletConnectSlice';
 
 
 const WalletCardContent: React.FC = () => {
@@ -12,12 +13,13 @@ const WalletCardContent: React.FC = () => {
   const [isActive, setActive] = useState<boolean>(false);
   const { sdk, connected, connecting, provider, chainId } = useSDK();
   const dispatch = useDispatch<AppDispatch>()
-  const { open } = useWeb3Modal();
   const onClickMetaMask = () => {
     dispatch(connectMetaMask());
   }
 
-  const onClickWalletConnect = () => open();
+  const onClickWalletConnect = () => {
+    dispatch(connectWalletConnect());
+  };
 
   const { Meta } = Card
 
