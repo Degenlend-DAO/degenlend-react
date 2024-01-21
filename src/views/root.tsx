@@ -36,7 +36,7 @@ const headerStyle: React.CSSProperties = {
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
-  minHeight: 120,
+  minHeight: '100vh',
   lineHeight: '120px',
   color: '#fff',
   backgroundColor: '#F5F5F5',
@@ -44,29 +44,19 @@ const contentStyle: React.CSSProperties = {
   paddingTop: 20,
   paddingBottom: 20,
   paddingInline: 80,
-
 };
 
 const footerStyle: React.CSSProperties = {
   textAlign: 'center',
-  color: '#fff',
+  color: '#000000',
   backgroundColor: 'lightgrey',
 };
 
-const layoutStyle = {
-  borderRadius: 8,
-  overflow: 'hidden',
-  // width: 'calc(95% - 8px)',
-  // maxWidth: 'calc(95% - 8px)',
-  paddingInline: 50,
-
-};
-
 const Root: React.FC = () => <>
-  <Header style={headerStyle}>
-    <TopNavigationBar />
-  </Header>
-  <Layout style={layoutStyle}>
+  <Layout>
+    <Header style={headerStyle}>
+      <TopNavigationBar />
+    </Header>
     <Content style={contentStyle}>
       <Dashboard />
       <Row gutter={16}>
@@ -78,10 +68,10 @@ const Root: React.FC = () => <>
         </Col>
       </Row>
     </Content>
+    <Footer style={footerStyle}>
+      Created by Prediction Labs Team
+    </Footer>
   </Layout>
-  <Footer style={footerStyle}>
-    Created by Prediction Labs Team
-  </Footer>
 </>
 
 export default Root;
