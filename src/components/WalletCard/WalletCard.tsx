@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Col, Flex, Modal } from 'antd'
+import { Button, Flex, Modal, Typography } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 import WalletCardContent from './WalletCardContent';
 import { Provider, useStore } from 'react-redux';
+import { useBreakPoint } from '../../hooks/UseBreakPoint';
 
+const { Text } = Typography;
 
 const WalletCard: React.FC = () => {
     const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
     const [walletAddress, setWalletAddress] = useState<string>('0x0000000000000000000000000000000000000000'); //Put in place when adding metamask logic
     const store = useStore()
+    const screens = useBreakPoint();
 
     const { confirm } = Modal;
 
@@ -63,9 +66,9 @@ const WalletCard: React.FC = () => {
             );
         } else {
             return (
-                <Flex vertical gap={"small"} style={{ width: "10%" }}>
-                    <Button type="default" block shape="round" icon={<CaretRightOutlined />} style={buttonStyle} onClick={connectWallet}>
-                        Connect Wallet
+                <Flex gap={"small"} style={{ width: "10%" }}>
+                    <Button type="default" shape="round" icon={screens !== 'xs' && <CaretRightOutlined />} style={buttonStyle} onClick={connectWallet}>
+                        {screens === 'xs' ? 'Connect' : 'Connect Wallet'}
                     </Button>
                 </Flex>
             );
