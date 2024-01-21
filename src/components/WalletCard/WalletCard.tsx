@@ -35,7 +35,7 @@ const WalletCard: React.FC = () => {
     const connectWallet = () => {
         confirm({
             title: "Select a Wallet",
-            okText: " Connect",
+            okText: "Connect",
             cancelText: "Cancel",
             centered: true,
             width: 600,
