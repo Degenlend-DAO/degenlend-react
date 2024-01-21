@@ -52,3 +52,5 @@ export const walletConnectSlice: any = createSlice({
         })
     }
 });
+
+export default walletConnectSlice.reducer;

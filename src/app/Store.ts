@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import metaMaskReducer from '../feature/MetaMaskSlice';
+import walletConnectReducer from '../feature/WalletConnectSlice';
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
     reducer: {
         metaMask: metaMaskReducer,
+        walletConnect: walletConnectReducer,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
