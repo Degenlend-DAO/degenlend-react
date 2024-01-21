@@ -16,7 +16,7 @@ import { CaretRightOutlined } from '@ant-design/icons'
 
 
 // Components
-import Dashboard from '../components/Dashboard/dashboard';
+import Dashboard from '../components/Dashboard/Dashboard';
 import BorrowMarkets from '../components/Markets/BorrowMarkets';
 import SupplyMarkets from '../components/Markets/SupplyMarkets';
 import TopNavigationBar from '../components/Header/TopNavigationBar';
