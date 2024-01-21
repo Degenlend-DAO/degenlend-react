@@ -25,13 +25,11 @@ import TopNavigationBar from '../components/Header/topNavigationBar';
 const { Header, Footer, Content } = Layout;
 
 const headerStyle: React.CSSProperties = {
-  textAlign: 'center',
-  color: '#fff',
-  height: 75,
-  lineHeight: '64px',
+  position: 'fixed',
+  zIndex: 1,
+  width: '100%',
+  height: 100,
   backgroundColor: '#2566D8',
-  display: 'flex',
-  alignItems: 'center',
 };
 
 const contentStyle: React.CSSProperties = {

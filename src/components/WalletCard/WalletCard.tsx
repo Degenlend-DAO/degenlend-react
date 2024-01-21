@@ -55,7 +55,7 @@ const WalletCard: React.FC = () => {
     const WalletCard = (flag: boolean) => {
         if (flag) {
             return (
-                <Flex vertical gap={"small"} style={{ width: "100%" }}>
+                <Flex vertical gap={"small"} style={{ width: "10%" }}>
                     <Button type="text" block shape="round" size="large" onClick={connectWallet}>
                         {filteredWalletAddress(walletAddress)}
                     </Button>;
@@ -63,7 +63,7 @@ const WalletCard: React.FC = () => {
             );
         } else {
             return (
-                <Flex vertical gap={"small"} style={{ width: "100%" }}>
+                <Flex vertical gap={"small"} style={{ width: "10%" }}>
                     <Button type="default" block shape="round" icon={<CaretRightOutlined />} style={buttonStyle} onClick={connectWallet}>
                         Connect Wallet
                     </Button>
