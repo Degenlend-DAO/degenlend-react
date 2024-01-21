@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Col, Modal } from 'antd'
+import { Button, Col, Flex, Modal } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 import WalletCardContent from './WalletCardContent';
 import { Provider, useStore } from 'react-redux';
@@ -54,13 +54,21 @@ const WalletCard: React.FC = () => {
 
     const WalletCard = (flag: boolean) => {
         if (flag) {
-            return <Button type="text" block shape="round" size="large" onClick={connectWallet}>
-                {filteredWalletAddress(walletAddress)}
-            </Button>;
+            return (
+                <Flex vertical gap={"small"} style={{ width: "100%" }}>
+                    <Button type="text" block shape="round" size="large" onClick={connectWallet}>
+                        {filteredWalletAddress(walletAddress)}
+                    </Button>;
+                </Flex>
+            );
         } else {
-            return <Button type="default" block shape="round" icon={<CaretRightOutlined />} size="large" style={buttonStyle} onClick={connectWallet}>
-                Connect Wallet
-            </Button>;
+            return (
+                <Flex vertical gap={"small"} style={{ width: "100%" }}>
+                    <Button type="default" block shape="round" icon={<CaretRightOutlined />} style={buttonStyle} onClick={connectWallet}>
+                        Connect Wallet
+                    </Button>
+                </Flex>
+            );
         }
     }
 
