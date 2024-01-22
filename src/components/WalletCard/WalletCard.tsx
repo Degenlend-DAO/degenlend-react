@@ -13,7 +13,7 @@ const WalletCard: React.FC = () => {
     const store = useStore()
     const screens = useBreakPoint();
 
-    const { confirm } = Modal;
+    const { info } = Modal;
 
     const filteredWalletAddress = (address: string) => {
         const size = address.length;
@@ -33,7 +33,7 @@ const WalletCard: React.FC = () => {
     }
 
     const connectWallet = () => {
-        confirm({
+        info({
             title: "Select a Wallet",
             okText: "Connect",
             cancelText: "Cancel",
