@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import metaMaskReducer from '../feature/MetaMaskSlice';
-import walletConnectReducer from '../feature/WalletConnectSlice';
+import metaMaskReducer from '../feature/wallet/MetaMaskSlice';
+import walletConnectReducer from '../feature/wallet/WalletConnectSlice';
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
