@@ -6,6 +6,7 @@
     "@ant-design/icons": "^5.2.6",
     "@metamask/sdk-react": "^0.14.2",
     "@metamask/sdk-react-ui": "^0.14.3",
+    "@nextui-org/react": "^2.2.9",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -17,6 +18,7 @@
     "@web3modal/wagmi": "^3.5.6",
     "antd": "^5.12.7",
     "ethers": "^6.10.0",
+    "framer-motion": "^10.18.0",
     "netlify-cli": "^17.13.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -51,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
   }
 }
