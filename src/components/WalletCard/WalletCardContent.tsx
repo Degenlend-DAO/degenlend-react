@@ -4,8 +4,8 @@ import { useSDK } from '@metamask/sdk-react';
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/Store';
-import { connectMetaMask } from '../../feature/MetaMaskSlice';
-import { connectWalletConnect } from '../../feature/WalletConnectSlice';
+import { connectMetaMask } from '../../feature/wallet/MetaMaskSlice';
+import { connectWalletConnect } from '../../feature/wallet/WalletConnectSlice';
 
 
 const WalletCardContent: React.FC = () => {
