@@ -17,7 +17,7 @@ const Dashboard = () => <>{
                         precision={2}
                         valueStyle={{ color: '#3f8600' }}
                         prefix="$"
-                        loading={true}
+                        loading={false}
                     />
                 </Card>
             </Col>
@@ -29,7 +29,7 @@ const Dashboard = () => <>{
                         precision={2}
                         valueStyle={{ color: 'black' }}
                         suffix="%"
-                        loading={true}
+                        loading={false}
                     />
                 </Card>
             </Col>
@@ -42,13 +42,13 @@ const Dashboard = () => <>{
                         precision={2}
                         valueStyle={{ color: '#3f8600' }}
                         prefix="$"
-                        loading={true}
+                        loading={false}
                     />
                 </Card>
             </Col>
         </Row>
         <Row  >
-            <Col span={24} >
+            <Col span={22} >
                 <Card bordered={false} bodyStyle={bodyStyle} headStyle={bodyStyle} style={bodyStyle}>
                     <h3>
                         Borrow Limit
