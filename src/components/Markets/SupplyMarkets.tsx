@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Button, Modal, Col, Card, Row, Space, Switch,  } from 'antd';
-import SXNetworkCardContent from '../WalletCard/SXNetworkCardContent';
+import SXTokenCardContent from '../WalletCard/SXTokenCardContent';
 import { Provider, useStore } from 'react-redux';
 
 
@@ -16,7 +16,7 @@ const wsxMarketSelected = () => {
         maskClosable: true,
         width: 810,
         
-        content: <SXNetworkCardContent />,
+        content: <SXTokenCardContent />,
     })
 }
 

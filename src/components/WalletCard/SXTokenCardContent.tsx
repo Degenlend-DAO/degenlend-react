@@ -2,19 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Switch, Divider, Button, Col, Skeleton } from 'antd';
 import { useDispatch } from 'react-redux';
 
-
-const SXNetworkCardTitle = () => {
-    return <><div><img></img> Wrapped SX Token</div></>;
-}
-
 const enableWSXLending = () => {
     // This is where actions go for the erc20 token (enable useage)
     alert('You can now borrow your WSX!');
-}
-
-const SXNetworkCard = () => {
-    return <>
-    </>;
 }
 
 const SXNetworkCardContent: React.FC = () => {
