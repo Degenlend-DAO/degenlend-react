@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Button, Modal, Col, Card, Row, Space, Switch,  } from 'antd';
 import SXTokenCardContent from '../WalletCard/SXTokenCardContent';
-import { Provider, useStore } from 'react-redux';
+import { Provider, useStore, useDispatch } from 'react-redux';
 
 
 const { info } = Modal;
