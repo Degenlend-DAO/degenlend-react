@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
 interface Account {
     address: string;
 }
@@ -21,8 +20,7 @@ export const connectMetaMask = createAsyncThunk(
     'metaMask/connect',
     async () => {
         try {
-            const accounts = await window.ethereum!.request({ method: 'eth_requestAccounts' }) as Account[];
-            console.log(accounts);
+            const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' }) as Account[];
             return accounts[0];
         } catch (err) {
             console.log(err);
