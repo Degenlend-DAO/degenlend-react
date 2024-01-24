@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Switch, Divider, Button, Col, Skeleton } from 'antd';
+import { approveWSX } from '../../feature/supply/withdrawWSXSlice';
 import { useDispatch } from 'react-redux';
 
 const enableWSXLending = () => {
     // This is where actions go for the erc20 token (enable useage)
     alert('You can now borrow your WSX!');
+    // withdrawWSXSlice  goes here 
 }
 
 const SXNetworkCardContent: React.FC = () => {
