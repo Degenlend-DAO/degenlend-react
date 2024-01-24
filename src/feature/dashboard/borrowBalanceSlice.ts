@@ -1,7 +1,11 @@
 import { supplyBlanceSlice } from './supplyBalanceSlice';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
+interface BorrowBalanceState {
+    netBorrowBalance: number,
+}
+
+const initialState: BorrowBalanceState = {
     netBorrowBalance: 0,
 }
 
@@ -13,10 +17,15 @@ export const updateBorrowBalance = createAsyncThunk(
     }
 );
 
-export const borrowBlanceSlice: any = createSlice({
+export const borrowBalanceSlice = createSlice({
     name: "borrowBalance",
     initialState,
-    reducers: {}
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(updateBorrowBalance.fulfilled, (state, action) => {
+            state.netBorrowBalance = action.payload || -1;
+        })
+    }
 });
 
-export default supplyBlanceSlice.reducer;
+export default borrowBalanceSlice.reducer;

@@ -12,7 +12,7 @@ export const updatenetAPY = createAsyncThunk(
     }
 );
 
-export const netAPYSlice: any = createSlice({
+export const netAPYSlice = createSlice({
     name: "netAPY",
     initialState,
     reducers: {}

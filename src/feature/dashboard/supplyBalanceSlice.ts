@@ -1,10 +1,10 @@
 import { createReducer, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-interface Account {
-    address: string;
+interface SupplyBalanceState {
+    netSupplyBalance: number;
 }
 
-const initialState = {
+const initialState: SupplyBalanceState = {
     netSupplyBalance: 0,
 }
 
@@ -16,10 +16,15 @@ export const updateSupplyBalance = createAsyncThunk(
     }
 );
 
-export const supplyBlanceSlice: any = createSlice({
+export const supplyBlanceSlice = createSlice({
     name: "supplyBalance",
     initialState,
     reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(updateSupplyBalance.fulfilled, (state, action) => {
+            state.netSupplyBalance = action.payload || 0;
+        })
+    }
 });
 
 export default supplyBlanceSlice.reducer;

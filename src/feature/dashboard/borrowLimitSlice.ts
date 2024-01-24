@@ -1,6 +1,11 @@
 import { createReducer, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
+
+interface BorrowLimitState {
+    borrowLimit: number,
+}
+
+const initialState: BorrowLimitState = {
     borrowLimit: 0,
 }
 
@@ -12,7 +17,7 @@ export const updateborrowLimit = createAsyncThunk(
     }
 );
 
-export const borrowLimitSlice: any = createSlice({
+export const borrowLimitSlice = createSlice({
     name: "borrowLimit",
     initialState,
     reducers: {}
