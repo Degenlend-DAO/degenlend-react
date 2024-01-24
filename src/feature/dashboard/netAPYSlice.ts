@@ -15,7 +15,12 @@ export const updatenetAPY = createAsyncThunk(
 export const netAPYSlice = createSlice({
     name: "netAPY",
     initialState,
-    reducers: {}
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(updatenetAPY.fulfilled, (state, action) => {
+            state.netAPY = action.payload || 0;
+        })
+    }
 });
 
 export default netAPYSlice.reducer;
