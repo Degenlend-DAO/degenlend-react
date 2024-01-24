@@ -13,7 +13,6 @@ const bodyStyle: React.CSSProperties = {
 
 
 const Dashboard:React.FC = () => {
-    // const [supplyBalance, setSupplyBalance] = useState<number>(342122.11);
     const supplyBalance = useSelector((state:RootState) => state.supplyBalance.netSupplyBalance);
     const borrowBalance = useSelector((state:RootState) => state.borrowBalance.netBorrowBalance);
     const borrowLimit = useSelector((state:RootState) => state.borrowLimit.borrowLimit);

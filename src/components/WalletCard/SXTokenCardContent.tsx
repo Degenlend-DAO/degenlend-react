@@ -22,23 +22,6 @@ const SXNetworkCardContent: React.FC = () => {
             <p>To supply, withdraw, or repay your Wrapped SX, you need to enable it first</p>
         </Row>
 
-        <Row gutter={6}>
-            <Col span={6}>
-                <Card style={{ width: 200, height: 190 }}>
-                <Switch checkedChildren="  Supply  " unCheckedChildren="  Withdraw  " defaultChecked/>
-                <p> Supply APY: 5.46% </p>
-                <Button onClick={enableWSXLending}>
-                    Enable SX Token 
-                </Button>
-                </Card>            
-            </Col>
-            <Col span={6} offset={6}>
-                <Card style={{ width: 200, height: 190}}>
-                    <h4>Your Wallet Balance: </h4>
-                    <h4> 0 WSX </h4>
-                </Card>
-            </Col>
-        </Row>
         
     </div>
 }
