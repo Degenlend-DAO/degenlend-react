@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+interface BorrowUSDCState {
+    status: string,
+    balance: number
+}
 
-const initialState = {
+const initialState: BorrowUSDCState = {
     status: 'initial',
     balance: 0,
 }
@@ -27,3 +31,5 @@ export const borrowUSDCSlice = createSlice({
     },
     extraReducers: (builder) => {},
 });
+
+export default borrowUSDCSlice.reducer

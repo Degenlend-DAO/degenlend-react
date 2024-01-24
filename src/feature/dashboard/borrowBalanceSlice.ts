@@ -23,7 +23,7 @@ export const borrowBalanceSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(updateBorrowBalance.fulfilled, (state, action) => {
-            state.netBorrowBalance = action.payload || -1;
+            state.netBorrowBalance = action.payload || 0;
         })
     }
 });
