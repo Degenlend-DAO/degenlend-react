@@ -25,30 +25,32 @@ const WalletCardContent: React.FC = () => {
 
   useEffect(() => { }, []); // Empty for now
 
-  return <div>
-    {isActive ?
-      <div>
-        <Row>
-          <Col span={6}>
-            <Skeleton active style={{ width: 240, height: 130 }} />
-          </Col>
-          <Col span={6} offset={6}>
-            <Skeleton active style={{ width: 240, height: 130 }} />
-          </Col>
-        </Row>
-      </div>
-      : <div>
-        <Row>
-          <Col span={6}>
-            <Card hoverable style={{ width: 240, height: 130 }} cover={<img alt="Metamask" src="http://tinyurl.com/8jttsvbw"></img>} onClick={onClickMetaMask}></Card>
-          </Col>
-          <Col span={6} offset={6}>
-            <Card hoverable style={{ width: 240, height: 130 }} cover={<img alt="WalletConnect" src="http://tinyurl.com/2smfxt43"></img>} onClick={onClickWalletConnect}></Card>
-          </Col>
-        </Row>
-      </div>
-    }
-  </div>;
+  return (
+    <div>
+        {isActive ?
+          <div>
+            <Row>
+              <Col span={6}>
+                <Skeleton active style={{ width: 240, height: 130 }} />
+              </Col>
+              <Col span={6} offset={6}>
+                <Skeleton active style={{ width: 240, height: 130 }} />
+              </Col>
+            </Row>
+          </div>
+          : <div>
+            <Row>
+              <Col span={6}>
+                <Card bordered={true} hoverable style={{ width: 240, height: 130 }} cover={<img alt="Metamask" src="http://tinyurl.com/8jttsvbw"></img>} onClick={onClickMetaMask}></Card>
+              </Col>
+              <Col span={6} offset={6}>
+                <Card bordered={true} hoverable style={{ width: 240, height: 130 }} cover={<img alt="WalletConnect" src="http://tinyurl.com/2smfxt43"></img>} onClick={onClickWalletConnect}></Card>
+              </Col>
+            </Row>
+          </div>
+        }
+    </div>
+  );
 }
 
 
