@@ -25,19 +25,20 @@ import TopNavigationBar from '../components/Header/topNavigationBar';
 const { Header, Footer, Content } = Layout;
 
 const headerStyle: React.CSSProperties = {
-  position: 'fixed',
+
   zIndex: 1,
   width: '100%',
-  height: 100,
+  height: '15%',
   backgroundColor: '#2566D8',
 };
 
 const contentStyle: React.CSSProperties = {
+  zIndex: 1,
   textAlign: 'center',
   minHeight: '100vh',
-  lineHeight: '120px',
   color: '#fff',
   backgroundColor: '#F5F5F5',
+  position: 'relative',
   alignItems: 'center',
   paddingTop: 20,
   paddingBottom: 20,
