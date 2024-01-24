@@ -22,7 +22,7 @@ const sx_testnet = {
   }
 }
 // 1. Get projectId at https://cloud.walletconnect.com
-const projectId = ''
+const projectId: string = (process.env.REACT_APP_WEB3_PROJECT_ID as string)
 
 // 2. Create wagmiConfig
 const metadata = {
