@@ -1,5 +1,5 @@
 import { Button, Dropdown, MenuProps } from 'antd'
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
+import Icon, { LogoutOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/Store';
 import { connectMetaMask } from '../../feature/wallet/MetaMaskSlice';
@@ -38,16 +38,26 @@ const WalletCard: React.FC = () => {
         }
     };
 
+    const dropdownStyle: React.CSSProperties = {
+        objectFit: 'contain',
+        width: 100,
+        height: 100
+    }
+
+    const MetaMaskIcon = () => <Icon component={() => <img alt="Metamask" src="http://tinyurl.com/8jttsvbw" style={dropdownStyle} />} />;
+
+    const WalletConnectIcon = () => <Icon component={() => <img alt="WalletConnect" src="http://tinyurl.com/2smfxt43" style={dropdownStyle} />} />;
+
     const walletOptions: MenuProps['items'] = [
         {
             label: 'MetaMask',
             key: '1',
-            icon: <UserOutlined />,
+            icon: <MetaMaskIcon />,
         },
         {
             label: 'WalletConnect',
             key: '2',
-            icon: <UserOutlined />,
+            icon: <WalletConnectIcon />,
         },
     ];
 
