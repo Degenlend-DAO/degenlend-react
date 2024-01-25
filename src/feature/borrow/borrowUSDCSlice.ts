@@ -2,11 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 interface BorrowUSDCState {
     status: string,
+    borrowAPY: number,
     balance: number
 }
 
 const initialState: BorrowUSDCState = {
     status: 'initial',
+    borrowAPY: 0.00,
     balance: 0,
 }
 
