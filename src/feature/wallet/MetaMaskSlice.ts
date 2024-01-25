@@ -1,29 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-interface Account {
-    address: string;
-}
-
 interface MetaMaskState {
-    account: Account | undefined;
+    address: string;
     loading: boolean;
     error: string;
+    isConnected: boolean;
 }
 
 const initialState: MetaMaskState = {
-    account: { address: "0x0000000000000000000000000000000000000000" },
+    address: "0x0000000000000000000000000000000000000000" ,
     loading: false,
-    error: ""
+    error: "",
+    isConnected: false,
 }
 
-export const connectMetaMask = createAsyncThunk(
+export const connectMetaMask = createAsyncThunk<string, void>(
     'metaMask/connect',
     async () => {
         try {
-            const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' }) as Account[];
+            const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
+            console.log(accounts[0]);
             return accounts[0];
         } catch (err) {
-            console.log(err);
+            return "0x0000000000000000000000000000000000000000";
         }
     }
 );
@@ -40,24 +39,13 @@ export const metaMaskSlice = createSlice({
             })
             .addCase(connectMetaMask.fulfilled, (state, action) => {
                 state.loading = false;
-                try {
-                    const userAddress = action.payload?.address!;
-                    const newAccount: Account = {
-                        address: userAddress
-                    }
-                    state.account = newAccount;
-                } catch (error) {
-                    const userAddress = "0x0000000000000000000000000000000000000000";
-                    const newAccount: Account = {
-                        address: userAddress
-                    }
-                    state.account = newAccount;
-                }
-
+                state.address = action.payload;
+                state.isConnected = true;
             })
             .addCase(connectMetaMask.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message!;
+                state.isConnected = false;
             })
     }
 });

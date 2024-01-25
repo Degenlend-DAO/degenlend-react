@@ -1,83 +1,77 @@
-import React, { useState } from 'react';
-import { Button, Flex, Modal, Typography } from 'antd'
-import { CaretRightOutlined } from '@ant-design/icons'
-import WalletCardContent from './WalletCardContent';
-import { Provider, useSelector, useStore } from 'react-redux';
-import { useBreakPoint } from '../../hooks/UseBreakPoint';
-import { RootState } from '../../app/Store';
-
-const { Text } = Typography;
+import { Button, Dropdown, Flex, MenuProps} from 'antd'
+import { UserOutlined } from '@ant-design/icons'
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../app/Store';
+import { connectMetaMask } from '../../feature/wallet/MetaMaskSlice';
+import { connectWalletConnect } from '../../feature/wallet/WalletConnectSlice';
 
 const WalletCard: React.FC = () => {
-    const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
-    const walletAddress = useSelector((state:RootState) => state.metaMask.account?.address);
-    const store = useStore()
-    const screens = useBreakPoint();
+    const walletAddress = useSelector((state: RootState) => state.metaMask.address);
+    const isConnected = useSelector((state: RootState) => state.metaMask.isConnected);
+    const dispatch = useDispatch<AppDispatch>()
 
-    const { info } = Modal;
+    const onClickMetaMask = () => {
+        dispatch(connectMetaMask());
+    }
 
-    const filteredWalletAddress = (address: string) => {
-        const size = address.length;
-        const prefix = address.substring(0, 5);
-        const suffix = address.substring(size - 5);
+    const onClickWalletConnect = () => {
+        dispatch(connectWalletConnect());
+    };
+
+    const filteredWalletAddress = (address: string | undefined) => {
+        const size = address!.length;
+        const prefix = address!.substring(0, 5);
+        const suffix = address!.substring(size - 5);
         return `${prefix}...${suffix}`;
     }
 
-    const buttonStyle: React.CSSProperties = {
-        color: 'white',
-        backgroundColor: '#277AD6',
-    }
-    const modalStyle: React.CSSProperties = {
-        color: 'white',
-        width: 'calc(65% - 8px)',
-        height: '300',
+    const handleClick: MenuProps['onClick'] = (e) => {
+        console.log('click', e);
+        if (e.key === '1') {
+            onClickMetaMask();
+        } else if (e.key === '2') {
+            onClickWalletConnect();
+        }
+    };
+
+    const items: MenuProps['items'] = [
+        {
+            label: 'MetaMask',
+            key: '1',
+            icon: <UserOutlined />,
+        },
+        {
+            label: 'WalletConnect',
+            key: '2',
+            icon: <UserOutlined />,
+        },
+    ];
+
+    const menuProps: MenuProps = {
+        items: items,
+        onClick: handleClick
     }
 
-    const connectWallet = () => {
-        info({
-            title: "Select a Wallet",
-            okText: "Connect",
-            cancelText: "Cancel",
-            centered: true,
-            width: 600,
-            closeIcon: true,
-            maskClosable: true,
-            content:
-                <Provider store={store}>
-                    <WalletCardContent />
-                </Provider>,
-            style: modalStyle,
-            onOk() {
-                setIsWalletConnected(true);
-            },
-            onCancel() {
-                setIsWalletConnected(false);
-            },
-        });
-    }
-
-    const WalletCard = (flag: boolean) => {
-        if (flag) {
+    const WalletCard = (isConnected: boolean) => {
+        if (isConnected) {
             return (
                 <Flex gap={"small"} style={{ width: "10%" }}>
-                    <Button type="text" block shape="round" size="large" onClick={connectWallet} style={{color: 'white'}}>
-                        {filteredWalletAddress(walletAddress!)}
+                    <Button type="text" block shape="round" size="large" style={{ color: 'white' }}>
+                        {filteredWalletAddress(walletAddress)}
                     </Button>
                 </Flex>
             );
         } else {
             return (
-                <Flex gap={"small"} style={{ width: "10%" }}>
-                    <Button type="default" shape="round" icon={screens !== 'xs' && <CaretRightOutlined />} style={buttonStyle} onClick={connectWallet}>
-                        {screens === 'xs' ? 'Connect' : 'Connect Wallet'}
-                    </Button>
-                </Flex>
+                <Dropdown menu={menuProps}>
+                    <Button type="primary">Connect to a wallet</Button>
+                </Dropdown>
             );
         }
     }
 
     return <>
-        {WalletCard(isWalletConnected)}
+        {WalletCard(isConnected)}
     </>;
 }
 
