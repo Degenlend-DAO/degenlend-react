@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic } from 'antd';
-import { approveWSX } from '../../feature/supply/withdrawWSXSlice';
-import { useDispatch } from 'react-redux';
+import {  useSelector } from 'react-redux';
+import { RootState } from '../../app/Store';
 
 const SXNetworkCardContent: React.FC = () => {
     const [form] = Form.useForm();
 
-    const wsxBalance = 400;
-    const supplyAPY = 43.2;
+    const wsxBalance = useSelector((state:RootState) => state.supplyWSX.wsxBalance);
+    const supplyAPY = useSelector((state:RootState) => state.supplyWSX.supplyAPY);;
 
     const enableWSXLending = () => {
         // This is where actions go for the erc20 token (enable useage)

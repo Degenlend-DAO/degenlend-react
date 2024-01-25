@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Flex, Radio, Form, Divider, Button, Col, Statistic, Skeleton } from 'antd';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/Store';
 
 
 const enableUSDCLending = () => {
@@ -10,8 +12,8 @@ const USDCCardContent: React.FC = () => {
 
     const [form] = Form.useForm();
 
-    const borrowAPY = 6.4;
-    const usdcBalance = 0;
+    const borrowAPY = useSelector((state:RootState) => state.borrowUSDC.borrowAPY);
+    const usdcBalance = useSelector((state:RootState) => state.borrowUSDC.balance);
 
     return <div>
         <div style={{ display: "flex", justifyItems: "center" }}>
