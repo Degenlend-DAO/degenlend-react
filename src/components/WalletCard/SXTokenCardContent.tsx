@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Flex, Card, Row, Radio, Divider, Button, Col, Form } from 'antd';
+import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic } from 'antd';
 import { approveWSX } from '../../feature/supply/withdrawWSXSlice';
 import { useDispatch } from 'react-redux';
 
-const enableWSXLending = () => {
-    // This is where actions go for the erc20 token (enable useage)
-    alert('You can now borrow your WSX!');
-    // withdrawWSXSlice  goes here 
-}
-
 const SXNetworkCardContent: React.FC = () => {
     const [form] = Form.useForm();
+
+    const wsxBalance = 400;
+    const supplyAPY = 43.2;
+
+    const enableWSXLending = () => {
+        // This is where actions go for the erc20 token (enable useage)
+        alert('You can now borrow your WSX!');
+        // withdrawWSXSlice  goes here 
+        
+    }
 
     const [ selectedActivity, setSelectedActivity ] = useState("supply")
 
@@ -34,11 +38,23 @@ const SXNetworkCardContent: React.FC = () => {
                             </Radio.Group>
                 </Form>
 
-            
+                    <Card bordered={false}>
+                        <Statistic
+                        title="Supply APY"
+                        value={supplyAPY}
+                        precision={2}
+                        suffix="%"
+                        />
+                    </Card>
 
+
+                <Button type="primary" size={'large'} onClick={enableWSXLending}>
+                    Enable WSX
+                </Button>
+                <p>
+                    Wallet Balance: {wsxBalance} WSX
+                </p>
         </Flex>
-
-
     </div>
 }
 

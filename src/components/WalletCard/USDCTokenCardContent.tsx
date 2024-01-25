@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Flex, Radio, Form, Divider, Button, Col, Skeleton } from 'antd';
+import { Card, Row, Flex, Radio, Form, Divider, Button, Col, Statistic, Skeleton } from 'antd';
 
 
 const enableUSDCLending = () => {
@@ -9,6 +9,9 @@ const enableUSDCLending = () => {
 const USDCCardContent: React.FC = () => {
 
     const [form] = Form.useForm();
+
+    const borrowAPY = 6.4;
+    const usdcBalance = 0;
 
     return <div>
         <div style={{ display: "flex", justifyItems: "center" }}>
@@ -29,7 +32,22 @@ const USDCCardContent: React.FC = () => {
                 </Radio.Group>
             </Form>
 
+            <Card bordered={false}>
+                        <Statistic
+                        title="Borrow APY"
+                        value={borrowAPY}
+                        precision={2}
+                        suffix="%"
+                        />
+                    </Card>
 
+            <Button type="primary" size={'large'} onClick={enableUSDCLending}>
+                Enable USDC
+            </Button>
+
+            <p>
+                Wallet Balance: {usdcBalance} USDC
+            </p>
         </Flex>
     </div>
 }
