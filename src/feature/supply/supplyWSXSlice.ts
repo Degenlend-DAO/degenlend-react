@@ -1,11 +1,16 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 interface SupplyWSXState {
-    status: string
+    status: string,
+    wsxBalance: number,
+    supplyAPY: number,
 }
 
 const initialState: SupplyWSXState = {
     status: 'initial',
+    wsxBalance: 0.00,
+    supplyAPY: 0.00
+
 }
 
 export const approveWSX = createAsyncThunk('wSX/approve', async () => {});
