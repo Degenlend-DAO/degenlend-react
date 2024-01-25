@@ -20,14 +20,13 @@ const initialState: WalletConnectState  = {
 export const connectWalletConnect = createAsyncThunk(
     'walletconnect/connect',
     async () => {
-    try {
-        //WC logic
-        const { open } = useWeb3Modal();
-        open();
-    } catch (err) {
-        console.log(err);
-    }
-
+        try {
+            //WC logic
+            const { open } = useWeb3Modal();
+            open();
+        } catch (err) {
+            console.log(err);
+        }
 });
 
 
