@@ -5,15 +5,15 @@ interface Account {
 }
 
 interface MetaMaskState {
-    account: Account | null;
+    account: Account | undefined;
     loading: boolean;
-    error: string | null;
+    error: string;
 }
 
 const initialState: MetaMaskState = {
-    account: null,
+    account: { address: "0x0000000000000000000000000000000000000000" },
     loading: false,
-    error: null
+    error: ""
 }
 
 export const connectMetaMask = createAsyncThunk(
@@ -28,7 +28,7 @@ export const connectMetaMask = createAsyncThunk(
     }
 );
 
-export const metaMaskSlice: any = createSlice({
+export const metaMaskSlice = createSlice({
     name: 'metaMask',
     initialState,
     reducers: {},
@@ -36,11 +36,24 @@ export const metaMaskSlice: any = createSlice({
         builder
             .addCase(connectMetaMask.pending, (state) => {
                 state.loading = true;
-                state.error = null;
+                state.error = "";
             })
             .addCase(connectMetaMask.fulfilled, (state, action) => {
                 state.loading = false;
-                state.account = action.payload || null;
+                try {
+                    const userAddress = action.payload?.address!;
+                    const newAccount: Account = {
+                        address: userAddress
+                    }
+                    state.account = newAccount;
+                } catch (error) {
+                    const userAddress = "0x0000000000000000000000000000000000000000";
+                    const newAccount: Account = {
+                        address: userAddress
+                    }
+                    state.account = newAccount;
+                }
+
             })
             .addCase(connectMetaMask.rejected, (state, action) => {
                 state.loading = false;

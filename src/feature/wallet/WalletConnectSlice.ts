@@ -42,7 +42,7 @@ export const walletConnectSlice: any = createSlice({
         })
         .addCase(connectWalletConnect.fulfilled, (state, action) => {
             state.loading = false;
-            //Insert account address here
+
         })
         .addCase(connectWalletConnect.rejected, (state, action) => {
             state.loading = false;
