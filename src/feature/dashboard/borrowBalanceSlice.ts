@@ -13,7 +13,7 @@ export const updateBorrowBalance = createAsyncThunk(
     'borrowBalance/update',
     async () => {
         // Contract call
-        return 0;
+        return 1;
     }
 );
 
