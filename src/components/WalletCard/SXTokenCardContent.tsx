@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic } from 'antd';
-import {  useSelector } from 'react-redux';
+import {  useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
+import { approveWSX, updateWSXBalance } from '../../feature/supply/supplyWSXSlice';
+import { UnknownAction } from '@reduxjs/toolkit';
 
 const SXNetworkCardContent: React.FC = () => {
+    const dispatch = useDispatch();
     const [form] = Form.useForm();
 
     const wsxBalance = useSelector((state:RootState) => state.supplyWSX.wsxBalance);
     const supplyAPY = useSelector((state:RootState) => state.supplyWSX.supplyAPY);;
 
     const enableWSXLending = () => {
-        // This is where actions go for the erc20 token (enable useage)
-        alert('You can now borrow your WSX!');
-        // withdrawWSXSlice  goes here 
-        
+        dispatch(approveWSX() as unknown as UnknownAction);
     }
 
-    const [ selectedActivity, setSelectedActivity ] = useState("supply")
+    useEffect(() => {
+        dispatch( updateWSXBalance() as unknown as UnknownAction);
+    })
 
     return <div>
         <div style={{ display: "flex", justifyItems: "center"}}>
