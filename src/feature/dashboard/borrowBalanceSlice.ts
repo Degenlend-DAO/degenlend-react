@@ -1,6 +1,6 @@
 import { supplyBlanceSlice } from './supplyBalanceSlice';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { web3, erc20ABI, addresses } from '../../utils/eth';
+import { web3, erc20ABI, addresses } from '../../utils/web3';
 
 
 interface BorrowBalanceState {
