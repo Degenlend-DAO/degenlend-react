@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Statistic, Progress } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/Store';
+import { updateSupplyBalance } from '../../feature/dashboard/supplyBalanceSlice';
+import { UnknownAction } from '@reduxjs/toolkit';
+import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
+import { updateborrowLimit } from '../../feature/dashboard/borrowLimitSlice';
+import { updatenetAPY } from '../../feature/dashboard/netAPYSlice';
 
 
 
@@ -11,10 +16,18 @@ const bodyStyle: React.CSSProperties = {
 
 
 const Dashboard:React.FC = () => {
+    const dispatch = useDispatch();
     const supplyBalance = useSelector((state:RootState) => state.supplyBalance.netSupplyBalance);
     const borrowBalance = useSelector((state:RootState) => state.borrowBalance.netBorrowBalance);
     const borrowLimit = useSelector((state:RootState) => state.borrowLimit.borrowLimit);
     const netAPY = useSelector((state:RootState) => state.netAPY.netAPY)
+
+    useEffect(() =>{
+        dispatch(updatenetAPY() as unknown as UnknownAction);
+        dispatch(updateborrowLimit() as unknown as UnknownAction);
+        dispatch(updateBorrowBalance() as unknown as UnknownAction);
+        dispatch(updateSupplyBalance() as unknown as UnknownAction);
+    });
     
     return     <div>
     <Row gutter={16}>
