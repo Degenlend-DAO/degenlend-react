@@ -13,10 +13,7 @@ const initialState: SupplyBalanceState = {
 export const updateSupplyBalance = createAsyncThunk(
     'supplyBalance/update',
     async () => {
-        // Contract call
-        const testnetAddress = Comptroller.address;
-        const abi = Comptroller.abi;
-        const ComptrollerContract = new ethers.Contract(testnetAddress,abi);
+
         return 1;
     }
 );
