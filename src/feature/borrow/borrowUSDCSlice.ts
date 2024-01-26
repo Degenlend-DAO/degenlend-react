@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { web3, erc20ABI, addresses } from '../../utils/eth';
 
 interface BorrowUSDCState {
     status: string,

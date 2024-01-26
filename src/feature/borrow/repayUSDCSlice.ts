@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Web3 } from 'web3';
+import { web3, erc20ABI, addresses } from '../../utils/eth';
+
 
 interface RepayUSDCState {
     status: string,
@@ -12,9 +13,8 @@ const initialState: RepayUSDCState = {
 export const updateUSDCBalance = createAsyncThunk(
     'usdcBalance/update',
     async () => {
-        const web3 = new Web3('https://rpc.toronto.sx.technology/');          
-          const balance = web3.utils.fromWei(await web3.eth.getBalance('0x4869aF0Aed0a9948f724f809dC0DCcF9885cCe34'), "ether");
-        return balance;
+        
+        return 0;
     }
 );
 
