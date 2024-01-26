@@ -4,25 +4,26 @@ import SXTokenCardContent from '../WalletCard/SXTokenCardContent';
 import { Provider, useStore, useDispatch } from 'react-redux';
 
 
-const { info } = Modal;
+const SupplyMarkets:React.FC = () => {
 
-const wsxMarketSelected = () => {
+    const store = useStore();
+    const { info } = Modal;
 
-    info({
-        title: "About WSX Token",
-        okText: "Return",
-        centered: true,
-        closeIcon: true,
-        maskClosable: true,
-        width: 810,
-        
-        content: <SXTokenCardContent />,
-    })
-}
+    const wsxMarketSelected = () => {
+        info({
+            title: "About WSX Token",
+            okText: "Return",
+            centered: true,
+            closeIcon: true,
+            maskClosable: true,
+            width: 810,
+            
+            content: <Provider store={store}><SXTokenCardContent /></Provider>,
+        });
+    }
 
-const SupplyMarkets:React.FC = () => <>{
-
-    <div className="column">
+    return (
+        <div className="column">
         <Col>
             <Card bordered={true} title="Supply Markets" style={{ width: 450 }} onClick={wsxMarketSelected}>
                 <Card hoverable>
@@ -31,6 +32,7 @@ const SupplyMarkets:React.FC = () => <>{
             </Card>
         </Col>
     </div>
-}</>
+    );
+}
 
 export default SupplyMarkets
