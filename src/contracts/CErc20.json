@@ -2,6 +2,7 @@
   "_format": "hh-sol-artifact-1",
   "contractName": "CErc20",
   "sourceName": "contracts/CErc20.sol",
+  "address": "0xbdC2A1a7239fac713EBF5dAb69931b37FE4c9B9A",
   "abi": [
     {
       "inputs": [],
