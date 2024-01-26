@@ -2,6 +2,7 @@
   "_format": "hh-sol-artifact-1",
   "contractName": "JumpRateModelV2",
   "sourceName": "contracts/JumpRateModelV2.sol",
+  "address": "0xd26cCEdaCb5E1166e3285ba5EF9817f45F6bfA76",
   "abi": [
     {
       "inputs": [
