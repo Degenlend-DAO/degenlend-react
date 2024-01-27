@@ -4483,9 +4483,11 @@ export const InterestRateModelAbi = [
   }
 ] as const;
 
-export const addresses = {
-  "cERC20": "0xbdC2A1a7239fac713EBF5dAb69931b37FE4c9B9A",
-  "comptroller": "0xd26cCEdaCb5E1166e3285ba5EF9817f45F6bfA76",
-  "JumpRateModelV2": "0xd26cCEdaCb5E1166e3285ba5EF9817f45F6bfA76",
-  "account": ""
+export const address = {
+  "cERC20": '0xbdC2A1a7239fac713EBF5dAb69931b37FE4c9B9A',
+  'testnetSX': '',
+  "testnetUSDC": '0x5147891461a7C81075950f8eE6384e019e39ab98',
+  "comptroller": '',
+  "JumpRateModelV2": '',
+  "account": '0x4869aF0Aed0a9948f724f809dC0DCcF9885cCe34',
 }
