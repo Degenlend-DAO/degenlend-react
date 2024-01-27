@@ -5,10 +5,8 @@ import supplyBalanceReducer from '../feature/dashboard/supplyBalanceSlice';
 import borrowBalanceReducer from '../feature/dashboard/borrowBalanceSlice';
 import borrowLimitReducer from '../feature/dashboard/borrowLimitSlice';
 import netAPYReducer from '../feature/dashboard/netAPYSlice';
-import supplyWSXReducer from '../feature/supply/supplyWSXSlice';
-import withdrawWSXReducer from '../feature/supply/withdrawWSXSlice';
-import borrowUSDCReducer from '../feature/borrow/borrowUSDCSlice';
-import repayUSDCReducer from '../feature/borrow/repayUSDCSlice';
+import WSXReducer from '../feature/supply/WSXSlice';
+import USDCReducer from '../feature/borrow/USDCSlice';
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
@@ -19,10 +17,9 @@ export const store = configureStore({
         borrowBalance: borrowBalanceReducer,
         borrowLimit: borrowLimitReducer,
         netAPY: netAPYReducer,
-        supplyWSX: supplyWSXReducer,
-        withdrawWSX: withdrawWSXReducer,
-        borrowUSDC: borrowUSDCReducer,
-        repayUSDC: repayUSDCReducer,
+        WSX: WSXReducer,
+        borrowUSDC: USDCReducer,
+        repayUSDC: USDCReducer,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
