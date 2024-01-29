@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { address, USDC, usdcABI, wSX } from '../../utils/web3';
+import { USDC } from '../../utils/web3';
 import { BrowserProvider, Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
@@ -22,9 +22,9 @@ const initialState: USDCState = {
 
 export const updateUSDCBalance = createAsyncThunk(
     'usdcBalance/update',
-    async () => {
+    async (walletAddress:string ) => {
         try {
-            const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
+            const myWalletAddress:String = walletAddress as unknown as String;
             const name = await USDC.name();
             const balance = await USDC.balanceOf(myWalletAddress);
             console.log(`[Console] invoke updateUSDCBalance: name: ${name} balance: ${balance}`)
@@ -36,8 +36,16 @@ export const updateUSDCBalance = createAsyncThunk(
     }
 );
 
-export const approveUSDC = createAsyncThunk('usdc/approve', async () => {
-
+export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddress: string) => {
+    try {
+        const amount = 2000;
+        const tx = await USDC.approve(
+            myWalletAddress,
+            ethers.parseEther(amount + '')
+          );
+    } catch (error) {
+        console.log(`something went wrong: ${error}`)
+    }
 });
 
 export const confirmUSDC = createAsyncThunk('usdc/confirm', async () => {});
