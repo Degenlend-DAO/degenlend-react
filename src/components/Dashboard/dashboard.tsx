@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Statistic, Progress } from 'antd';
 import { useDispatch, useSelector, } from 'react-redux';
-import { AppDispatch, RootState } from '../../app/Store';
+import { RootState } from '../../app/Store';
 import { updateSupplyBalance } from '../../feature/dashboard/supplyBalanceSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
 import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
