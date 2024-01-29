@@ -2,8 +2,8 @@ import { Button, Dropdown, MenuProps } from 'antd'
 import Icon, { LogoutOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/Store';
-import { connectMetaMask } from '../../feature/wallet/MetaMaskSlice';
-import { connectWalletConnect } from '../../feature/wallet/WalletConnectSlice';
+import { connectMetaMask, connectWalletConnect, disconnectWallet } from '../../feature/wallet/walletSlice';
+
 
 const WalletCard: React.FC = () => {
     const walletAddress = useSelector((state: RootState) => state.metaMask.address);
@@ -19,7 +19,7 @@ const WalletCard: React.FC = () => {
     };
 
     const handleDisconnect = () => {
-        //TODO: hanle wallet disconnect
+        dispatch(disconnectWallet());
     }
 
     const filteredWalletAddress = (address: string | undefined) => {
