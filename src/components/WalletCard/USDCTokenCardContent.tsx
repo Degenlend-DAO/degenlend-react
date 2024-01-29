@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Flex, Radio, Form, Divider, Button, Col, Statistic, Skeleton } from 'antd';
-import { useSelector } from 'react-redux';
+import { Card, Row, Flex, Radio, Form, Divider, Button, Col, Statistic, Skeleton, Segmented } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 
 
-const enableUSDCLending = () => {
-    alert('you can now borrow your USDC!');
-}
-
 const USDCCardContent: React.FC = () => {
 
-    const [form] = Form.useForm();
+    const dispatch = useDispatch();
+    let isSupply = false;
 
     const borrowAPY = useSelector((state:RootState) => state.borrowUSDC.borrowAPY);
-    const usdcBalance = useSelector((state:RootState) => state.borrowUSDC.balance);
+    const usdcBalance = useSelector((state:RootState) => state.borrowUSDC.usdcBalance);
+
+    const enableUSDCLending = () => {
+        
+    }
+    
+
+    function SegmentedContent({ isSupply }: {isSupply: boolean}) {
+            let content = <div></div>;
+            if (isSupply) {
+                content = <Statistic title="Borrow APY" value={borrowAPY} precision={2} suffix="%" />
+            }
+
+            return content;
+        }
 
     return <div>
         <div style={{ display: "flex", justifyItems: "center" }}>
@@ -27,21 +38,14 @@ const USDCCardContent: React.FC = () => {
             <p>To supply, withdraw or repay your USDC, you need to enable it first</p>
         </Row>
         <Flex vertical align='center'>
-            <Form form={form}>
-            <Radio.Group defaultValue="borow" size='large' buttonStyle='solid'>
-                            <Radio.Button value="borow">Borrow</Radio.Button>
-                            <Radio.Button value="repay">Repay</Radio.Button>
-                </Radio.Group>
-            </Form>
+            <Segmented
+                    defaultValue="center"
+                    style={{ marginBottom: 8 }}
+                    onChange={() => {isSupply = !isSupply}}
+                    options={['Supply', 'Withdraw']}
+                    />
 
-            <Card bordered={false}>
-                        <Statistic
-                        title="Borrow APY"
-                        value={borrowAPY}
-                        precision={2}
-                        suffix="%"
-                        />
-                    </Card>
+                    <SegmentedContent isSupply={isSupply} />
 
             <Button type="primary" size={'large'} onClick={enableUSDCLending}>
                 Enable USDC
