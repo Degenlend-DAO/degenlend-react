@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented } from 'antd';
+import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input } from 'antd';
 import {  useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { approveWSX, updateWSXBalance, updatewsxSupplyAPY } from '../../feature/supply/WSXSlice';
@@ -7,11 +7,14 @@ import { UnknownAction } from '@reduxjs/toolkit';
 
 const SXNetworkCardContent: React.FC = () => {
     const dispatch = useDispatch();
-    const [form] = Form.useForm();
 
+    //variable declarations    
     const wsxBalance = useSelector((state:RootState) => state.WSX.wsxBalance);
     const supplyAPY = useSelector((state:RootState) => state.WSX.supplyAPY);;
-    let isSupply = false;
+    const [isSupply, setSupply] = useState(true);
+
+
+    // function declarations
     const enableWSXLending = () => {
         dispatch(approveWSX() as unknown as UnknownAction);
     }
@@ -21,7 +24,42 @@ const SXNetworkCardContent: React.FC = () => {
         dispatch( updateWSXBalance() as unknown as UnknownAction);
     })
 
-    return (<div>
+    // content
+
+    function Content({ flag }: {flag: boolean}) {
+
+        if (flag) return (
+        
+        <div>
+        <Statistic
+        title="Supply APY"
+        value={supplyAPY}
+        precision={2}
+        suffix="%"
+        />
+
+        <Button type="primary" size={'large'} onClick={enableWSXLending}>
+                    Enable WSX
+                </Button>
+        </div>)
+        else return (
+        <div>
+            <Statistic
+                title="Borrow APY"
+                value= {0}
+                precision={2}
+                suffix="%"
+            />
+
+            
+            <Input placeholder="Enter your withdraw amount" variant="borderless" />
+    
+            </div>
+        );
+    }
+
+    return (
+    <div>
         <div style={{ display: "flex", justifyItems: "center"}}>
             <Col offset={11}>
                 <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>
@@ -34,21 +72,12 @@ const SXNetworkCardContent: React.FC = () => {
         </Row>
         <Flex vertical align='center'>
                         <Segmented
-                                defaultValue="center"
+                                defaultValue="Supply"
                                 style={{ marginBottom: 8 }}
-                                onChange={() => {isSupply = !isSupply}}
                                 options={['Supply', 'Withdraw']}
+                                onChange={() => {setSupply(!isSupply)}}
                                 />
-                        <Statistic
-                        title="Supply APY"
-                        value={supplyAPY}
-                        precision={2}
-                        suffix="%"
-                        />
-
-                <Button type="primary" size={'large'} onClick={enableWSXLending}>
-                    Enable WSX
-                </Button>
+                            <Content flag={isSupply} />
                 <p>
                     Wallet Balance: {wsxBalance} WSX
                 </p>

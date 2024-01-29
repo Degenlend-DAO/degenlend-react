@@ -7,7 +7,7 @@ import { RootState } from '../../app/Store';
 const USDCCardContent: React.FC = () => {
 
     const dispatch = useDispatch();
-    let isSupply = false;
+    const [isSupply, setSupply] = useState(false);
 
     const borrowAPY = useSelector((state:RootState) => state.borrowUSDC.borrowAPY);
     const usdcBalance = useSelector((state:RootState) => state.borrowUSDC.usdcBalance);
@@ -18,12 +18,21 @@ const USDCCardContent: React.FC = () => {
     
 
     function SegmentedContent({ isSupply }: {isSupply: boolean}) {
-            let content = <div></div>;
-            if (isSupply) {
-                content = <Statistic title="Borrow APY" value={borrowAPY} precision={2} suffix="%" />
-            }
 
-            return content;
+            if (isSupply) return (
+            <div>
+
+            <Statistic title="Borrow APY" value={borrowAPY} precision={2} suffix="%" />
+
+            <Button type="primary" size={'large'} onClick={enableUSDCLending}>
+                Enable USDC
+            </Button>
+            </div>)
+            else return (
+                <div>
+
+                </div>
+            );
         }
 
     return <div>
@@ -39,17 +48,14 @@ const USDCCardContent: React.FC = () => {
         </Row>
         <Flex vertical align='center'>
             <Segmented
-                    defaultValue="center"
+                    defaultValue="Withdraw"
                     style={{ marginBottom: 8 }}
-                    onChange={() => {isSupply = !isSupply}}
+                    onChange={() => {setSupply(!isSupply)}}
                     options={['Supply', 'Withdraw']}
                     />
 
                     <SegmentedContent isSupply={isSupply} />
 
-            <Button type="primary" size={'large'} onClick={enableUSDCLending}>
-                Enable USDC
-            </Button>
 
             <p>
                 Wallet Balance: {usdcBalance} USDC
