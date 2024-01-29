@@ -4,8 +4,7 @@ import { useSDK } from '@metamask/sdk-react';
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../app/Store';
-import { connectMetaMask } from '../../feature/wallet/MetaMaskSlice';
-import { connectWalletConnect } from '../../feature/wallet/WalletConnectSlice';
+import { connectMetaMask, connectWalletConnect } from '../../feature/wallet/walletSlice';
 
 
 const WalletCardContent: React.FC = () => {
@@ -13,14 +12,6 @@ const WalletCardContent: React.FC = () => {
   const [isActive, setActive] = useState<boolean>(false);
   const { sdk, connected, connecting, provider, chainId } = useSDK();
   const dispatch = useDispatch<AppDispatch>()
-  const onClickMetaMask = () => {
-    dispatch(connectMetaMask());
-  }
-
-  const onClickWalletConnect = () => {
-    dispatch(connectWalletConnect());
-  };
-
   const { Meta } = Card
 
   useEffect(() => { }, []); // Empty for now
@@ -41,10 +32,10 @@ const WalletCardContent: React.FC = () => {
           : <div>
             <Row>
               <Col span={6}>
-                <Card bordered={true} hoverable style={{ width: 240, height: 130 }} cover={<img alt="Metamask" src="http://tinyurl.com/8jttsvbw"></img>} onClick={onClickMetaMask}></Card>
+                <Card bordered={true} hoverable style={{ width: 240, height: 130 }} cover={<img alt="Metamask" src="http://tinyurl.com/8jttsvbw"></img>}></Card>
               </Col>
               <Col span={6} offset={6}>
-                <Card bordered={true} hoverable style={{ width: 240, height: 130 }} cover={<img alt="WalletConnect" src="http://tinyurl.com/2smfxt43"></img>} onClick={onClickWalletConnect}></Card>
+                <Card bordered={true} hoverable style={{ width: 240, height: 130 }} cover={<img alt="WalletConnect" src="http://tinyurl.com/2smfxt43"></img>}></Card>
               </Col>
             </Row>
           </div>
