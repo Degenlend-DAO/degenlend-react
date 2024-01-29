@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import metaMaskReducer from '../feature/wallet/MetaMaskSlice';
-import walletConnectReducer from '../feature/wallet/WalletConnectSlice';
+import metaMaskReducer from '../feature/wallet/walletSlice';
 import supplyBalanceReducer from '../feature/dashboard/supplyBalanceSlice';
 import borrowBalanceReducer from '../feature/dashboard/borrowBalanceSlice';
 import borrowLimitReducer from '../feature/dashboard/borrowLimitSlice';
@@ -12,7 +11,6 @@ import { useDispatch } from "react-redux";
 export const store = configureStore({
     reducer: {
         metaMask: metaMaskReducer,
-        walletConnect: walletConnectReducer,
         supplyBalance: supplyBalanceReducer,
         borrowBalance: borrowBalanceReducer,
         borrowLimit: borrowLimitReducer,
