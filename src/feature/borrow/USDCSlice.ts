@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { USDC } from '../../utils/web3';
+import { USDC, address, provider, usdcABI } from '../../utils/web3';
 import { BrowserProvider, Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
+import { Eip1193Provider } from 'web3/lib/commonjs/providers.exports';
 
 
 
@@ -24,10 +25,7 @@ export const updateUSDCBalance = createAsyncThunk(
     'usdcBalance/update',
     async (walletAddress:string ) => {
         try {
-            const myWalletAddress:String = walletAddress as unknown as String;
-            const name = await USDC.name();
-            const balance = await USDC.balanceOf(myWalletAddress);
-            console.log(`[Console] invoke updateUSDCBalance: name: ${name} balance: ${balance}`)
+            const balance = await USDC.balanceOf(walletAddress);
             return balance;
         } catch (error) {
             console.log`[Console] error invoking updateUSDCBalance: \n ${error}`
@@ -39,11 +37,15 @@ export const updateUSDCBalance = createAsyncThunk(
 export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddress: string) => {
     try {
         const amount = 2000;
-        const tx = await USDC.approve(
+        const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+        const signer = await provider.getSigner();
+        const signedUSDC = new ethers.Contract(address.testnetUSDC, usdcABI, signer);
+        const tx = await signedUSDC.approve(
             myWalletAddress,
             ethers.parseEther(amount + '')
-          );
-    } catch (error) {
+        );
+        console.log(tx);
+        } catch (error) {
         console.log(`something went wrong: ${error}`)
     }
 });
