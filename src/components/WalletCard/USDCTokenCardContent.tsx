@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { UnknownAction } from '@reduxjs/toolkit';
 import { approveUSDC, updateUSDCBalance } from '../../feature/borrow/USDCSlice';
+import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
 
 
 const USDCCardContent: React.FC = () => {
@@ -22,6 +23,7 @@ const USDCCardContent: React.FC = () => {
 
     useEffect(() => {
         dispatch(updateUSDCBalance(myWalletAddress) as unknown as UnknownAction);
+        dispatch(updateBorrowBalance() as unknown as UnknownAction);
     })
     
     function Content({ isBorrow }: {isBorrow: boolean}) {
