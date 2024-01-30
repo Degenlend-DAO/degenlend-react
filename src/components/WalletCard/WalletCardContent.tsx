@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Skeleton } from 'antd';
-import { useSDK } from '@metamask/sdk-react';
-import { useWeb3Modal } from '@web3modal/wagmi/react'
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../app/Store';
-import { connectMetaMask, connectWalletConnect } from '../../feature/wallet/walletSlice';
-
 
 const WalletCardContent: React.FC = () => {
-  const [account, setAccount] = useState<string>('');
   const [isActive, setActive] = useState<boolean>(false);
-  const { sdk, connected, connecting, provider, chainId } = useSDK();
-  const dispatch = useDispatch<AppDispatch>()
-  const { Meta } = Card
-
-  useEffect(() => { }, []); // Empty for now
 
   return (
     <div>
