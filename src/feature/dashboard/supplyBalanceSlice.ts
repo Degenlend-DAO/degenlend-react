@@ -13,8 +13,8 @@ const initialState: SupplyBalanceState = {
 export const updateSupplyBalance = createAsyncThunk(
     'supplyBalance/update',
     async () => {
-
-        return 1;
+        const supplyBalance = 0;
+        return supplyBalance;
     }
 );
 

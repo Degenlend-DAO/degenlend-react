@@ -1,6 +1,6 @@
 import { supplyBlanceSlice } from './supplyBalanceSlice';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { web3, erc20ABI, addresses } from '../../utils/web3';
+import { web3, erc20ABI, address } from '../../utils/web3';
 
 
 interface BorrowBalanceState {
@@ -14,8 +14,9 @@ const initialState: BorrowBalanceState = {
 export const updateBorrowBalance = createAsyncThunk(
     'borrowBalance/update',
     async () => {
-        // Contract call
-        return 1;
+        
+        const borrowBalance = 0;
+        return borrowBalance;
     }
 );
 

@@ -8,8 +8,6 @@ interface WSXState {
     wsxBalance: number,
     supplyBalance: number,
     supplyAPY: number,
-    borrowBalance: number,
-    borrowAPY: number,
 }
 
 const initialState: WSXState = {
@@ -18,8 +16,6 @@ const initialState: WSXState = {
     wsxBalance: 0.00,
     supplyBalance: 0.00,
     supplyAPY: 0.00,
-    borrowBalance: 0.00,
-    borrowAPY: 0.00,
 
 }
 
@@ -82,9 +78,6 @@ export const approveWSX = createAsyncThunk('wSX/approve', async () => {
             ethers.parseEther(amount + '')
         );
         console.log(tx);
-          console.log(tx);
-          console.log(`balance:${balance}, and USDC: ${await USDC.balanceOf(myWalletAddress)}`);
-
     } catch (error) {
             console.log(`something went wrong: ${error}`)
     }

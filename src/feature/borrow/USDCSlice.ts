@@ -10,14 +10,14 @@ import { Eip1193Provider } from 'web3/lib/commonjs/providers.exports';
 interface USDCState {
     status: string,
     borrowAPY: number,
-    supplyAPY: number,
+    borrowBalance: number,
     usdcBalance: number,
 }
 
 const initialState: USDCState = {
     status: 'initial',
     borrowAPY: 0.00,
-    supplyAPY: 0.00,
+    borrowBalance: 0.00,
     usdcBalance: 0.00,
 }
 

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useWeb3Modal } from '@web3modal/wagmi/react'
+import { useWeb3Modal, useWeb3ModalAccount } from '@web3modal/ethers/react'
 
 import { ethers } from "ethers";
 
@@ -40,8 +40,12 @@ export const connectWalletConnect = createAsyncThunk(
             //WC logic
             const { open } = useWeb3Modal();
             open();
+            const { address, chainId, isConnected } = useWeb3ModalAccount()
+
+            return address as unknown as string;
         } catch (err) {
             console.log(err);
+            return "0x0000000000000000000000000000000000000000";
         }
 });
 
@@ -74,7 +78,8 @@ export const metaMaskSlice = createSlice({
             })
             .addCase(connectWalletConnect.fulfilled, (state, action) => {
                 state.loading = false;
-    
+                state.address = action.payload;
+                state.isConnected = true;
             })
             .addCase(connectWalletConnect.rejected, (state, action) => {
                 state.loading = false;
