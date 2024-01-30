@@ -24,7 +24,7 @@ const USDCCardContent: React.FC = () => {
         dispatch(updateUSDCBalance(myWalletAddress) as unknown as UnknownAction);
     })
     
-    function SegmentedContent({ isBorrow }: {isBorrow: boolean}) {
+    function Content({ isBorrow }: {isBorrow: boolean}) {
 
             if (isBorrow) return (
             <div>
@@ -49,28 +49,28 @@ const USDCCardContent: React.FC = () => {
         }
 
     return (<div>
-        <div style={{ display: "flex", justifyItems: "center" }}>
-            <Col offset={11}>
-                <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>
-            </Col>
-        </div>
+                <div style={{ display: "flex", justifyItems: "center" }}>
+                    <Col offset={11}>
+                        <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>
+                    </Col>
+                </div>
 
-        <Divider> Details </Divider>
-        <Flex vertical align='center'>
-            <Segmented
-                    defaultValue="Borrow"
-                    style={{ marginBottom: 8 }}
-                    onChange={() => {setSupply(!isBorrow)}}
-                    options={['Borrow', 'Repay']}
-                    />
+                <Divider> Details </Divider>
+                <Flex vertical align='center'>
+                    <Segmented
+                            defaultValue="Borrow"
+                            style={{ marginBottom: 8 }}
+                            onChange={() => {setSupply(!isBorrow)}}
+                            options={['Borrow', 'Repay']}
+                            />
 
-                    <SegmentedContent isBorrow={isBorrow} />
+                            <Content isBorrow={isBorrow} />
 
 
-            <p>
-                Wallet Balance: {usdcBalance} USDC
-            </p>
-        </Flex>
+                    <p>
+                        Wallet Balance: {usdcBalance} USDC
+                    </p>
+                </Flex>
     </div>);
 }
 
