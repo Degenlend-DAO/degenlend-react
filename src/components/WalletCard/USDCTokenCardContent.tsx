@@ -9,10 +9,11 @@ import { approveUSDC, updateUSDCBalance } from '../../feature/borrow/USDCSlice';
 const USDCCardContent: React.FC = () => {
 
     const dispatch = useDispatch();
-    const [isSupply, setSupply] = useState(false);
+    const [isBorrow, setSupply] = useState(false);
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
-    const borrowAPY = useSelector((state:RootState) => state.borrowUSDC.borrowAPY);
-    const usdcBalance = useSelector((state:RootState) => state.borrowUSDC.usdcBalance);
+    const borrowAPY = useSelector((state:RootState) => state.USDC.borrowAPY);
+    const usdcBalance = useSelector((state:RootState) => state.USDC.usdcBalance);
+    const borrowBalance = useSelector((state:RootState) => state.USDC.borrowBalance);
 
     const enableUSDCLending = () => {
         dispatch(approveUSDC(myWalletAddress) as unknown as UnknownAction);
@@ -23,21 +24,26 @@ const USDCCardContent: React.FC = () => {
         dispatch(updateUSDCBalance(myWalletAddress) as unknown as UnknownAction);
     })
     
-    function SegmentedContent({ isSupply }: {isSupply: boolean}) {
+    function SegmentedContent({ isBorrow }: {isBorrow: boolean}) {
 
-            if (isSupply) return (
+            if (isBorrow) return (
             <div>
+            <Row gutter={4}>
+                <p>To supply, withdraw or repay your USDC, you need to enable it first</p>
+            </Row>
+            <Input placeholder="Enter an amount" variant="borderless" />
 
             <Statistic title="Borrow APY" value={borrowAPY} precision={2} suffix="%" />
-
+            
             <Button type="primary" size={'large'} onClick={enableUSDCLending}>
                 Enable USDC
             </Button>
+
+            <p>Currently borrowing {borrowBalance} USDC</p>
             </div>)
             else return (
                 <div>
-                    <Input placeholder="Enter an amount" variant="borderless" />
-                    <Statistic title="Supply APY" value={borrowAPY} precision={2} suffix="%" />
+                    <Statistic title="Borrow APY" value={borrowAPY} precision={2} suffix="%" />
                 </div>
             );
         }
@@ -50,18 +56,15 @@ const USDCCardContent: React.FC = () => {
         </div>
 
         <Divider> Details </Divider>
-        <Row gutter={4}>
-            <p>To supply, withdraw or repay your USDC, you need to enable it first</p>
-        </Row>
         <Flex vertical align='center'>
             <Segmented
-                    defaultValue="Withdraw"
+                    defaultValue="Borrow"
                     style={{ marginBottom: 8 }}
-                    onChange={() => {setSupply(!isSupply)}}
-                    options={['Supply', 'Withdraw']}
+                    onChange={() => {setSupply(!isBorrow)}}
+                    options={['Borrow', 'Repay']}
                     />
 
-                    <SegmentedContent isSupply={isSupply} />
+                    <SegmentedContent isBorrow={isBorrow} />
 
 
             <p>
