@@ -70,7 +70,7 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddre
     }
 });
 
-export const repayUSDC = createAsyncThunk('usdc/confirm', async (myWalletAddress: string) => {
+export const repayUSDC = createAsyncThunk('usdc/repay', async (myWalletAddress: string) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedUSDC = new ethers.Contract(address.testnetUSDC, usdcABI, signer);
@@ -83,12 +83,15 @@ export const repayUSDC = createAsyncThunk('usdc/confirm', async (myWalletAddress
     }
 });
 
-export const borrowUSDC = createAsyncThunk('usdc/confirm', async (myWalletAddress: string) => {
-
+export const borrowUSDC = createAsyncThunk('usdc/borrow', async (myWalletAddress: string) => {
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+    const signer = await provider.getSigner();
+    const signedUSDC = new ethers.Contract(address.testnetUSDC, usdcABI, signer);
     try {
         
     } catch (error) {
         // txn rejected
+        console.log(`[Console] Something went wrong: ${error}`);
     }
 });
 

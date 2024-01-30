@@ -107,20 +107,27 @@ export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
 });
 
 export const supplyWSX = createAsyncThunk('wSX/supply', async (myWalletAddress: string) => {
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+    const signer = await provider.getSigner();
+    const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
 
     try {
         
     } catch (error) {
         // txn rejected
+        console.log(`[Console] Something went wrong: ${error}`);
     }
 });
 
 export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (myWalletAddress: string) => {
-
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+    const signer = await provider.getSigner();
+    const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
     try {
         
     } catch (error) {
         // txn rejected
+        console.log(`[Console] Something went wrong: ${error}`);
     }
 });
 
