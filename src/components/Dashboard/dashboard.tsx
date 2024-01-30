@@ -61,7 +61,7 @@ const Dashboard:React.FC = () => {
                 <Statistic
                     title="Borrow Balance"
                     value={borrowBalance}
-                    precision={2}
+                    precision={8}
                     valueStyle={{ color: '#3f8600' }}
                     prefix="$"
                     loading={false}
