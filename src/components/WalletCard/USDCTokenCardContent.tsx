@@ -1,22 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Flex, Radio, Form, Divider, Button, Col, Statistic, Skeleton, Segmented } from 'antd';
+import { Row, Flex, Divider, Button, Col, Statistic, Segmented, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
+import { UnknownAction } from '@reduxjs/toolkit';
+import { approveUSDC, updateUSDCBalance } from '../../feature/borrow/USDCSlice';
 
 
 const USDCCardContent: React.FC = () => {
 
     const dispatch = useDispatch();
     const [isSupply, setSupply] = useState(false);
-
+    const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
     const borrowAPY = useSelector((state:RootState) => state.borrowUSDC.borrowAPY);
     const usdcBalance = useSelector((state:RootState) => state.borrowUSDC.usdcBalance);
 
     const enableUSDCLending = () => {
-        
+        dispatch(approveUSDC(myWalletAddress) as unknown as UnknownAction);
     }
     
 
+    useEffect(() => {
+        dispatch(updateUSDCBalance(myWalletAddress) as unknown as UnknownAction);
+    })
+    
     function SegmentedContent({ isSupply }: {isSupply: boolean}) {
 
             if (isSupply) return (
@@ -30,12 +36,13 @@ const USDCCardContent: React.FC = () => {
             </div>)
             else return (
                 <div>
-
+                    <Input placeholder="Enter an amount" variant="borderless" />
+                    <Statistic title="Supply APY" value={borrowAPY} precision={2} suffix="%" />
                 </div>
             );
         }
 
-    return <div>
+    return (<div>
         <div style={{ display: "flex", justifyItems: "center" }}>
             <Col offset={11}>
                 <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>
@@ -61,7 +68,7 @@ const USDCCardContent: React.FC = () => {
                 Wallet Balance: {usdcBalance} USDC
             </p>
         </Flex>
-    </div>
+    </div>);
 }
 
 export default USDCCardContent;
