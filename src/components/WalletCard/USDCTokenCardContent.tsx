@@ -58,7 +58,8 @@ const USDCCardContent: React.FC = () => {
             );
         }
 
-    return (<div>
+    return (
+            <div style={{textAlign: "center"}}>
                 <div style={{ display: "flex", justifyItems: "center" }}>
                     <Col offset={11}>
                         <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>

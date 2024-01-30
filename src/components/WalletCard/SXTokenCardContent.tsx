@@ -37,9 +37,9 @@ const SXNetworkCardContent: React.FC = () => {
 
     // content
 
-    function Content({ flag }: {flag: boolean}) {
+    function Content({ isSupply }: {isSupply: boolean}) {
 
-        if (flag) return (
+        if (isSupply) return (
         
         <div>
         <Statistic
@@ -59,19 +59,19 @@ const SXNetworkCardContent: React.FC = () => {
             <Row gutter={4}>
                 <p>To supply, withdraw, or repay your Wrapped SX, you need to enable it first</p>
             </Row>
+                <Input placeholder="Enter withdraw amount" variant="borderless" />
                 <Statistic
                     title="Borrow APY"
                     value= {0}
                     precision={2}
                     suffix="%"
                 />
-            <Input placeholder="Enter withdraw amount" variant="borderless" />
             </div>
         );
     }
 
     return (
-    <div>
+    <div style={{textAlign: "center"}}>
         <div style={{ display: "flex", justifyItems: "center"}}>
             <Col offset={11}>
                 <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>
@@ -86,7 +86,7 @@ const SXNetworkCardContent: React.FC = () => {
                         options={['Supply', 'Withdraw']}
                         onChange={() => {setSupply(!isSupply)}}
                         />
-                        <Content flag={isSupply} />
+                        <Content isSupply={isSupply} />
                 <p>
                     Wallet Balance: {wsxBalance} WSX
                 </p>
