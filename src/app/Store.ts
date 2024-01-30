@@ -16,8 +16,7 @@ export const store = configureStore({
         borrowLimit: borrowLimitReducer,
         netAPY: netAPYReducer,
         WSX: WSXReducer,
-        borrowUSDC: USDCReducer,
-        repayUSDC: USDCReducer,
+        USDC: USDCReducer,
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
