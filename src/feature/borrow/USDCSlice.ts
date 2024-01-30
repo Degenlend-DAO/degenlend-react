@@ -26,7 +26,7 @@ export const updateUSDCBalance = createAsyncThunk(
     async (walletAddress:string ) => {
         try {
             const balance = await USDC.balanceOf(walletAddress);
-            return balance;
+            return balance as unknown as number;
         } catch (error) {
             console.log`[Console] error invoking updateUSDCBalance: \n ${error}`
             return 0;
@@ -50,7 +50,18 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddre
     }
 });
 
-export const confirmUSDC = createAsyncThunk('usdc/confirm', async () => {});
+export const confirmUSDC = createAsyncThunk('usdc/confirm', async () => {
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+    const signer = await provider.getSigner();
+    const signedUSDC = new ethers.Contract(address.testnetUSDC, usdcABI, signer);
+
+    try {
+        const tx = await signedUSDC.transfer();
+        console.log(tx);
+    } catch (error) {
+        console.log(`[Console] Something went wrong: ${error}`);
+    }
+});
 
 export const USDCSlice = createSlice({
     name: "USDC",
