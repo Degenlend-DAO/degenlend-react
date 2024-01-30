@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input } from 'antd';
 import {  useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
-import { approveWSX, updateWSXBalance, updatewsxSupplyAPY } from '../../feature/supply/WSXSlice';
+import { approveWSX, updateWSXBalance, updatewsxSupplyAPY, updateSupplyBalance } from '../../feature/supply/WSXSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
 
 const SXNetworkCardContent: React.FC = () => {
@@ -21,8 +21,9 @@ const SXNetworkCardContent: React.FC = () => {
     }
 
     useEffect(() => {
-        dispatch( updatewsxSupplyAPY() as unknown as UnknownAction );
-        dispatch( updateWSXBalance() as unknown as UnknownAction);
+        dispatch(updatewsxSupplyAPY() as unknown as UnknownAction );
+        dispatch(updateWSXBalance() as unknown as UnknownAction);
+        dispatch(updateSupplyBalance() as unknown as UnknownAction);
     })
 
     // content
@@ -55,8 +56,7 @@ const SXNetworkCardContent: React.FC = () => {
                     precision={2}
                     suffix="%"
                 />
-                    <Input placeholder="Enter your withdraw amount" variant="borderless" />
-    
+            <Input placeholder="Enter withdraw amount" variant="borderless" />
             </div>
         );
     }
