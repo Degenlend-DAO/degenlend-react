@@ -1,32 +1,27 @@
 import './App.css';
 import { BrowserRouter } from 'react-router-dom'
-import RoutesComponent from './components/Routes/routes';
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react'
+import RoutesComponent from './components/routes/routes';
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers/react'
 
-import { WagmiConfig } from 'wagmi'
-import { Chain, polygon } from 'viem/chains'
 
 const sx_testnet = {
-  id: 647,
-  network: "toronto",
+  chainId: 647,
   name: "SX Testnet",
-  nativeCurrency: { name: 'Wrapped SX', symbol: 'SX', decimals: 18 },
-  rpcUrls: {
-    default: { http: ['https://rpc.toronto.sx.technology/'] },
-    public: {
-      http: ['https://rpc.toronto.sx.technology/'],
-      webSocket: undefined
-    }
-  },
-  blockExplorers: {
-    default: { name: 'SX Testnet Explorer', url: 'https://https://explorer.toronto.sx.technology'}
-  },
-  contracts: {
-    // Empty for now
-  }
-} as const satisfies Chain
+  currency: 'SX',
+  rpcUrl: 'https://rpc.toronto.sx.technology/',
+  explorerUrl: 'https://https://explorer.toronto.sx.technology',
+}
+
+const mainnet = {
+  chainId: 1,
+  name: 'Ethereum',
+  currency: 'ETH',
+  explorerUrl: 'https://etherscan.io',
+  rpcUrl: 'https://cloudflare-eth.com'
+}
 // 1. Get projectId at https://cloud.walletconnect.com
-const projectId: string = (process.env.REACT_APP_WEB3_PROJECT_ID as string)
+// const projectId: string = (process.env.REACT_APP_WEB3_PROJECT_ID as string)
+const projectId = '68f04d7f1f30b2def8d97eadb86a63fb'
 
 // 2. Create wagmiConfig
 const metadata = {
@@ -36,19 +31,22 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 }
 
-const chains = [ polygon, sx_testnet ]
-const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+const chains = [ mainnet, sx_testnet ]
 
-createWeb3Modal({ wagmiConfig, projectId, chains })
+
+createWeb3Modal({
+  ethersConfig: defaultConfig({ metadata }),
+  chains: [mainnet, sx_testnet],
+  projectId,
+  enableAnalytics: true // Optional - defaults to your Cloud configuration
+})
 
 
 function App() {
   return (
-    <WagmiConfig config={wagmiConfig}>
       <BrowserRouter>
         <RoutesComponent />
       </BrowserRouter>
-    </WagmiConfig>
   );
 }
 
