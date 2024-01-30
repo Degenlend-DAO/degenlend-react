@@ -112,7 +112,7 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (myWalletAddress: 
     const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
 
     try {
-        
+        // Contract call
     } catch (error) {
         // txn rejected
         console.log(`[Console] Something went wrong: ${error}`);
@@ -124,7 +124,7 @@ export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (myWalletAddre
     const signer = await provider.getSigner();
     const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
     try {
-        
+        //Contract call
     } catch (error) {
         // txn rejected
         console.log(`[Console] Something went wrong: ${error}`);
