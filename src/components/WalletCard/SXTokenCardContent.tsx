@@ -11,6 +11,7 @@ const SXNetworkCardContent: React.FC = () => {
     //variable declarations    
     const wsxBalance = useSelector((state:RootState) => state.WSX.wsxBalance);
     const supplyAPY = useSelector((state:RootState) => state.WSX.supplyAPY);;
+    const supplyBalance = useSelector((state:RootState) => state.WSX.supplyBalance)
     const [isSupply, setSupply] = useState(true);
 
 
@@ -40,19 +41,21 @@ const SXNetworkCardContent: React.FC = () => {
 
         <Button type="primary" size={'large'} onClick={enableWSXLending}>
                     Enable WSX
-                </Button>
+        </Button>
+        <p>Currently supplying {supplyBalance} SX</p>
         </div>)
         else return (
         <div>
-            <Statistic
-                title="Borrow APY"
-                value= {0}
-                precision={2}
-                suffix="%"
-            />
-
-            
-            <Input placeholder="Enter your withdraw amount" variant="borderless" />
+            <Row gutter={4}>
+                <p>To supply, withdraw, or repay your Wrapped SX, you need to enable it first</p>
+            </Row>
+                <Statistic
+                    title="Borrow APY"
+                    value= {0}
+                    precision={2}
+                    suffix="%"
+                />
+                    <Input placeholder="Enter your withdraw amount" variant="borderless" />
     
             </div>
         );
@@ -67,17 +70,14 @@ const SXNetworkCardContent: React.FC = () => {
         </div>
 
         <Divider> Details </Divider>
-        <Row gutter={4}>
-            <p>To supply, withdraw, or repay your Wrapped SX, you need to enable it first</p>
-        </Row>
         <Flex vertical align='center'>
-                        <Segmented
-                                defaultValue="Supply"
-                                style={{ marginBottom: 8 }}
-                                options={['Supply', 'Withdraw']}
-                                onChange={() => {setSupply(!isSupply)}}
-                                />
-                            <Content flag={isSupply} />
+                <Segmented
+                        defaultValue="Supply"
+                        style={{ marginBottom: 8 }}
+                        options={['Supply', 'Withdraw']}
+                        onChange={() => {setSupply(!isSupply)}}
+                        />
+                        <Content flag={isSupply} />
                 <p>
                     Wallet Balance: {wsxBalance} WSX
                 </p>
