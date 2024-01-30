@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX } from '../../utils/web3';
+import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX } from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
 import { create } from 'domain';
 import { createBuilderStatusReporter } from 'typescript';
@@ -33,7 +33,7 @@ export const updateWSXBalance = createAsyncThunk(
         const rawGasBalance = await web3.eth.getBalance(accounts[0]);
         const gasBalance = web3.utils.fromWei(rawGasBalance, "ether");
         console.log(`wsx balance: ${balance}, raw balance: ${rawBalance}, gas balance: ${gasBalance}`);
-        return gasBalance as unknown as number;
+        return balance as unknown as number;
     }
 );
 
@@ -53,12 +53,11 @@ export const updatewsxSupplyAPY = createAsyncThunk(
     const ethMantissa = 1e18;
     const blocksPerDay = 7200; // 12 seconds per block
     const daysPerYear = 365;
-    const cEthAddress = address.cERC20;
     let supplyApy = 0;
     let borrowApy = 0;
     try {
-            const cToken = new web3.eth.Contract(cerc20ABI, cEthAddress);
-            const supplyRatePerBlock:any = await cToken.methods.supplyRatePerBlock().call();
+            
+            const supplyRatePerBlock:any = await cWSX.supplyRatePerBlock();
             console.log(`supply rate per block: ${supplyRatePerBlock}`)
             supplyApy = (((Math.pow((supplyRatePerBlock / ethMantissa * blocksPerDay) + 1, daysPerYear))) - 1) * 100;
             console.log(`Supply APY for ETH ${supplyApy} %`);
@@ -81,7 +80,7 @@ export const approveWSX = createAsyncThunk('wSX/approve', async (myWalletAddress
         const balance = await wSX.balanceOf(myWalletAddress);
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         const signer = await provider.getSigner();
-        const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
+        const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
         const tx = await signedWSX.approve(
             myWalletAddress,
             ethers.parseEther(amount + '')
@@ -96,7 +95,7 @@ export const approveWSX = createAsyncThunk('wSX/approve', async (myWalletAddress
 export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
+    const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
 
     try {
         const tx = await signedWSX.transfer();
@@ -106,25 +105,29 @@ export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
     }
 });
 
-export const supplyWSX = createAsyncThunk('wSX/supply', async (myWalletAddress: string) => {
+export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: string) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
+    const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
 
     try {
         // Contract call
+        const txn = signedWSX.supply( address.testnetWSX, supplyAmount);
+        console.log(txn);
     } catch (error) {
         // txn rejected
         console.log(`[Console] Something went wrong: ${error}`);
     }
 });
 
-export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (myWalletAddress: string) => {
+export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount: string) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
+    const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
     try {
         //Contract call
+        const txn = signedWSX.withdraw(address.testnetWSX, supplyAmount);
+        console.log(txn);
     } catch (error) {
         // txn rejected
         console.log(`[Console] Something went wrong: ${error}`);
