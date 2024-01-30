@@ -11,13 +11,14 @@ const SXNetworkCardContent: React.FC = () => {
     //variable declarations    
     const wsxBalance = useSelector((state:RootState) => state.WSX.wsxBalance);
     const supplyAPY = useSelector((state:RootState) => state.WSX.supplyAPY);;
-    const supplyBalance = useSelector((state:RootState) => state.WSX.supplyBalance)
+    const supplyBalance = useSelector((state:RootState) => state.WSX.supplyBalance);
+    const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
     const [isSupply, setSupply] = useState(true);
 
 
     // function declarations
     const enableWSXLending = () => {
-        dispatch(approveWSX() as unknown as UnknownAction);
+        dispatch(approveWSX(myWalletAddress) as unknown as UnknownAction);
     }
 
     useEffect(() => {
