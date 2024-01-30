@@ -36,7 +36,7 @@ const Dashboard:React.FC = () => {
                 <Statistic
                     title="Supply Balance"
                     value={supplyBalance}
-                    precision={2}
+                    precision={8}
                     valueStyle={{ color: '#3f8600' }}
                     prefix="$"
                     loading={false}
@@ -48,7 +48,7 @@ const Dashboard:React.FC = () => {
                 <Statistic
                     title="Net APY"
                     value={netAPY}
-                    precision={2}
+                    precision={8}
                     valueStyle={{ color: 'black' }}
                     suffix="%"
                     loading={false}
