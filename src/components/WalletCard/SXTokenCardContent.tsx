@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input } from 'antd';
 import {  useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
-import { approveWSX, updateWSXBalance, updatewsxSupplyAPY, updateSupplyBalance } from '../../feature/supply/WSXSlice';
+import { approveWSX, updateWSXBalance, updatewsxSupplyAPY, updateSupplyBalance, supplyWSX, withdrawWSX } from '../../feature/supply/WSXSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
 
 const SXNetworkCardContent: React.FC = () => {
@@ -17,8 +17,16 @@ const SXNetworkCardContent: React.FC = () => {
 
 
     // function declarations
-    const enableWSXLending = () => {
+    const enableWSXHook = () => {
         dispatch(approveWSX(myWalletAddress) as unknown as UnknownAction);
+    }
+
+    const supplyWSXHook = () => {
+        dispatch(supplyWSX(myWalletAddress) as unknown as UnknownAction);
+    }
+
+    const withdrawWSXHook = () => {
+        dispatch(withdrawWSX(myWalletAddress) as unknown as UnknownAction);
     }
 
     useEffect(() => {
@@ -41,7 +49,7 @@ const SXNetworkCardContent: React.FC = () => {
         suffix="%"
         />
 
-        <Button type="primary" size={'large'} onClick={enableWSXLending}>
+        <Button type="primary" size={'large'} onClick={enableWSXHook}>
                     Enable WSX
         </Button>
         <p>Currently supplying {supplyBalance} SX</p>

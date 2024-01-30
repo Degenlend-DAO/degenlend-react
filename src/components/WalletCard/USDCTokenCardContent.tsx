@@ -3,23 +3,31 @@ import { Row, Flex, Divider, Button, Col, Statistic, Segmented, Input } from 'an
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { UnknownAction } from '@reduxjs/toolkit';
-import { approveUSDC, updateUSDCBalance } from '../../feature/borrow/USDCSlice';
+import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance } from '../../feature/borrow/USDCSlice';
 import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
 
 
 const USDCCardContent: React.FC = () => {
 
     const dispatch = useDispatch();
-    const [isBorrow, setSupply] = useState(false);
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
     const borrowAPY = useSelector((state:RootState) => state.USDC.borrowAPY);
     const usdcBalance = useSelector((state:RootState) => state.USDC.usdcBalance);
     const borrowBalance = useSelector((state:RootState) => state.USDC.borrowBalance);
+    const [isBorrow, setSupply] = useState(false);
 
-    const enableUSDCLending = () => {
+
+    const enableUSDCHook = () => {
         dispatch(approveUSDC(myWalletAddress) as unknown as UnknownAction);
     }
+
+    const repayUSDCHook = () => {
+        dispatch(repayUSDC(myWalletAddress) as unknown as UnknownAction);
+    }
     
+    const borrowUSDCHook = () => {
+        dispatch(borrowUSDC(myWalletAddress) as unknown as UnknownAction);
+    }
 
     useEffect(() => {
         dispatch(updateUSDCBalance(myWalletAddress) as unknown as UnknownAction);
@@ -37,7 +45,7 @@ const USDCCardContent: React.FC = () => {
 
             <Statistic title="Borrow APY" value={borrowAPY} precision={2} suffix="%" />
             
-            <Button type="primary" size={'large'} onClick={enableUSDCLending}>
+            <Button type="primary" size={'large'} onClick={enableUSDCHook}>
                 Enable USDC
             </Button>
 

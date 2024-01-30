@@ -106,6 +106,24 @@ export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
     }
 });
 
+export const supplyWSX = createAsyncThunk('wSX/supply', async (myWalletAddress: string) => {
+
+    try {
+        
+    } catch (error) {
+        // txn rejected
+    }
+});
+
+export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (myWalletAddress: string) => {
+
+    try {
+        
+    } catch (error) {
+        // txn rejected
+    }
+});
+
 export const WSXSlice = createSlice({
     name: "WSX",
     initialState,

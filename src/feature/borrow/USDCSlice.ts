@@ -70,7 +70,7 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddre
     }
 });
 
-export const confirmUSDC = createAsyncThunk('usdc/confirm', async () => {
+export const repayUSDC = createAsyncThunk('usdc/confirm', async (myWalletAddress: string) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedUSDC = new ethers.Contract(address.testnetUSDC, usdcABI, signer);
@@ -80,6 +80,15 @@ export const confirmUSDC = createAsyncThunk('usdc/confirm', async () => {
         console.log(tx);
     } catch (error) {
         console.log(`[Console] Something went wrong: ${error}`);
+    }
+});
+
+export const borrowUSDC = createAsyncThunk('usdc/confirm', async (myWalletAddress: string) => {
+
+    try {
+        
+    } catch (error) {
+        // txn rejected
     }
 });
 
