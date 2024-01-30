@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX } from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
+import { create } from 'domain';
+import { createBuilderStatusReporter } from 'typescript';
 
 
 interface WSXState {
@@ -35,6 +37,16 @@ export const updateWSXBalance = createAsyncThunk(
     }
 );
 
+export const updateSupplyBalance = createAsyncThunk(
+    'supplyBalance/update',
+    async () => {
+        const supplyBalance = 0;
+
+        return supplyBalance;
+    }
+);
+
+// This doesn't work yet
 export const updatewsxSupplyAPY = createAsyncThunk(
     'wSX/updateSupplyAPY',
     async () => {
@@ -58,13 +70,10 @@ export const updatewsxSupplyAPY = createAsyncThunk(
 
   })
 
-  export const updatewsxSupplyAPY2 = createAsyncThunk('wsxupdateSupplyAPY', async () => {
-  }) 
 
+// Method calls
 
-
-export const approveWSX = createAsyncThunk('wSX/approve', async () => {
-    const myWalletAddress = '0x4869aF0Aed0a9948f724f809dC0DCcF9885cCe34';
+export const approveWSX = createAsyncThunk('wSX/approve', async (myWalletAddress:string ) => {
 
     try {
         const name = await wSX.name();
@@ -72,8 +81,8 @@ export const approveWSX = createAsyncThunk('wSX/approve', async () => {
         const balance = await wSX.balanceOf(myWalletAddress);
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         const signer = await provider.getSigner();
-        const signedUSDC = new ethers.Contract(address.testnetUSDC, erc20ABI, signer);
-        const tx = await signedUSDC.approve(
+        const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
+        const tx = await signedWSX.approve(
             myWalletAddress,
             ethers.parseEther(amount + '')
         );
@@ -85,11 +94,20 @@ export const approveWSX = createAsyncThunk('wSX/approve', async () => {
 });
 
 export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+    const signer = await provider.getSigner();
+    const signedWSX = new ethers.Contract(address.testnetSX, erc20ABI, signer);
 
+    try {
+        const tx = await signedWSX.transfer();
+        console.log(tx);
+    } catch (error) {
+        console.log(`[Console] Something went wrong: ${error}`);
+    }
 });
 
 export const WSXSlice = createSlice({
-    name: "supplyWSX",
+    name: "WSX",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -98,6 +116,9 @@ export const WSXSlice = createSlice({
         })
         builder.addCase(updatewsxSupplyAPY.fulfilled, (state, action) => {
             state.supplyAPY = action.payload;
+        })
+        builder.addCase(updateSupplyBalance.fulfilled, (state, action) => {
+            state.supplyBalance = action.payload;
         })
     }
 });

@@ -9,9 +9,10 @@ import { Eip1193Provider } from 'web3/lib/commonjs/providers.exports';
 
 interface USDCState {
     status: string,
-    borrowAPY: number,
-    borrowBalance: number,
     usdcBalance: number,
+    borrowBalance: number,
+    borrowAPY: number,
+
 }
 
 const initialState: USDCState = {
@@ -21,6 +22,8 @@ const initialState: USDCState = {
     usdcBalance: 0.00,
 }
 
+
+// Views
 export const updateUSDCBalance = createAsyncThunk(
     'usdcBalance/update',
     async (walletAddress:string ) => {
@@ -33,6 +36,23 @@ export const updateUSDCBalance = createAsyncThunk(
         }
     }
 );
+
+export const updateBorrowBalance = createAsyncThunk(
+    'supplyBalance/update',
+    async () => {
+        
+        const borrowBalance = 0;
+        return borrowBalance;
+    }
+);
+
+export const updateusdcBorrowAPY = createAsyncThunk('usdc/updateBorrowAPY', async () => {
+    return 1;
+});
+
+
+
+// Method calls
 
 export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddress: string) => {
     try {
@@ -70,6 +90,12 @@ export const USDCSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(updateUSDCBalance.fulfilled, (state, action) => {
             state.usdcBalance = action.payload;
+        })
+        builder.addCase(updateusdcBorrowAPY.fulfilled, (state, action) => {
+            state.borrowAPY = action.payload;
+        })
+        builder.addCase(updateBorrowBalance.fulfilled, (state, action) => {
+            state.borrowBalance = action.payload;
         })
     }
 });
