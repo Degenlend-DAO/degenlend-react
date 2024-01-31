@@ -53,14 +53,13 @@ export const updateBorrowBalance = createAsyncThunk(
     }
 );
 
-export const updateusdcBorrowAPY = createAsyncThunk('usdc/updateBorrowAPY', async (walletAddress:string) => {
+export const updateusdcBorrowAPY = createAsyncThunk('usdc/updateBorrowAPY', async () => {
     const borrowRate = 0;
     try {
-        const borrowRate = await cUSDC.borrowBalanceCurrent(walletAddress);
+        const borrowRate = await cUSDC.borrowRatePerBlock();
         console.log(`borrows: ${borrowRate}`);
     } catch (error) {
-        const borrowRate = 0;
-        console.log`[Console] error invoking updateUSDCBalance: \n ${error}`
+        console.log`[Console] error invoking updateBorrowAPY: \n ${error}`
     }
     return borrowRate;
 });

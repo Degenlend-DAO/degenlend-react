@@ -3,7 +3,7 @@ import { Row, Flex, Divider, Button, Col, Statistic, Segmented, Input, Tooltip, 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { UnknownAction } from '@reduxjs/toolkit';
-import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBalance } from '../../feature/borrow/USDCSlice';
+import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBalance, updateusdcBorrowAPY } from '../../feature/borrow/USDCSlice';
 import { InfoCircleOutlined } from '@ant-design/icons';
 
 
@@ -35,6 +35,8 @@ const USDCCardContent: React.FC = () => {
         console.log(`updateUSDCBALANCE: ${usdcBalance}`)
         dispatch(updateBorrowBalance(myWalletAddress) as unknown as UnknownAction);
         console.log(`updateBorrowBalance: ${usdcBalance}`)
+        dispatch(updateusdcBorrowAPY() as unknown as UnknownAction);
+        console.log(`updateusdcBorrowAPY: ${borrowAPY}`)
     })
     
     function Content({ isBorrow }: {isBorrow: boolean}) {
