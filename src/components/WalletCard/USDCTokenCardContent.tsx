@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Flex, Divider, Button, Col, Statistic, Segmented, Input } from 'antd';
+import { Row, Flex, Divider, Button, Col, Statistic, Segmented, Input, Tooltip, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { UnknownAction } from '@reduxjs/toolkit';
-import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance } from '../../feature/borrow/USDCSlice';
-import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
+import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBalance } from '../../feature/borrow/USDCSlice';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 
 const USDCCardContent: React.FC = () => {
@@ -12,13 +12,14 @@ const USDCCardContent: React.FC = () => {
     const dispatch = useDispatch();
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
     const borrowAPY = useSelector((state:RootState) => state.USDC.borrowAPY);
-    const usdcBalance = useSelector((state:RootState) => state.USDC.usdcBalance);
+    let usdcBalance = useSelector((state:RootState) => state.USDC.usdcBalance);
     const borrowBalance = useSelector((state:RootState) => state.USDC.borrowBalance);
     const [isBorrow, setSupply] = useState(false);
 
 
     const enableUSDCHook = () => {
         dispatch(approveUSDC(myWalletAddress) as unknown as UnknownAction);
+        // dispatch(borrowUSDC(20000) as unknown as UnknownAction);
     }
 
     const repayUSDCHook = () => {
@@ -26,12 +27,14 @@ const USDCCardContent: React.FC = () => {
     }
     
     const borrowUSDCHook = () => {
-        dispatch(borrowUSDC(myWalletAddress) as unknown as UnknownAction);
+        dispatch(borrowUSDC(20000) as unknown as UnknownAction);
     }
 
     useEffect(() => {
         dispatch(updateUSDCBalance(myWalletAddress) as unknown as UnknownAction);
-        dispatch(updateBorrowBalance() as unknown as UnknownAction);
+        console.log(`updateUSDCBALANCE: ${usdcBalance}`)
+        dispatch(updateBorrowBalance(myWalletAddress) as unknown as UnknownAction);
+        console.log(`updateBorrowBalance: ${usdcBalance}`)
     })
     
     function Content({ isBorrow }: {isBorrow: boolean}) {
@@ -41,8 +44,11 @@ const USDCCardContent: React.FC = () => {
             <Row gutter={4}>
                 <p>To supply, withdraw or repay your USDC, you need to enable it first</p>
             </Row>
-            <Input placeholder="Enter an amount" variant="borderless" />
 
+            <Space.Compact style={{ width: '100%' }}>
+            <Input size="large" prefix={<img width="20" height="20" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>} placeholder="Enter an amount" variant="borderless" suffix={ <Tooltip title="Enter a deposit amount"> <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} /> </Tooltip> } />
+      <Button type="primary">Submit</Button>
+    </Space.Compact>
             <Statistic title="Borrow APY" value={borrowAPY} precision={2} suffix="%" />
             
             <Button type="primary" size={'large'} onClick={enableUSDCHook}>

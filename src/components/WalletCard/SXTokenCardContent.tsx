@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input } from 'antd';
+import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input, Tooltip, Space } from 'antd';
 import {  useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { approveWSX, updateWSXBalance, updatewsxSupplyAPY, updateSupplyBalance, supplyWSX, withdrawWSX } from '../../feature/supply/WSXSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 const SXNetworkCardContent: React.FC = () => {
     const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const SXNetworkCardContent: React.FC = () => {
         <Statistic
         title="Supply APY"
         value={supplyAPY}
-        precision={2}
+        precision={6}
         suffix="%"
         />
 
@@ -59,7 +60,10 @@ const SXNetworkCardContent: React.FC = () => {
             <Row gutter={4}>
                 <p>To supply, withdraw, or repay your Wrapped SX, you need to enable it first</p>
             </Row>
-                <Input placeholder="Enter withdraw amount" variant="borderless" />
+                <Space.Compact style={{ width: '100%' }}>
+                    <Input size="large" prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>} placeholder="Enter an amount" variant="borderless" suffix={ <Tooltip title="Enter a deposit amount"> <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} /> </Tooltip> } />
+                    <Button type="primary">Submit</Button>
+                </Space.Compact>
                 <Statistic
                     title="Borrow APY"
                     value= {0}
