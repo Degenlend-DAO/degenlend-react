@@ -79,6 +79,7 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddre
             myWalletAddress,
             ethers.parseEther(amount + '')
         );
+        await tx.wait(1);
         console.log(tx);
         } catch (error) {
         console.log(`something went wrong: ${error}`)
@@ -92,6 +93,7 @@ export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: str
 
     try {
         const tx = await signedUSDC.repayBorrow(borrowAmount);
+        await tx.wait(1);
         console.log(tx);
     } catch (error) {
         console.log(`[Console] Something went wrong: ${error}`);
@@ -104,6 +106,7 @@ export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: n
     const signedUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
     try {
         const tx = await signedUSDC.borrow(borrowAmount);
+        await tx.wait(1);
         console.log(tx);
     } catch (error) {
         // txn rejected
