@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Button, Modal, Col, Card, Row, Space, Switch,  } from 'antd';
+import { Avatar, Button, Modal, Col, Card, Tooltip,  } from 'antd';
 import SXTokenCardContent from '../WalletCard/SXTokenCardContent';
 import { Provider, useStore, useDispatch } from 'react-redux';
 
@@ -11,7 +11,7 @@ const SupplyMarkets:React.FC = () => {
 
     const wsxMarketSelected = () => {
         info({
-            title: "About WSX Token",
+            title: <Tooltip title="Leverage your WSX and borrow or trade against it">About WSX Token</Tooltip>,
             okText: "Return",
             centered: true,
             closeIcon: true,

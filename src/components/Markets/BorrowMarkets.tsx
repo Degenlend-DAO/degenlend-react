@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, Card, Col } from 'antd';
+import { Modal, Card, Col, Tooltip } from 'antd';
 import USDCCardContent from '../WalletCard/USDCTokenCardContent';
-import { Provider, useStore, useDispatch } from 'react-redux';
+import { Provider, useStore } from 'react-redux';
 
 
 
@@ -12,7 +12,7 @@ const { info } = Modal;
 
 const usdcMarketSelected = () => {
     info({
-        title: "About USDC Token",
+        title: <Tooltip title="Leverage your USDC and borrow or trade against it">About USDC Token</Tooltip>,
         okText: "Return",
         centered: true,
         closeIcon: true,
