@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { USDC, address, cUSDC, cerc20ABI, provider, usdcABI } from '../../utils/web3';
+import { USDC, address, cUSDC, cerc20ABI, provider, usdcABI, web3 } from '../../utils/web3';
 import { BrowserProvider, Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
@@ -28,8 +28,8 @@ export const updateUSDCBalance = createAsyncThunk(
     'usdcBalance/update',
     async (walletAddress:string) => {
         try {
-            const balance = await USDC.balanceOf(walletAddress);
-            console.log(`USDC Balance: ${balance}`);
+            const rawBalance = await USDC.balanceOf(walletAddress);
+            const balance = web3.utils.fromWei(rawBalance, "Mwei");
             return balance as unknown as number;
         } catch (error) {
             console.log`[Console] error invoking updateUSDCBalance: \n ${error}`
@@ -53,16 +53,29 @@ export const updateBorrowBalance = createAsyncThunk(
     }
 );
 
-export const updateusdcBorrowAPY = createAsyncThunk('usdc/updateBorrowAPY', async (walletAddress:string) => {
-    const borrowRate = 0;
+export const updateusdcBorrowAPY = createAsyncThunk('usdc/updateBorrowAPY', async () => {
+    let borrowAPY = 0;
+    const blocksPerDay = 4 * 60 * 24; // 4 blocks in 1 minute
+    const daysPerYear = 365;
+    const ethDecimals = 18;
+    const ethMantissa = Math.pow(10, ethDecimals); // 1 * 10 ^ 18
+    let underlying;
+
+    console.log(`Borrow APY for USDC ${borrowAPY} %\n`);
     try {
-        const borrowRate = await cUSDC.borrowBalanceCurrent(walletAddress);
-        console.log(`borrows: ${borrowRate}`);
+        const cToken = new web3.eth.Contract(cerc20ABI, address.cUSDC);
+        // const supplyRatePerBlock:any = await cToken.methods.supplyRatePerBlock().call();
+        const borrowRatePerBlock:any = await cToken.methods.borrowRatePerBlock().call();
+        // supplyApy = (((Math.pow((supplyRatePerBlock / ethMantissa * blocksPerDay) + 1, daysPerYear - 1))) - 1) * 100;
+        borrowAPY = (((Math.pow((borrowRatePerBlock / ethMantissa * blocksPerDay) + 1, daysPerYear - 1))) - 1) * 100;
+        // console.log(`Supply APY for USDC ${supplyApy} %`);
+        console.log(`Borrow APY for USDC ${borrowAPY} %\n`);
+        console.log(`borrows: ${borrowAPY}`);
     } catch (error) {
-        const borrowRate = 0;
-        console.log`[Console] error invoking updateUSDCBalance: \n ${error}`
+        let borrowAPY = 0;
+        console.log`[Console] error invoking updateusdcBorrowAPY: \n ${error}`
     }
-    return borrowRate;
+    return borrowAPY;
 });
 
 
@@ -104,8 +117,9 @@ export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: n
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
+    const scaledUpBorrowAmount = (borrowAmount * Math.pow(10, 18)).toString();
     try {
-        const tx = await signedUSDC.borrow(borrowAmount);
+        const tx = await signedUSDC.borrow(scaledUpBorrowAmount);
         await tx.wait(1);
         console.log(tx);
     } catch (error) {
@@ -120,10 +134,10 @@ export const USDCSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(updateUSDCBalance.fulfilled, (state, action) => {
-            console.log(`Payload USDC Balance: ${action.payload}`);
             state.usdcBalance = action.payload;
         })
         builder.addCase(updateusdcBorrowAPY.fulfilled, (state, action) => {
+            console.log(`updateusdcBorrowAPY payload: ${action.payload}`);
             state.borrowAPY = action.payload;
         })
         builder.addCase(updateBorrowBalance.fulfilled, (state, action) => {
