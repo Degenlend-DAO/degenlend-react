@@ -120,14 +120,15 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: str
     }
 });
 
-export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount: string) => {
+export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
+    const signedcWSX = new ethers.Contract(address.cwSX, cerc20ABI, signer);
     try {
         //Contract call
-        const txn = signedWSX.withdraw(address.testnetWSX, supplyAmount);
-        console.log(txn);
+        const tx = await signedcWSX.redeem(supplyAmount * 1e8);
+        await tx.wait(1); // wait until the transaction has 1 confirmation on the blockchain
+        console.log(tx);
     } catch (error) {
         // txn rejected
         console.log(`[Console] Something went wrong: ${error}`);
