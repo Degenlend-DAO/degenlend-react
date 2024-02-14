@@ -26,7 +26,7 @@ const Dashboard:React.FC = () => {
     useEffect(() =>{
         dispatch(updatenetAPY() as unknown as UnknownAction);
         dispatch(updateborrowLimit() as unknown as UnknownAction);
-        dispatch(updateBorrowBalance() as unknown as UnknownAction);
+        dispatch(updateBorrowBalance(walletAddress) as unknown as UnknownAction);
         dispatch(updateSupplyBalance(walletAddress) as unknown as UnknownAction);
     });
     
