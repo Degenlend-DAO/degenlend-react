@@ -1,6 +1,7 @@
 import { createReducer, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
 import Comptroller from '../../contracts/Comptroller.json';
+import { address, cWSX } from "../../utils/web3";
 
 interface SupplyBalanceState {
     netSupplyBalance: number;
@@ -12,8 +13,9 @@ const initialState: SupplyBalanceState = {
 
 export const updateSupplyBalance = createAsyncThunk(
     'supplyBalance/update',
-    async () => {
-        const supplyBalance = 0;
+    async (walletAddress: string) => {
+        const rawBalance = await cWSX.balanceOf(walletAddress);
+        const supplyBalance = rawBalance / 1e8;
         return supplyBalance;
     }
 );
