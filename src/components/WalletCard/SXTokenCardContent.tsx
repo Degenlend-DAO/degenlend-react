@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input, Tooltip, Space, InputNumber } from 'antd';
 import {  useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
-import { approveWSX, updateWSXBalance, updatewsxSupplyAPY, updateSupplyBalance, supplyWSX, withdrawWSX } from '../../feature/supply/WSXSlice';
+import { approveWSX, updateWSXBalance, updatewsxsupplyRate, updateSupplyBalance, supplyWSX, withdrawWSX } from '../../feature/supply/WSXSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { address } from '../../utils/web3';
@@ -15,7 +15,7 @@ const SXNetworkCardContent: React.FC = () => {
     let depositAmount:number = 0;
     let withdrawAmount:number = 0;
     const wsxBalance = useSelector((state:RootState) => state.WSX.wsxBalance);
-    const supplyAPY = useSelector((state:RootState) => state.WSX.supplyAPY);;
+    const supplyRate = useSelector((state:RootState) => state.WSX.supplyRate);;
     const supplyBalance = useSelector((state:RootState) => state.WSX.supplyBalance);
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
     let WSX = new Intl.NumberFormat('en-US');
@@ -38,7 +38,7 @@ const SXNetworkCardContent: React.FC = () => {
     }
 
     useEffect(() => {
-        // dispatch(updatewsxSupplyAPY() as unknown as UnknownAction );
+        dispatch(updatewsxsupplyRate() as unknown as UnknownAction );
         dispatch(updateWSXBalance() as unknown as UnknownAction);
         dispatch(updateSupplyBalance(myWalletAddress) as unknown as UnknownAction);
     })
@@ -50,24 +50,22 @@ const SXNetworkCardContent: React.FC = () => {
         if (isSupply) return (
         
         <div>
-        <Statistic
-        title="Supply APY"
-        value={supplyAPY}
-        precision={6}
-        suffix="%"
-        />
 
             {isLendingEnabled ? 
                 <div>
+                    <Statistic
+                        title="Supply Rate"
+                        value={supplyRate}
+                        precision={6}
+                        suffix="%"
+                        />
                 <Space.Compact style={{ width: '100%' }}>
                         <InputNumber style={{ width: '100%', }} size="large" stringMode onChange={(value) => {depositAmount = value! as number}} prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>} placeholder="Enter an amount" variant="borderless" suffix={ <Tooltip title="Enter a deposit amount"> <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} /> </Tooltip> } />
                         <Button type="primary" onClick={depositWSXHook}>Deposit</Button>
                 </Space.Compact>
                 </div>
                 : <Button type="primary" size={'large'} onClick={enableWSXHook}> Enable WSX Lending </Button>
-                }
-        
-
+            }
                 
         <p>Currently supplying {WSX.format(supplyBalance)} degenwSX</p>
         </div>
@@ -81,12 +79,6 @@ const SXNetworkCardContent: React.FC = () => {
                     <InputNumber style={{width: '100%'}} stringMode size="large" onChange={(value) => {withdrawAmount = value! as number}} prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>} placeholder="Enter an amount" variant="borderless" suffix={ <Tooltip title="Enter a deposit amount"> <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} /> </Tooltip> } />
                     <Button type="primary" onClick={withdrawWSXHook}>Withdraw</Button>
                 </Space.Compact>
-                <Statistic
-                    title="Borrow APY"
-                    value= {0}
-                    precision={2}
-                    suffix="%"
-                />
             </div>
         );
     }
