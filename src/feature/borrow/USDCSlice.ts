@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { USDC, address, cUSDC, cerc20ABI, provider, usdcABI, web3 } from '../../utils/web3';
+import { USDC, address, cUSDC, cerc20ABI, erc20ABI, provider, web3 } from '../../utils/web3';
 import { BrowserProvider, Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
@@ -82,14 +82,13 @@ export const updateusdcBorrowAPY = createAsyncThunk('usdc/updateBorrowAPY', asyn
 
 // Method calls
 
-export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddress: string) => {
+export const approveUSDC = createAsyncThunk('usdc/approve', async ({amount, addressToApprove}: {amount: number, addressToApprove: string}) => {
     try {
-        const amount = 2000;
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         const signer = await provider.getSigner();
-        const signedUSDC = new ethers.Contract(address.testnetUSDC, usdcABI, signer);
+        const signedUSDC = new ethers.Contract(address.testnetUSDC, erc20ABI, signer);
         const tx = await signedUSDC.approve(
-            myWalletAddress,
+            addressToApprove,
             ethers.parseEther(amount + '')
         );
         await tx.wait(1);
@@ -99,13 +98,14 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async (myWalletAddre
     }
 });
 
-export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: string) => {
+export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedUSDC = new ethers.Contract(address.testnetUSDC, usdcABI, signer);
+    const signedcUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
+    const scaledUpBorrowAmount = (borrowAmount * Math.pow(10, 18)).toString();
 
     try {
-        const tx = await signedUSDC.repayBorrow(borrowAmount);
+        const tx = await signedcUSDC.repayBorrow(borrowAmount);
         await tx.wait(1);
         console.log(tx);
     } catch (error) {
@@ -116,10 +116,10 @@ export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: str
 export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
+    const signedcUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
     const scaledUpBorrowAmount = (borrowAmount * Math.pow(10, 18)).toString();
     try {
-        const tx = await signedUSDC.borrow(scaledUpBorrowAmount);
+        const tx = await signedcUSDC.borrow(scaledUpBorrowAmount);
         await tx.wait(1);
         console.log(tx);
     } catch (error) {
