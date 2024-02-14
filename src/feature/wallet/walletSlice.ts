@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useWeb3Modal, useWeb3ModalAccount } from '@web3modal/ethers/react'
 
 import { ethers } from "ethers";
+import { address } from "../../utils/web3";
 
 interface WalletState {
     address: string;
@@ -23,7 +24,7 @@ export const connectMetaMask = createAsyncThunk<string, void>(
         try {
 
             const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
-
+            address.account = accounts[0]; // Sets account address 
             console.log(accounts[0]);
             return accounts[0];
         } catch (err) {
@@ -41,7 +42,6 @@ export const connectWalletConnect = createAsyncThunk(
             const { open } = useWeb3Modal();
             open();
             const { address, chainId, isConnected } = useWeb3ModalAccount()
-
             return address as unknown as string;
         } catch (err) {
             console.log(err);
@@ -87,7 +87,9 @@ export const metaMaskSlice = createSlice({
     
             })
             .addCase(disconnectWallet.fulfilled, (state, action) => {
-                state.isConnected =false;
+                state.loading = false;
+                state.isConnected = false;
+                state.address = "0x0000000000000000000000000000000000000000"; // Resets the token address
             })
     }
 });
