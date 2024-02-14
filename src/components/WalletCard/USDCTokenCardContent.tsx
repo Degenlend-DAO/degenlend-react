@@ -11,6 +11,7 @@ const USDCCardContent: React.FC = () => {
 
     const dispatch = useDispatch();
     let borrowAmount:number = 0;
+    let approveAmount: number = 10000000;
     let repayAmount: number = 0;
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
     const borrowAPY = useSelector((state:RootState) => state.USDC.borrowAPY);
@@ -24,11 +25,11 @@ const USDCCardContent: React.FC = () => {
 
 
     const enableUSDCHook = () => {
-        dispatch(approveUSDC(myWalletAddress) as unknown as UnknownAction);
+        dispatch(approveUSDC({amount: approveAmount, addressToApprove: myWalletAddress}) as unknown as UnknownAction);
     }
 
     const repayUSDCHook = () => {
-        dispatch(repayUSDC(myWalletAddress) as unknown as UnknownAction);
+        dispatch(repayUSDC(repayAmount) as unknown as UnknownAction);
     }
     
     const borrowUSDCHook = () => {
