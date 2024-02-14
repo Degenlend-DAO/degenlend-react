@@ -2,11 +2,15 @@ import { Button, Dropdown, MenuProps } from 'antd'
 import Icon, { LogoutOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/Store';
+import { UnknownAction } from '@reduxjs/toolkit';
+import { updateSupplyBalance } from '../../feature/dashboard/supplyBalanceSlice';
+import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
 import { connectMetaMask, connectWalletConnect, disconnectWallet } from '../../feature/wallet/walletSlice';
 
 
 const WalletCard: React.FC = () => {
     const walletAddress = useSelector((state: RootState) => state.metaMask.address);
+    const emptyAddress = '0x0000000000000000000000000000000000000000'
     const isConnected = useSelector((state: RootState) => state.metaMask.isConnected);
     const dispatch = useDispatch<AppDispatch>()
 
@@ -19,7 +23,12 @@ const WalletCard: React.FC = () => {
     };
 
     const handleDisconnect = () => {
+        // Disconnect Wallet
         dispatch(disconnectWallet());
+
+        // Clear dashboard values
+        dispatch(updateBorrowBalance(emptyAddress) as unknown as UnknownAction);
+        dispatch(updateSupplyBalance(emptyAddress) as unknown as UnknownAction);
     }
 
     const filteredWalletAddress = (address: string | undefined) => {
