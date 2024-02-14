@@ -21,7 +21,7 @@ const Dashboard:React.FC = () => {
     const supplyBalance = useSelector((state:RootState) => state.supplyBalance.netSupplyBalance);
     const borrowBalance = useSelector((state:RootState) => state.borrowBalance.netBorrowBalance);
     const borrowLimit = useSelector((state:RootState) => state.borrowLimit.borrowLimit);
-    const netAPY = useSelector((state:RootState) => state.netAPY.netAPY)
+    const netAPR = useSelector((state:RootState) => state.netAPY.netAPY)
 
     useEffect(() =>{
         dispatch(updatenetAPY() as unknown as UnknownAction);
@@ -47,8 +47,8 @@ const Dashboard:React.FC = () => {
         <Col span={6}>
             <Card bordered={false}>
                 <Statistic
-                    title="Net APY"
-                    value={netAPY}
+                    title="Net APR"
+                    value={netAPR}
                     precision={8}
                     valueStyle={{ color: 'black' }}
                     suffix="%"
