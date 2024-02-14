@@ -17,6 +17,7 @@ const bodyStyle: React.CSSProperties = {
 
 const Dashboard:React.FC = () => {
     const dispatch = useDispatch();
+    const walletAddress = useSelector((state: RootState) => state.metaMask.address);
     const supplyBalance = useSelector((state:RootState) => state.supplyBalance.netSupplyBalance);
     const borrowBalance = useSelector((state:RootState) => state.borrowBalance.netBorrowBalance);
     const borrowLimit = useSelector((state:RootState) => state.borrowLimit.borrowLimit);
@@ -26,7 +27,7 @@ const Dashboard:React.FC = () => {
         dispatch(updatenetAPY() as unknown as UnknownAction);
         dispatch(updateborrowLimit() as unknown as UnknownAction);
         dispatch(updateBorrowBalance() as unknown as UnknownAction);
-        dispatch(updateSupplyBalance() as unknown as UnknownAction);
+        dispatch(updateSupplyBalance(walletAddress) as unknown as UnknownAction);
     });
     
     return     <div>
@@ -38,7 +39,7 @@ const Dashboard:React.FC = () => {
                     value={supplyBalance}
                     precision={8}
                     valueStyle={{ color: '#3f8600' }}
-                    prefix="$"
+                    prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>}
                     loading={false}
                 />
             </Card>
