@@ -1,5 +1,5 @@
 import { createReducer, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { web3, InterestRateModelAbi, address } from '../../utils/web3';
+import { web3, address } from '../../utils/web3';
 
 import JumpRateModelV2 from '../../contracts/JumpRateModelV2.json';
 
@@ -15,7 +15,6 @@ export const updatenetAPY = createAsyncThunk(
     'netAPY/update',
     async () => {
         // Contract call
-        const InterestRateContract = new web3.eth.Contract(InterestRateModelAbi, address.JumpRateModelV2);
         
         return 0;
     }
