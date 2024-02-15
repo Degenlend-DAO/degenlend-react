@@ -11,13 +11,13 @@ interface USDCState {
     status: string,
     usdcBalance: number,
     borrowBalance: number,
-    borrowAPY: number,
+    borrowRate: number,
 
 }
 
 const initialState: USDCState = {
     status: 'initial',
-    borrowAPY: 0.00,
+    borrowRate: 0.00,
     borrowBalance: 0.00,
     usdcBalance: 0.00,
 }
@@ -43,7 +43,8 @@ export const updateBorrowBalance = createAsyncThunk(
     async (walletAddress: string) => {
         let borrowBalance = 0;
         try {
-             borrowBalance = await cUSDC.balanceOf(walletAddress);
+             const rawBorrowBalance = await cUSDC.borrowBalanceCurrent(walletAddress);
+             borrowBalance = rawBorrowBalance / 10e8 // raw balance / 8 decimals (all cTokens are set to 8 decimals)
             console.log(`cUSDC Balance: ${borrowBalance}`);
         } catch (error) {
              borrowBalance = 0;
@@ -53,40 +54,31 @@ export const updateBorrowBalance = createAsyncThunk(
     }
 );
 
-export const updateusdcBorrowAPY = createAsyncThunk('usdc/updateBorrowAPY', async () => {
-    let borrowAPY = 0;
-    const blocksPerDay = 4 * 60 * 24; // 4 blocks in 1 minute
-    const daysPerYear = 365;
-    const ethDecimals = 18;
-    const ethMantissa = Math.pow(10, ethDecimals); // 1 * 10 ^ 18
-    let underlying;
+export const updateusdcBorrowRate = createAsyncThunk('usdc/updateBorrowAPY', async () => {
 
-    console.log(`Borrow APY for USDC ${borrowAPY} %\n`);
+    let borrowRate = 0;
+
+    console.log(`Borrow APY for USDC ${borrowRate} %\n`);
     try {
-        const cToken = new web3.eth.Contract(cerc20ABI, address.cUSDC);
-        // const supplyRatePerBlock:any = await cToken.methods.supplyRatePerBlock().call();
-        const borrowRatePerBlock:any = await cToken.methods.borrowRatePerBlock().call();
-        // supplyApy = (((Math.pow((supplyRatePerBlock / ethMantissa * blocksPerDay) + 1, daysPerYear - 1))) - 1) * 100;
-        borrowAPY = (((Math.pow((borrowRatePerBlock / ethMantissa * blocksPerDay) + 1, daysPerYear - 1))) - 1) * 100;
-        // console.log(`Supply APY for USDC ${supplyApy} %`);
-        console.log(`Borrow APY for USDC ${borrowAPY} %\n`);
-        console.log(`borrows: ${borrowAPY}`);
+        let borrowRate = await cUSDC.borrowRatePerBlock();
+        borrowRate = borrowRate / Math.pow(10, 8);
+        return borrowRate;
     } catch (error) {
-        let borrowAPY = 0;
         console.log`[Console] error invoking updateusdcBorrowAPY: \n ${error}`
     }
-    return borrowAPY;
 });
 
 
 
 // Method calls
 
+/// This function enables USDC to be engaged with
 export const approveUSDC = createAsyncThunk('usdc/approve', async ({amount, addressToApprove}: {amount: number, addressToApprove: string}) => {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         const signer = await provider.getSigner();
         const signedUSDC = new ethers.Contract(address.testnetUSDC, erc20ABI, signer);
+
         const tx = await signedUSDC.approve(
             addressToApprove,
             ethers.parseEther(amount + '')
@@ -98,6 +90,7 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async ({amount, addr
     }
 });
 
+/// This function repays the USDC balance
 export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
@@ -105,23 +98,24 @@ export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: num
     const scaledUpBorrowAmount = (borrowAmount * Math.pow(10, 18)).toString();
 
     try {
-        const tx = await signedcUSDC.repayBorrow(borrowAmount);
-        await tx.wait(1);
-        console.log(tx);
+        const txn = await signedcUSDC.repayBorrow(borrowAmount);
+        await txn.wait(1);
+        console.log(txn);
     } catch (error) {
         console.log(`[Console] Something went wrong: ${error}`);
     }
 });
 
+/// This function allows you to borrow usdc 
 export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedcUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
-    const scaledUpBorrowAmount = (borrowAmount * Math.pow(10, 18)).toString();
+    const scaledUpBorrowAmount = (borrowAmount * 10e18);
     try {
-        const tx = await signedcUSDC.borrow(scaledUpBorrowAmount);
-        await tx.wait(1);
-        console.log(tx);
+        const txn = await signedcUSDC.borrow(scaledUpBorrowAmount); // This code will work out fine
+        await txn.wait(1);
+        console.log(txn);
     } catch (error) {
         // txn rejected
         console.log(`[Console] Something went wrong: ${error}`);
@@ -136,9 +130,9 @@ export const USDCSlice = createSlice({
         builder.addCase(updateUSDCBalance.fulfilled, (state, action) => {
             state.usdcBalance = action.payload;
         })
-        builder.addCase(updateusdcBorrowAPY.fulfilled, (state, action) => {
-            console.log(`updateusdcBorrowAPY payload: ${action.payload}`);
-            state.borrowAPY = action.payload;
+        builder.addCase(updateusdcBorrowRate.fulfilled, (state, action) => {
+            console.log(`updateusdcBorrowRate payload: ${action.payload}`);
+            state.borrowRate = action.payload;
         })
         builder.addCase(updateBorrowBalance.fulfilled, (state, action) => {
             state.borrowBalance = action.payload;
