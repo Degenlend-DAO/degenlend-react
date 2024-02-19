@@ -1,15 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX } from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
-import { create } from 'domain';
-import { createBuilderStatusReporter } from 'typescript';
-
 
 interface WSXState {
     status: string,
     wsxBalance: number,
     supplyBalance: number,
-    supplyAPY: number,
+    supplyRate: number,
 }
 
 const initialState: WSXState = {
@@ -17,7 +14,7 @@ const initialState: WSXState = {
     status: 'initial',
     wsxBalance: 0.00,
     supplyBalance: 0.00,
-    supplyAPY: 0.00,
+    supplyRate: 0.00,
 
 }
 
@@ -57,25 +54,20 @@ export const updateSupplyBalance = createAsyncThunk(
     }
 );
 
-// This doesn't work yet
-export const updatewsxSupplyAPY = createAsyncThunk(
-    'wSX/updateSupplyAPY',
+export const updatewsxsupplyRate = createAsyncThunk(
+    'wSX/updatesupplyRate',
     async () => {
-    const ethMantissa = 1e18;
-    const blocksPerDay = 7200; // 12 seconds per block
-    const daysPerYear = 365;
-    let supplyApy = 0;
-    let borrowApy = 0;
+    let supplyRate = 0;
     try {
             
-            const supplyRatePerBlock:any = await cWSX.supplyRatePerBlock();
+            const supplyRatePerBlock = await cWSX.supplyRatePerBlock();
             console.log(`supply rate per block: ${supplyRatePerBlock}`)
-            supplyApy = (((Math.pow((supplyRatePerBlock / ethMantissa * blocksPerDay) + 1, daysPerYear))) - 1) * 100;
-            console.log(`Supply APY for ETH ${supplyApy} %`);
-            return supplyApy;
+            supplyRate = supplyRatePerBlock / 1e8;
+            console.log(`Supply rate for wSX ${supplyRate} %`);
+            return supplyRate;
         } catch (error) {
             console.log(`ERROR: ${error}`);
-            return supplyApy;
+            return supplyRate;
         }
 
   })
@@ -89,11 +81,12 @@ export const approveWSX = createAsyncThunk('wSX/approve', async ({amount, addres
         const signer = await provider.getSigner();
         const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
         
-        const tx = await signedWSX.approve(
+        const txn = await signedWSX.approve(
             addressToApprove,
             ethers.parseEther(amount + '')
         );
-        console.log(tx);
+        await txn.wait(1);
+        console.log(txn);
     } catch (error) {
             console.log(`something went wrong: ${error}`)
     }
@@ -154,17 +147,25 @@ export const WSXSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(updateWSXBalance.fulfilled, (state, action) => {
             state.wsxBalance = action.payload;
+
         })
-        builder.addCase(updatewsxSupplyAPY.fulfilled, (state, action) => {
-            state.supplyAPY = action.payload;
+        builder.addCase(updatewsxsupplyRate.fulfilled, (state, action) => {
+            state.supplyRate = action.payload;
         })
         builder.addCase(updateSupplyBalance.fulfilled, (state, action) => {
             state.supplyBalance = action.payload;
         })
 
         //Actions
+
         builder.addCase(approveWSX.pending, (state, action) => {
-            
+            state.status = "loading";  
+        })
+        builder.addCase(approveWSX.rejected, (state, action) => {
+            state.status = "failed";
+        })
+        builder.addCase(approveWSX.fulfilled, (state, action) => {
+            state.status = "completed";
         })
     }
 });
