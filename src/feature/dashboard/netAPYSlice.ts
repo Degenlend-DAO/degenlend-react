@@ -3,32 +3,43 @@ import { web3, address } from '../../utils/web3';
 
 import JumpRateModelV2 from '../../contracts/JumpRateModelV2.json';
 
-interface NetAPYState {
-    netAPY: number;
+interface netAPRState {
+    status: string;
+    netAPR: number;
 }
 
-const initialState: NetAPYState = {
-    netAPY: 0,
+const initialState: netAPRState = {
+    status: "initial",
+    netAPR: 0,
 }
 
-export const updatenetAPY = createAsyncThunk(
-    'netAPY/update',
-    async () => {
-        // Contract call
-        
-        return 0;
+export const updatenetAPR = createAsyncThunk(
+    'netAPR/update',
+    async ({supplyRate, borrowRate} : {supplyRate: number, borrowRate: number}) => {
+        // Basically netAPR is supply - borrow rate
+        const netAPR = supplyRate - borrowRate
+         if (netAPR < 0 || Number.isNaN(netAPR) ) { return 0 }
+        return netAPR;
     }
 );
 
-export const netAPYSlice = createSlice({
-    name: "netAPY",
+export const netAPRSlice = createSlice({
+    name: "netAPR",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(updatenetAPY.fulfilled, (state, action) => {
-            state.netAPY = action.payload;
+        builder.addCase(updatenetAPR.pending, (state, action) => {
+            state.status = 'loading';
+        })
+        builder.addCase(updatenetAPR.fulfilled, (state, action) => {
+            state.netAPR = action.payload;
+            state.status = 'success';
+        })
+        builder.addCase(updatenetAPR.rejected, (state, action) => {
+            state.status = 'failed';
+            state.netAPR = 0;
         })
     }
 });
 
-export default netAPYSlice.reducer;
+export default netAPRSlice.reducer;

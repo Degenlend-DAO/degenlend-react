@@ -26,7 +26,11 @@ export const supplyBlanceSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(updateSupplyBalance.fulfilled, (state, action) => {
-            state.netSupplyBalance = action.payload || 0;
+            state.netSupplyBalance = action.payload;
+        })
+
+        builder.addCase(updateSupplyBalance.rejected, (state, action) => {
+            state.netSupplyBalance = 0;
         })
     }
 });
