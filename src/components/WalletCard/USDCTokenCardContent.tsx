@@ -58,7 +58,7 @@ const USDCCardContent: React.FC = () => {
                         <Button type="primary" onClick={borrowUSDCHook}>Borrow</Button>
                 </Space.Compact>
 
-            <p>Currently borrowing {USDollar.format(borrowBalance)} USDC</p>
+
             </div>
             )
             else return (
@@ -69,9 +69,11 @@ const USDCCardContent: React.FC = () => {
                             <InputNumber style={{ width: '75%', }} size="large" stringMode onChange={(value) => {repayAmount = value! as number}} prefix={<img width="20" height="20" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>} placeholder="Enter an amount" variant="borderless" suffix={ <Tooltip title="Enter a deposit amount"> <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} /> </Tooltip> } />
                             <Button type="primary" onClick={repayUSDCHook}>Repay</Button>
                         </Space.Compact>
-                        : <Button type="primary" size={'large'} onClick={enableUSDCHook}> Enable USDC </Button>
+                        : <Button type="primary" size={'large'} onClick={enableUSDCHook}> Approve USDC for Repay </Button>
                     }
+                    <p>Currently borrowing {USDollar.format(borrowBalance)} USDC</p>
                 </div>
+                
             );
         }
 
@@ -79,7 +81,7 @@ const USDCCardContent: React.FC = () => {
             <div style={{textAlign: "center"}}>
                 <div style={{ display: "flex", justifyItems: "center" }}>
                     <Col offset={11}>
-                        <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>
+                        <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='.'></img>
                     </Col>
                 </div>
 

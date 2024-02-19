@@ -6,7 +6,6 @@ import { approveWSX, updateWSXBalance, updatewsxsupplyRate, updateSupplyBalance,
 import { UnknownAction } from '@reduxjs/toolkit';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { address } from '../../utils/web3';
-import TypedInputNumber from 'antd/es/input-number';
 
 const SXNetworkCardContent: React.FC = () => {
     const dispatch = useDispatch();
@@ -25,7 +24,7 @@ const SXNetworkCardContent: React.FC = () => {
 
     // function declarations
     const enableWSXHook = () => {
-        dispatch(approveWSX({amount: depositAmount, addressToApprove: address.cwSX}) as unknown as UnknownAction);
+        dispatch(approveWSX({amount: 100000000000000, addressToApprove: address.cwSX}) as unknown as UnknownAction);
         setIsLendingEnabled(true);
     }
 
@@ -64,7 +63,7 @@ const SXNetworkCardContent: React.FC = () => {
                         <Button type="primary" onClick={depositWSXHook}>Deposit</Button>
                 </Space.Compact>
                 </div>
-                : <Button type="primary" size={'large'} onClick={enableWSXHook}> Enable WSX Lending </Button>
+                : <Button type="primary" size={'large'} onClick={enableWSXHook}> Approve WSX for Deposits </Button>
             }
                 
         <p>Currently supplying {WSX.format(supplyBalance)} degenwSX</p>
