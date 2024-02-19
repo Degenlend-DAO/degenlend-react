@@ -6,7 +6,7 @@ import { updateSupplyBalance } from '../../feature/dashboard/supplyBalanceSlice'
 import { UnknownAction } from '@reduxjs/toolkit';
 import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
 import { updateborrowLimit } from '../../feature/dashboard/borrowLimitSlice';
-import { updatenetAPY } from '../../feature/dashboard/netAPYSlice';
+import { updatenetAPR } from '../../feature/dashboard/netAPYSlice';
 
 
 
@@ -21,10 +21,12 @@ const Dashboard:React.FC = () => {
     const supplyBalance = useSelector((state:RootState) => state.supplyBalance.netSupplyBalance);
     const borrowBalance = useSelector((state:RootState) => state.borrowBalance.netBorrowBalance);
     const borrowLimit = useSelector((state:RootState) => state.borrowLimit.borrowLimit);
-    const netAPR = useSelector((state:RootState) => state.netAPY.netAPY)
+    const netAPR = useSelector((state:RootState) => state.netAPY.netAPR);
+    const supplyRate = useSelector((state:RootState) => state.WSX.supplyRate);
+    const borrowRate = useSelector((state: RootState) => state.USDC.borrowRate);
 
     useEffect(() =>{
-        dispatch(updatenetAPY() as unknown as UnknownAction);
+        dispatch(updatenetAPR({supplyRate, borrowRate}) as unknown as UnknownAction); //Make sure to include APR Rates 
         dispatch(updateborrowLimit() as unknown as UnknownAction);
         dispatch(updateBorrowBalance(walletAddress) as unknown as UnknownAction);
         dispatch(updateSupplyBalance(walletAddress) as unknown as UnknownAction);
