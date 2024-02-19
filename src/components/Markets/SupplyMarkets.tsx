@@ -12,7 +12,7 @@ const SupplyMarkets:React.FC = () => {
     const wsxMarketSelected = () => {
         info({
             title:    <div style={{ display: "flex", justifyContent: "space-between"}}>
-            <><div><Tooltip title="Leverage your WSX and borrow or trade against it">About WSX Token</Tooltip></div><div><Tooltip title="Use the switch to enable wSX as collateral on the platform"><Switch /></Tooltip></div></> </div>,
+            <><div><Tooltip title="Leverage your WSX and borrow or trade against it">About WSX Token</Tooltip></div><div><Tooltip title="Use the switch to enable wSX as collateral on the platform"><Switch title='Enable or disable this cryptocurrency on the protocol' checkedChildren='Enabled' /></Tooltip></div></> </div>,
             okText: "Return",
             centered: true,
             closeIcon: true,
