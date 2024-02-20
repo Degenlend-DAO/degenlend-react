@@ -1,8 +1,6 @@
+import { address, modal } from './../../utils/web3';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useWeb3Modal, useWeb3ModalAccount } from '@web3modal/ethers/react'
 
-import { ethers } from "ethers";
-import { address } from "../../utils/web3";
 
 interface WalletState {
     address: string;
@@ -39,10 +37,9 @@ export const connectWalletConnect = createAsyncThunk(
     async () => {
         try {
             //WC logic
-            const { open } = useWeb3Modal();
-            open();
-            const { address, chainId, isConnected } = useWeb3ModalAccount()
-            return address as unknown as string;
+            modal.open()
+            const accountAddress = modal.getAddress()
+            return accountAddress as unknown as string;
         } catch (err) {
             console.log(err);
             return "0x0000000000000000000000000000000000000000";
