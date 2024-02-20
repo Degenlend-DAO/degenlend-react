@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX } from '../../utils/web3';
+import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX, comptroller } from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
 
 interface WSXState {
@@ -72,6 +72,23 @@ export const updatewsxsupplyRate = createAsyncThunk(
 
   })
 
+export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
+    // Enter degenwSX-degenUSDC Market
+
+    let marketsToEnter = [address.cwSX, address.cUSDC];
+    try {
+        let txn = await comptroller.enterMarkets(marketsToEnter);
+        await txn.wait(1);
+        console.log(txn);
+    } catch (error) {
+        console.log(`something went wrong: ${error}`)
+    }
+    console.log("Done");
+})
+
+export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
+    // Exit wSX Market
+});
 
 // Method calls
 
