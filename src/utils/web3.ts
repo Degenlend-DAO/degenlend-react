@@ -1,4 +1,4 @@
-import { Contract, ethers } from 'ethers'
+import { Contract, ethers, BrowserProvider } from 'ethers'
 import { createWeb3Modal, defaultConfig } from '@web3modal/ethers'
 
 import Web3 from "web3";
@@ -8,6 +8,7 @@ import Web3 from "web3";
 export const web3 = new Web3('https://rpc.toronto.sx.technology/');
 const testnetURL = 'https://rpc.toronto.sx.technology/';
 export const provider = new ethers.JsonRpcProvider(testnetURL);
+
 // A list of ABIs to export
 export const cerc20ABI = [
   {
@@ -2176,7 +2177,9 @@ export const modal = createWeb3Modal({
   enableAnalytics: true // Optional - defaults to your Cloud configuration
 })
 
-export const wcProvider = modal.getWalletProvider();
+export const wcProvider = modal.getWalletProvider()!;
+export const WCProvider = new BrowserProvider(wcProvider);
+export const wcSigner = WCProvider.getSigner();
 
 // USDC
 export const USDC = new Contract(address.testnetUSDC, erc20ABI, provider);
