@@ -1,4 +1,6 @@
-import { BrowserProvider, Contract, formatUnits, ethers } from 'ethers'
+import { Contract, ethers } from 'ethers'
+import { createWeb3Modal, defaultConfig } from '@web3modal/ethers'
+
 import Web3 from "web3";
 
 
@@ -2126,7 +2128,53 @@ export const address = {
 }
 
 
-// Contract objects
+// Web3Modal objects go here:
+
+
+const sx_testnet = {
+  chainId: 647,
+  name: "SX Testnet",
+  currency: 'SX',
+  rpcUrl: 'https://rpc.toronto.sx.technology/',
+  explorerUrl: 'https://explorer.toronto.sx.technology',
+}
+
+const sx_mainnet = { 
+  chainId: 416,
+  name: "SX Network",
+  currency: 'SX',
+  rpcUrl:'https://rpc.sx.technology/',
+  explorerUrl: 'https://explorer.sx.technology',
+}
+
+const mainnet = {
+  chainId: 1,
+  name: 'Ethereum',
+  currency: 'ETH',
+  explorerUrl: 'https://etherscan.io',
+  rpcUrl: 'https://cloudflare-eth.com'
+}
+// 1. Get projectId at https://cloud.walletconnect.com
+// const projectId: string = (process.env.REACT_APP_WEB3_PROJECT_ID as string)
+const projectId = '68f04d7f1f30b2def8d97eadb86a63fb'
+
+// 2. Create metadata
+const metadata = {
+  name: 'DegenLend',
+  description: 'DegenLend - Bet more',
+  url: 'https://web3modal.com',
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+const chains = [ mainnet, sx_mainnet, sx_testnet ]
+
+
+export const modal = createWeb3Modal({
+  ethersConfig: defaultConfig({ metadata }),
+  chains: chains,
+  projectId,
+  enableAnalytics: true // Optional - defaults to your Cloud configuration
+})
 
 // USDC
 export const USDC = new Contract(address.testnetUSDC, erc20ABI, provider);
