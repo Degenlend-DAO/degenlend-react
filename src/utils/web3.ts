@@ -2176,6 +2176,8 @@ export const modal = createWeb3Modal({
   enableAnalytics: true // Optional - defaults to your Cloud configuration
 })
 
+export const wcProvider = modal.getWalletProvider();
+
 // USDC
 export const USDC = new Contract(address.testnetUSDC, erc20ABI, provider);
 
