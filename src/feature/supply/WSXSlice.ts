@@ -87,7 +87,15 @@ export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
 })
 
 export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
-    // Exit wSX Market
+   let marketToExit = address.cwSX;
+
+   try {
+    let txn = await comptroller.exitmarket(marketToExit);
+    await txn.wait(1);
+    console.log(txn);
+   } catch (error) {
+        console.log(`something went wrong: ${error}`);
+   }
 });
 
 // Method calls
