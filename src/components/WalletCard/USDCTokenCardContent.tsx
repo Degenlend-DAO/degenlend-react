@@ -10,13 +10,13 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 const USDCCardContent: React.FC = () => {
 
     const dispatch = useDispatch();
-    let borrowAmount:number = 0;
+    let borrowAmount: number = 0;
     let approveAmount: number = 10000000;
     let repayAmount: number = 0;
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
-    const borrowRate = useSelector((state:RootState) => state.USDC.borrowRate);
-    const usdcBalance = useSelector((state:RootState) => state.USDC.usdcBalance);
-    const borrowBalance = useSelector((state:RootState) => state.USDC.borrowBalance);
+    const borrowRate = useSelector((state: RootState) => state.USDC.borrowRate);
+    const usdcBalance = useSelector((state: RootState) => state.USDC.usdcBalance);
+    const borrowBalance = useSelector((state: RootState) => state.USDC.borrowBalance);
     let USDollar = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -26,7 +26,7 @@ const USDCCardContent: React.FC = () => {
 
 
     const enableUSDCHook = () => {
-        dispatch(approveUSDC({amount: approveAmount, addressToApprove: myWalletAddress}) as unknown as UnknownAction);
+        dispatch(approveUSDC({ amount: approveAmount, addressToApprove: myWalletAddress }) as unknown as UnknownAction);
         setisBorrowingEnabled(true);
 
     }
@@ -34,7 +34,7 @@ const USDCCardContent: React.FC = () => {
     const repayUSDCHook = () => {
         dispatch(repayUSDC(repayAmount) as unknown as UnknownAction);
     }
-    
+
     const borrowUSDCHook = () => {
         dispatch(borrowUSDC(borrowAmount) as unknown as UnknownAction);
     }
@@ -44,68 +44,85 @@ const USDCCardContent: React.FC = () => {
         dispatch(updateUSDCBalance(myWalletAddress) as unknown as UnknownAction);
         dispatch(updateBorrowBalance(myWalletAddress) as unknown as UnknownAction);
     })
-    
-    function Content({ isBorrow }: {isBorrow: boolean}) {
 
-            if (isBorrow) return (
+    function Content({ isBorrow }: { isBorrow: boolean }) {
+
+        if (isBorrow) return (
             <div>
-            <Row gutter={4}>
-                <p>To supply, withdraw or repay your USDC, you need to enable it first</p>
-            </Row>
-            <Statistic title="Borrow Rate" value={borrowRate} precision={2} suffix="%" />
-                    <Space.Compact style={{ width: '100%' }}>
-                        <InputNumber style={{ width: '75%', }} stringMode id='borrowAmount' placeholder="Enter an amount" size="large" onChange={(value) => {borrowAmount = value! as number}} prefix={<img width="20" height="20" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>} variant="borderless" suffix={ <Tooltip title="Enter a deposit amount"> <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} /> </Tooltip> } />
-                        <Button type="primary" onClick={borrowUSDCHook}>Borrow</Button>
+                <Row gutter={4}>
+                    <p>To supply, withdraw or repay your USDC, you need to enable it first</p>
+                </Row>
+                <Statistic title="Borrow Rate" value={borrowRate} precision={2} suffix="%" />
+                <Space.Compact style={{ width: '100%' }}>
+                    <InputNumber
+                        style={{ width: '75%'}}
+                        stringMode id='borrowAmount'
+                        placeholder="Enter an amount"
+                        size="large"
+                        onChange={(value) => { borrowAmount = value! as number }}
+                        prefix={<img width="20" height="20" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>}
+                        variant="outlined"
+                        controls={false}
+                    />
+                    <Button
+                        type="primary"
+                        size='large'
+                        onClick={borrowUSDCHook}>Borrow</Button>
                 </Space.Compact>
-
-
             </div>
-            )
-            else return (
-                <div>
-                    {
-                        isBorrowingEnabled ? 
+        )
+        else return (
+            <div>
+                {
+                    isBorrowingEnabled ?
                         <Space.Compact style={{ width: '100%' }}>
-                            <InputNumber style={{ width: '75%', }} size="large" stringMode onChange={(value) => {repayAmount = value! as number}} prefix={<img width="20" height="20" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>} placeholder="Enter an amount" variant="borderless" suffix={ <Tooltip title="Enter a deposit amount"> <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} /> </Tooltip> } />
-                            <Button type="primary" onClick={repayUSDCHook}>Repay</Button>
+                            <InputNumber
+                                style={{ width: '75%'}}
+                                size="large"
+                                stringMode onChange={(value) => { repayAmount = value! as number }}
+                                prefix={<img width="20" height="20" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>}
+                                placeholder="Enter an amount"
+                                variant="outlined"
+                                controls={false}
+                            />
+                            <Button
+                                type="primary"
+                                size='large'
+                                onClick={repayUSDCHook}>Repay</Button>
                         </Space.Compact>
-                        : <Button type="primary" size={'large'} onClick={enableUSDCHook}> Approve USDC for Repay </Button>
-                    }
-                    <p>Currently borrowing {USDollar.format(borrowBalance)} USDC</p>
-                </div>
-                
-            );
-        }
+                        : <Button
+                            type="primary"
+                            size={'large'}
+                            onClick={enableUSDCHook}> Approve USDC for Repay </Button>
+                }
+                <p>Currently borrowing {USDollar.format(borrowBalance)} USDC</p>
+            </div>
+        );
+    }
 
     return (
-            <div style={{textAlign: "center"}}>
-                <div style={{ display: "flex", justifyItems: "center" }}>
-                    <Col offset={11}>
-                        <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='.'></img>
-                    </Col>
-                </div>
-
-                <Divider> Details </Divider>
-                <Flex vertical align='center'>
-
-                        <Tooltip title="Borrow or Repay your USDC token">
-                            <Segmented
-                                    defaultValue="Borrow"
-                                    style={{ marginBottom: 8, }}
-                                    onChange={() => {setSupply(!isBorrow)}}
-                                    options={['Borrow', 'Repay']}
-                                    />
-                        </Tooltip>
-
-
-                                <Content isBorrow={isBorrow} />
-
-
-                    <p>
-                        Wallet Balance: {USDollar.format(usdcBalance)} USDC
-                    </p>
-                </Flex>
-    </div>
+        <div style={{ textAlign: "center" }}>
+            <div style={{ display: "flex", justifyItems: "center" }}>
+                <Col offset={11}>
+                    <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='.'></img>
+                </Col>
+            </div>
+            <Divider> Details </Divider>
+            <Flex vertical align='center'>
+                <Tooltip title="Borrow or Repay your USDC token">
+                    <Segmented
+                        defaultValue="Borrow"
+                        style={{ marginBottom: 8, }}
+                        onChange={() => { setSupply(!isBorrow) }}
+                        options={['Borrow', 'Repay']}
+                    />
+                </Tooltip>
+                <Content isBorrow={isBorrow} />
+                <p>
+                    Wallet Balance: {USDollar.format(usdcBalance)} USDC
+                </p>
+            </Flex>
+        </div>
     );
 }
 
