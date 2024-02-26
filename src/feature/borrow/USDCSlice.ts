@@ -94,7 +94,7 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async ({amount, addr
 export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedcUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
+    const signedcUSDC = new ethers.Contract(address.degenUSDC, cerc20ABI, signer);
     const scaledUpBorrowAmount = (borrowAmount * Math.pow(10, 18)).toString();
 
     try {
@@ -110,7 +110,7 @@ export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: num
 export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedcUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
+    const signedcUSDC = new ethers.Contract(address.degenUSDC, cerc20ABI, signer);
     const scaledUpBorrowAmount = (borrowAmount * 10e18);
     try {
         const txn = await signedcUSDC.borrow(scaledUpBorrowAmount); // This code will work out fine

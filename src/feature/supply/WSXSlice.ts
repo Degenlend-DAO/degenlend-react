@@ -39,7 +39,7 @@ export const updateSupplyBalance = createAsyncThunk(
     async (myWalletAddress:string) => {
 
         const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
-        const cWSX = new web3.eth.Contract(erc20ABI, address.cwSX);
+        const cWSX = new web3.eth.Contract(erc20ABI, address.degenWSX);
         try {
             const rawBalance = await cWSX.methods.balanceOf(accounts[0]).call();
             const supplyBalance = web3.utils.fromWei(rawBalance, "ether");
@@ -75,7 +75,7 @@ export const updatewsxsupplyRate = createAsyncThunk(
 export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
     // Enter degenwSX-degenUSDC Market
 
-    let marketsToEnter = [address.cwSX, address.cUSDC];
+    let marketsToEnter = [address.degenWSX, address.degenUSDC];
     try {
         let txn = await comptroller.enterMarkets(marketsToEnter);
         await txn.wait(1);
@@ -87,7 +87,7 @@ export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
 })
 
 export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
-   let marketToExit = address.cwSX;
+   let marketToExit = address.degenWSX;
 
    try {
     let txn = await comptroller.exitmarket(marketToExit);
@@ -134,7 +134,7 @@ export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
 export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedCWSX = new ethers.Contract(address.cwSX, cerc20ABI, signer);
+    const signedCWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
     const scaledUpSupplyAmount = (supplyAmount * 1e18);
     try {
         // Contract call
@@ -151,7 +151,7 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: num
 export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedcWSX = new ethers.Contract(address.cwSX, cerc20ABI, signer);
+    const signedcWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
     const scaledUpSupplyAmount = (supplyAmount * 1e8);
 
     try {

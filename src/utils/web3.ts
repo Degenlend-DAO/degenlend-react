@@ -4328,4 +4328,4 @@ export const comptroller = new Contract(address.testnetComptroller, comptrollerA
 // cWSX
 export  const cWSX = new Contract(address.cwSX, cerc20ABI, provider);
 // cUSDC
-export  const cUSDC = new Contract(address.cUSDC, cerc20ABI, provider);
+export  const cUSDC = new Contract(address.degenUSDC, cerc20ABI, provider);
