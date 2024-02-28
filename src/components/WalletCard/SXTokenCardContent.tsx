@@ -36,10 +36,16 @@ const SXNetworkCardContent: React.FC = () => {
         dispatch(withdrawWSX(withdrawAmount) as unknown as UnknownAction);
     }
 
-    useEffect(() => {
-        dispatch(updatewsxsupplyRate() as unknown as UnknownAction);
-        dispatch(updateWSXBalance() as unknown as UnknownAction);
+    const updateSupplyBalanceHook = () => {
         dispatch(updateSupplyBalance(myWalletAddress) as unknown as UnknownAction);
+    }
+
+    const updateSupplyRateHook = () => {
+        dispatch(updatewsxsupplyRate() as unknown as UnknownAction);
+    }
+
+    useEffect(() => {
+        dispatch(updateWSXBalance() as unknown as UnknownAction);
     })
 
     // content

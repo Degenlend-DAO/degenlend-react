@@ -84,7 +84,7 @@ export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
         console.log(`something went wrong: ${error}`)
     }
     console.log("Done");
-})
+});
 
 export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
    let marketToExit = address.degenWSX;
