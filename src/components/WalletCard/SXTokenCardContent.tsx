@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input, Tooltip, Space, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../app/Store';
+import { AppDispatch, RootState } from '../../app/Store';
 import { approveWSX, updateWSXBalance, updatewsxsupplyRate, updateSupplyBalance, supplyWSX, withdrawWSX } from '../../feature/supply/WSXSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { address } from '../../utils/web3';
 
 const SXNetworkCardContent: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     //variable declarations
     let depositAmount: number = 0;
@@ -18,28 +18,28 @@ const SXNetworkCardContent: React.FC = () => {
     const supplyBalance = useSelector((state: RootState) => state.WSX.supplyBalance);
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
     let WSX = new Intl.NumberFormat('en-US');
-    const [isLendingEnabled, setIsLendingEnabled] = useState(false);
-    const [isSupply, setSupply] = useState(true);
+    const [isLendingEnabled, setIsLendingEnabled] = useState<boolean>(false);
+    const [isSupply, setSupply] = useState<boolean>(true);
 
 
     // function declarations
     const enableWSXHook = () => {
-        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.cwSX }) as unknown as UnknownAction);
+        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.cwSX }));
         setIsLendingEnabled(true);
     }
 
     const depositWSXHook = () => {
-        dispatch(supplyWSX(depositAmount) as unknown as UnknownAction);
+        dispatch(supplyWSX(depositAmount));
     }
 
     const withdrawWSXHook = () => {
-        dispatch(withdrawWSX(withdrawAmount) as unknown as UnknownAction);
+        dispatch(withdrawWSX(withdrawAmount));
     }
 
     useEffect(() => {
-        dispatch(updatewsxsupplyRate() as unknown as UnknownAction);
-        dispatch(updateWSXBalance() as unknown as UnknownAction);
-        dispatch(updateSupplyBalance(myWalletAddress) as unknown as UnknownAction);
+        dispatch(updatewsxsupplyRate());
+        dispatch(updateWSXBalance());
+        dispatch(updateSupplyBalance(myWalletAddress));
     })
 
     // content

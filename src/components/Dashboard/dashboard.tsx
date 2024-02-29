@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Statistic, Progress } from 'antd';
 import { useDispatch, useSelector, } from 'react-redux';
-import { RootState } from '../../app/Store';
+import { AppDispatch, RootState } from '../../app/Store';
 import { updateSupplyBalance } from '../../feature/dashboard/supplyBalanceSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
 import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
@@ -16,7 +16,7 @@ const bodyStyle: React.CSSProperties = {
 
 
 const Dashboard:React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const walletAddress = useSelector((state: RootState) => state.metaMask.address);
     const supplyBalance = useSelector((state:RootState) => state.supplyBalance.netSupplyBalance);
     const borrowBalance = useSelector((state:RootState) => state.borrowBalance.netBorrowBalance);
@@ -26,9 +26,9 @@ const Dashboard:React.FC = () => {
     const borrowRate = useSelector((state: RootState) => state.USDC.borrowRate);
 
     useEffect(() =>{
-        dispatch(updatenetAPR({supplyRate, borrowRate}) as unknown as UnknownAction); //Make sure to include APR Rates 
-        dispatch(updateborrowLimit() as unknown as UnknownAction);
-        dispatch(updateBorrowBalance(walletAddress) as unknown as UnknownAction);
+        dispatch(updatenetAPR({supplyRate, borrowRate})); //Make sure to include APR Rates 
+        dispatch(updateborrowLimit());
+        dispatch(updateBorrowBalance(walletAddress));
         // dispatch(updateSupplyBalance(walletAddress) as unknown as UnknownAction);  // This causes a bug for some reason.  
     });
     

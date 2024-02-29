@@ -27,8 +27,8 @@ const WalletCard: React.FC = () => {
         dispatch(disconnectWallet());
 
         // Clear dashboard values
-        dispatch(updateBorrowBalance(emptyAddress) as unknown as UnknownAction);
-        dispatch(updateSupplyBalance(emptyAddress) as unknown as UnknownAction);
+        dispatch(updateBorrowBalance(emptyAddress));
+        dispatch(updateSupplyBalance(emptyAddress));
     }
 
     const filteredWalletAddress = (address: string | undefined) => {
