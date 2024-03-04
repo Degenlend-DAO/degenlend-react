@@ -24,7 +24,7 @@ const SXNetworkCardContent: React.FC = () => {
 
     // function declarations
     const enableWSXHook = () => {
-        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.cwSX }));
+        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.degenWSX }) as unknown as UnknownAction);
         setIsLendingEnabled(true);
     }
 
