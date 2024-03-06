@@ -3,27 +3,33 @@ import { Switch, Modal, Col, Card, Tooltip,  } from 'antd';
 import SXTokenCardContent from '../WalletCard/SXTokenCardContent';
 import { enterMarkets, exitMarkets } from '../../feature/supply/WSXSlice';
 import { Provider, useStore, useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '../../app/Store';
 import { UnknownAction } from '@reduxjs/toolkit';
 
 
 const SupplyMarkets:React.FC = () => {
-    const [joinMarket, leaveMarket] = useState(false);
+    const [joinMarket, setMarketsJoined] = useState(true);
     const store = useStore();
     const { info } = Modal;
+    const dispatch = useDispatch<AppDispatch>()
 
     // Hooks
 
     const enableMarkets = () => {
-        leaveMarket(!enterMarkets); //  if markets are exited, please enter, if markets are entered, please exit.
         if (joinMarket === true)
         {
+            console.log(`Attempting to enter Markets`)
             dispatch(enterMarkets as unknown as UnknownAction);
+            setMarketsJoined(false); //  if markets are exited, please enter, if markets are entered, please exit.
         }
 
         if (joinMarket === false)
         {
+            console.log(`Attempting to exit Markets`)
             dispatch(exitMarkets as unknown as UnknownAction);
+            setMarketsJoined(true); //  if markets are exited, please enter, if markets are entered, please exit.
         }
+        
     }
 
     const wsxMarketSelected = () => {
@@ -55,7 +61,3 @@ const SupplyMarkets:React.FC = () => {
 }
 
 export default SupplyMarkets
-
-function dispatch(arg0: UnknownAction) {
-    throw new Error('Function not implemented.');
-}
