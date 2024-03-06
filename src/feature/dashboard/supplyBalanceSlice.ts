@@ -15,7 +15,7 @@ export const updateSupplyBalance = createAsyncThunk(
     'supplyBalance/update',
     async (walletAddress: string) => {
         const rawBalance = await cWSX.balanceOf(walletAddress);
-        const supplyBalance = rawBalance / 1e8;
+        const supplyBalance = rawBalance / 1e18;
         return supplyBalance;
     }
 );
