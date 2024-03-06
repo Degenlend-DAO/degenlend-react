@@ -15,7 +15,7 @@ export const updateBorrowBalance = createAsyncThunk(
     'borrowBalance/update',
     async (walletAddress: string) => {
         const rawBalance = await cUSDC.balanceOf(walletAddress);
-        const borrowBalance = rawBalance / 1e8;
+        const borrowBalance = rawBalance / 1e18;
         return borrowBalance;
     }
 );
