@@ -22,6 +22,8 @@ const initialState: USDCState = {
     usdcBalance: 0.00,
 }
 
+const decimalPrecisionScalar = 1000000000000000000
+
 
 // Views
 export const updateUSDCBalance = createAsyncThunk(
@@ -44,7 +46,7 @@ export const updateBorrowBalance = createAsyncThunk(
         let borrowBalance = 0;
         try {
              const rawBorrowBalance = await cUSDC.borrowBalanceCurrent(walletAddress);
-             borrowBalance = rawBorrowBalance / 10e8 // raw balance / 8 decimals (all cTokens are set to 8 decimals)
+             borrowBalance = rawBorrowBalance / decimalPrecisionScalar // raw balance / 8 decimals (all cTokens are set to 8 decimals)
             console.log(`cUSDC Balance: ${borrowBalance}`);
         } catch (error) {
              borrowBalance = 0;
@@ -111,7 +113,7 @@ export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: n
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedcUSDC = new ethers.Contract(address.degenUSDC, cerc20ABI, signer);
-    const scaledUpBorrowAmount = (borrowAmount * 10e18);
+    const scaledUpBorrowAmount = (borrowAmount * decimalPrecisionScalar);
     try {
         const txn = await signedcUSDC.borrow(scaledUpBorrowAmount); // This code will work out fine
         await txn.wait(1);

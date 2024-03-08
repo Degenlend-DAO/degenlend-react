@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX, comptroller } from '../../utils/web3';
+import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX, comptroller, comptrollerABI } from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
 
 interface WSXState {
@@ -17,6 +17,8 @@ const initialState: WSXState = {
     supplyRate: 0.00,
 
 }
+
+const decimalPrecisionScalar = 1000000000000000000
 
 
 export const updateWSXBalance = createAsyncThunk(
@@ -57,27 +59,30 @@ export const updateSupplyBalance = createAsyncThunk(
 export const updatewsxsupplyRate = createAsyncThunk(
     'wSX/updatesupplyRate',
     async () => {
-    let supplyRate = 0;
+    let supplyRate:number;
     try {
             
-            const supplyRatePerBlock = await cWSX.supplyRatePerBlock();
+            const supplyRatePerBlock: number = Number(await cWSX.supplyRatePerBlock());
             console.log(`supply rate per block: ${supplyRatePerBlock}`)
-            supplyRate = supplyRatePerBlock / 1e8;
+            supplyRate = supplyRatePerBlock / decimalPrecisionScalar;
             console.log(`Supply rate for wSX ${supplyRate} %`);
             return supplyRate;
         } catch (error) {
             console.log(`ERROR: ${error}`);
-            return supplyRate;
+            return 0;
         }
 
   })
 
-export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
+export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () => {
     // Enter degenwSX-degenUSDC Market
-
+    console.log(`Entering DegenWSX & degenUSDC markets`)
     let marketsToEnter = [address.degenWSX, address.degenUSDC];
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+    const signer = await provider.getSigner();
+    const signedComptroller = new ethers.Contract(address.testnetComptroller, comptrollerABI, signer);
     try {
-        let txn = await comptroller.enterMarkets(marketsToEnter);
+        let txn = await signedComptroller.enterMarkets(marketsToEnter);
         await txn.wait(1);
         console.log(txn);
     } catch (error) {
@@ -88,9 +93,11 @@ export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
 
 export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
    let marketToExit = address.degenWSX;
-
+   const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+   const signer = await provider.getSigner();
+   const signedComptroller = new ethers.Contract(address.testnetComptroller, comptrollerABI, signer);
    try {
-    let txn = await comptroller.exitmarket(marketToExit);
+    let txn = await signedComptroller.exitmarket(marketToExit);
     await txn.wait(1);
     console.log(txn);
    } catch (error) {
@@ -118,6 +125,15 @@ export const approveWSX = createAsyncThunk('wSX/approve', async ({amount, addres
     console.log("Done");
 });
 
+export const approveDegenWSX = createAsyncThunk('degenWSX/approve', async ({amount, addressToApprove}: {amount: number, addressToApprove: string}) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+
+})
+
 export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
@@ -135,7 +151,8 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: num
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedCWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
-    const scaledUpSupplyAmount = (supplyAmount * 1e18);
+    const scaledUpSupplyAmount = (supplyAmount * decimalPrecisionScalar);
+    console.log(`Supply Amount: raw: ${supplyAmount}, scaledup: ${scaledUpSupplyAmount}`);
     try {
         // Contract call
         // approve this address for spending first 
@@ -152,11 +169,11 @@ export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount:
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedcWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
-    const scaledUpSupplyAmount = (supplyAmount * 1e8);
-
+    const scaledUpSupplyAmount:number = (supplyAmount * decimalPrecisionScalar);
+    console.log(`Supply Amount: raw: ${supplyAmount}, scaledup: ${scaledUpSupplyAmount}`);
     try {
         //Contract call
-        const tx = await signedcWSX.redeem(scaledUpSupplyAmount);
+        const tx = await signedcWSX.redeem(supplyAmount);
         await tx.wait(1); // wait until the transaction has 1 confirmation on the blockchain
         console.log(tx);
     } catch (error) {
