@@ -19,13 +19,19 @@ const SXNetworkCardContent: React.FC = () => {
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
     let WSX = new Intl.NumberFormat('en-US');
     const [isLendingEnabled, setIsLendingEnabled] = useState<boolean>(false);
+    const [isWithdrawalsEnabled, setIsWithdrawlsEnabled] = useState<boolean>(false);
     const [isSupply, setSupply] = useState<boolean>(true);
 
 
     // function declarations
     const enableWSXHook = () => {
-        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.degenWSX }) as unknown as UnknownAction);
+        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.testnetWSX }) as unknown as UnknownAction);
         setIsLendingEnabled(true);
+    }
+
+    const enableDegenWSXHook = () => {
+        dispatch(approveWSX({amount: 100000000000000, addressToApprove: address.degenWSX }) as unknown as UnknownAction);
+        setIsWithdrawlsEnabled(true);
     }
 
     const depositWSXHook = () => {
@@ -79,18 +85,21 @@ const SXNetworkCardContent: React.FC = () => {
                 <Row gutter={4}>
                     <p>To supply, withdraw, or repay your Wrapped SX, you need to enable it first</p>
                 </Row>
-                <Space.Compact style={{ width: '100%' }}>
-                    <InputNumber
-                        style={{ width: '100%' }}
-                        stringMode
-                        size="large"
-                        onChange={(value) => { withdrawAmount = value! as number }}
-                        prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>}
-                        placeholder="Enter an amount"
-                        controls={false}
-                    />
-                    <Button type="primary" size='large' onClick={withdrawWSXHook}>Withdraw</Button>
-                </Space.Compact>
+                {isWithdrawalsEnabled ? 
+                                <Space.Compact style={{ width: '100%' }}>
+                                <InputNumber
+                                    style={{ width: '100%' }}
+                                    stringMode
+                                    size="large"
+                                    onChange={(value) => { withdrawAmount = value! as number }}
+                                    prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>}
+                                    placeholder="Enter an amount"
+                                    controls={false}
+                                />
+                                <Button type="primary" size='large' onClick={withdrawWSXHook}>Withdraw</Button>
+                            </Space.Compact>
+                            : <Button type="primary" size={'large'} onClick={enableDegenWSXHook}> </Button>
+                }
             </div>
         );
     }
