@@ -35,7 +35,7 @@ export const updateUSDCBalance = createAsyncThunk(
         try {
             const rawBalance = await USDC.balanceOf(walletAddress);
             const balance = web3.utils.fromWei(rawBalance, "Mwei");
-            return balance as unknown as number;
+            return Number(balance);
         } catch (error) {
             console.log`[Console] error invoking updateUSDCBalance: \n ${error}`
             return 0;
