@@ -14,74 +14,74 @@ const bodyStyle: React.CSSProperties = {
 }
 
 
-const Dashboard:React.FC = () => {
+const Dashboard: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const walletAddress = useSelector((state: RootState) => state.metaMask.address);
-    const supplyBalance = useSelector((state:RootState) => state.supplyBalance.netSupplyBalance);
-    const borrowBalance = useSelector((state:RootState) => state.borrowBalance.netBorrowBalance);
-    const borrowLimit = useSelector((state:RootState) => state.borrowLimit.borrowLimit);
-    const netAPR = useSelector((state:RootState) => state.netAPY.netAPR);
-    const supplyRate = useSelector((state:RootState) => state.WSX.supplyRate);
+    const supplyBalance = useSelector((state: RootState) => state.supplyBalance.netSupplyBalance);
+    const borrowBalance = useSelector((state: RootState) => state.borrowBalance.netBorrowBalance);
+    const borrowLimit = useSelector((state: RootState) => state.borrowLimit.borrowLimit);
+    const netAPR = useSelector((state: RootState) => state.netAPY.netAPR);
+    const supplyRate = useSelector((state: RootState) => state.WSX.supplyRate);
     const borrowRate = useSelector((state: RootState) => state.USDC.borrowRate);
 
-    useEffect(() =>{
-        dispatch(updatenetAPR({supplyRate, borrowRate})); //Make sure to include APR Rates 
+    useEffect(() => {
+        dispatch(updatenetAPR({ supplyRate, borrowRate })); //Make sure to include APR Rates 
         dispatch(updateborrowLimit());
         dispatch(updateBorrowBalance(walletAddress));
-        // dispatch(updateSupplyBalance(walletAddress) as unknown as UnknownAction);  // This causes a bug for some reason.  
+        // dispatch(updateSupplyBalance(walletAddress));  // This causes a bug for some reason.  
     });
-    
-    return     <div>
-    <Row gutter={16}>
-        <Col span={6} offset={3}>
-            <Card bordered={false}>
-                <Statistic
-                    title="Supply Balance"
-                    value={supplyBalance}
-                    precision={8}
-                    valueStyle={{ color: '#3f8600' }}
-                    prefix={<img width="20" height="20" src={sxtoken} alt='WSX Token'></img>}
-                    loading={false}
-                />
-            </Card>
-        </Col>
-        <Col span={6}>
-            <Card bordered={false}>
-                <Statistic
-                    title="Net APR"
-                    value={netAPR}
-                    precision={8}
-                    valueStyle={{ color: 'black' }}
-                    suffix="%"
-                    loading={false}
-                />
-            </Card>
-        </Col>
 
-        <Col span={6}>
-            <Card bordered={false}>
-                <Statistic
-                    title="Borrow Balance"
-                    value={borrowBalance}
-                    precision={8}
-                    valueStyle={{ color: '#3f8600' }}
-                    prefix="$"
-                    loading={false}
-                />
-            </Card>
-        </Col>
-    </Row>
-    <Row>
-        <Col span={23} >
-            <Card bordered={false} bodyStyle={bodyStyle} headStyle={bodyStyle} style={bodyStyle}>
-                <h3>
-                    Borrow Limit
-                </h3>
-                <Progress percent={borrowLimit} status="active" />
-            </Card>
-        </Col>
-    </Row>
-</div>
+    return <div>
+        <Row gutter={16}>
+            <Col span={6} offset={3}>
+                <Card bordered={false}>
+                    <Statistic
+                        title="Supply Balance"
+                        value={supplyBalance}
+                        precision={8}
+                        valueStyle={{ color: '#3f8600' }}
+                        prefix={<img width="20" height="20" src={sxtoken} alt='WSX Token'></img>}
+                        loading={false}
+                    />
+                </Card>
+            </Col>
+            <Col span={6}>
+                <Card bordered={false}>
+                    <Statistic
+                        title="Net APR"
+                        value={netAPR}
+                        precision={8}
+                        valueStyle={{ color: 'black' }}
+                        suffix="%"
+                        loading={false}
+                    />
+                </Card>
+            </Col>
+
+            <Col span={6}>
+                <Card bordered={false}>
+                    <Statistic
+                        title="Borrow Balance"
+                        value={borrowBalance}
+                        precision={8}
+                        valueStyle={{ color: '#3f8600' }}
+                        prefix="$"
+                        loading={false}
+                    />
+                </Card>
+            </Col>
+        </Row>
+        <Row>
+            <Col span={23} >
+                <Card bordered={false} bodyStyle={bodyStyle} headStyle={bodyStyle} style={bodyStyle}>
+                    <h3>
+                        Borrow Limit
+                    </h3>
+                    <Progress percent={borrowLimit} status="active" />
+                </Card>
+            </Col>
+        </Row>
+    </div>
 }
 
 export default Dashboard
