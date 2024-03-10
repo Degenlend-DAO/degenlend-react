@@ -7,8 +7,7 @@ import { UnknownAction } from '@reduxjs/toolkit';
 import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
 import { updateborrowLimit } from '../../feature/dashboard/borrowLimitSlice';
 import { updatenetAPR } from '../../feature/dashboard/netAPYSlice';
-
-
+import sxtoken from '../../assets/sx_coin_token.png';
 
 const bodyStyle: React.CSSProperties = {
     backgroundColor: 'transparent',
@@ -41,7 +40,7 @@ const Dashboard:React.FC = () => {
                     value={supplyBalance}
                     precision={8}
                     valueStyle={{ color: '#3f8600' }}
-                    prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>}
+                    prefix={<img width="20" height="20" src={sxtoken} alt='WSX Token'></img>}
                     loading={false}
                 />
             </Card>
