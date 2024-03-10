@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar, Switch, Modal, Col, Card, Tooltip,  } from 'antd';
 import SXTokenCardContent from '../WalletCard/SXTokenCardContent';
 import { Provider, useStore, useDispatch } from 'react-redux';
+import sxtoken from '../../assets/sx_coin_token.png';
 
 
 const SupplyMarkets:React.FC = () => {
@@ -29,7 +30,7 @@ const SupplyMarkets:React.FC = () => {
         <Col>
             <Card bordered={true} title="Supply Markets" style={{ width: 450 }} onClick={wsxMarketSelected}>
                 <Card hoverable>
-                        <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png'></img>
+                        <img src={sxtoken} alt='WSX Token'></img>
                 </Card>
             </Card>
         </Col>

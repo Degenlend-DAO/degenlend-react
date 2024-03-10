@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from '../../app/Store';
 import { UnknownAction } from '@reduxjs/toolkit';
 import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBalance, updateusdcBorrowRate } from '../../feature/borrow/USDCSlice';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
 
 
 const USDCCardContent: React.FC = () => {
@@ -60,7 +61,7 @@ const USDCCardContent: React.FC = () => {
                         placeholder="Enter an amount"
                         size="large"
                         onChange={(value) => { borrowAmount = value! as number }}
-                        prefix={<img width="20" height="20" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>}
+                        prefix={<img width="20" height="20" src={usdctoken} alt='USDC Token'></img>}
                         variant="outlined"
                         controls={false}
                     />
@@ -80,7 +81,7 @@ const USDCCardContent: React.FC = () => {
                                 style={{ width: '75%' }}
                                 size="large"
                                 stringMode onChange={(value) => { repayAmount = value! as number }}
-                                prefix={<img width="20" height="20" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='USDC Token'></img>}
+                                prefix={<img width="20" height="20" src={usdctoken} alt='USDC Token'></img>}
                                 placeholder="Enter an amount"
                                 variant="outlined"
                                 controls={false}
@@ -104,7 +105,7 @@ const USDCCardContent: React.FC = () => {
         <div style={{ textAlign: "center" }}>
             <div style={{ display: "flex", justifyItems: "center" }}>
                 <Col offset={11}>
-                    <img width="64" height="64" src='https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png' alt='.'></img>
+                    <img width="64" height="64" src={usdctoken} alt='USDC Token'></img>
                 </Col>
             </div>
             <Divider> Details </Divider>

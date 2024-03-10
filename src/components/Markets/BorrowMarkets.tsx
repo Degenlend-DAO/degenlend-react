@@ -2,8 +2,7 @@ import React from 'react';
 import { Modal, Card, Col, Tooltip } from 'antd';
 import USDCCardContent from '../WalletCard/USDCTokenCardContent';
 import { Provider, useStore } from 'react-redux';
-
-
+import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
 
 const BorrowMarkets = () => {
 
@@ -28,7 +27,7 @@ const BorrowMarkets = () => {
                 <Card bordered={true} title="Borrow Markets" onClick={usdcMarketSelected} style={{ width: 450 }}>
 
                     <Card hoverable>
-                        <img width="64" height="64" src="https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png"></img>
+                        <img width="64" height="64" src={usdctoken} alt='USDC Token'></img>
                     </Card>
 
                 </Card>

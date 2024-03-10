@@ -6,6 +6,7 @@ import { approveWSX, updateWSXBalance, updatewsxsupplyRate, updateSupplyBalance,
 import { UnknownAction } from '@reduxjs/toolkit';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { address } from '../../utils/web3';
+import sxtoken from '../../assets/sx_coin_token.png';
 
 const SXNetworkCardContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -62,7 +63,7 @@ const SXNetworkCardContent: React.FC = () => {
                                 size="large"
                                 stringMode
                                 onChange={(value) => { depositAmount = value! as number }}
-                                prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>}
+                                prefix={<img width="20" height="20" src={sxtoken} alt='WSX Token'></img>}
                                 placeholder="Enter an amount"
                                 controls={false}
                             />
@@ -85,7 +86,7 @@ const SXNetworkCardContent: React.FC = () => {
                         stringMode
                         size="large"
                         onChange={(value) => { withdrawAmount = value! as number }}
-                        prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>}
+                        prefix={<img width="20" height="20" src={sxtoken} alt='WSX Token'></img>}
                         placeholder="Enter an amount"
                         controls={false}
                     />
@@ -99,7 +100,7 @@ const SXNetworkCardContent: React.FC = () => {
         <div style={{ textAlign: "center" }}>
             <div style={{ display: "flex", justifyItems: "center" }}>
                 <Col offset={11}>
-                    <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>
+                    <img src={sxtoken} alt='WSX Token'></img>
                 </Col>
             </div>
             <Divider> Details </Divider>
