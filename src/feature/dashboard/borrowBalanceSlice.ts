@@ -1,7 +1,6 @@
+import { cUSDC } from '../../utils/web3/contract/contracts';
 import { supplyBlanceSlice } from './supplyBalanceSlice';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { cUSDC } from '../../utils/web3';
-
 
 interface BorrowBalanceState {
     netBorrowBalance: number,

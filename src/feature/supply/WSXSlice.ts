@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX, comptroller, comptrollerABI } from '../../utils/web3';
+import { address, web3} from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
+import { erc20ABI } from 'wagmi';
+import { cerc20ABI } from '../../utils/web3/abi/cerc20abi';
+import { comptrollerABI } from '../../utils/web3/abi/comptrollerabi';
+import { cWSX } from '../../utils/web3/contract/contracts';
 
 interface WSXState {
     status: string,

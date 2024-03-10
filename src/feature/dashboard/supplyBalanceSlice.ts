@@ -1,7 +1,8 @@
 import { createReducer, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
 import Comptroller from '../../contracts/Comptroller.json';
-import { address, cWSX } from "../../utils/web3";
+import { address } from "../../utils/web3";
+import { cWSX } from "../../utils/web3/contract/contracts";
 
 interface SupplyBalanceState {
     netSupplyBalance: number;
