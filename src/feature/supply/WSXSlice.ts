@@ -9,6 +9,11 @@ interface WSXState {
     supplyRate: number,
 }
 
+interface approveWSXParams {
+    amount: number,
+    addressToApprove: string,
+}
+
 const initialState: WSXState = {
 
     status: 'initial',
@@ -100,7 +105,7 @@ export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
 
 // Method calls
 
-export const approveWSX = createAsyncThunk('wSX/approve', async ({ amount, addressToApprove }: { amount: number, addressToApprove: string }) => {
+export const approveWSX = createAsyncThunk('wSX/approve', async ({ amount, addressToApprove }: approveWSXParams) => {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         const signer = await provider.getSigner();
