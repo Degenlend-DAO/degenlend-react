@@ -38,7 +38,7 @@ export const updateWSXBalance = createAsyncThunk(
 
 export const updateSupplyBalance = createAsyncThunk(
     'supplyBalance/update',
-    async (myWalletAddress:string) => {
+    async (myWalletAddress: string) => {
 
         const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
         const cWSX = new web3.eth.Contract(erc20ABI, address.degenWSX);
@@ -59,9 +59,9 @@ export const updateSupplyBalance = createAsyncThunk(
 export const updatewsxsupplyRate = createAsyncThunk(
     'wSX/updatesupplyRate',
     async () => {
-    let supplyRate:number;
-    try {
-            
+        let supplyRate: number;
+        try {
+
             const supplyRatePerBlock: number = Number(await cWSX.supplyRatePerBlock());
             console.log(`supply rate per block: ${supplyRatePerBlock}`)
             supplyRate = supplyRatePerBlock / decimalPrecisionScalar;
@@ -72,7 +72,7 @@ export const updatewsxsupplyRate = createAsyncThunk(
             return 0;
         }
 
-  })
+    })
 
 export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () => {
     // Enter degenwSX-degenUSDC Market
@@ -92,27 +92,27 @@ export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () => {
 });
 
 export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
-   let marketToExit = address.degenWSX;
-   const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
-   const signer = await provider.getSigner();
-   const signedComptroller = new ethers.Contract(address.testnetComptroller, comptrollerABI, signer);
-   try {
-    let txn = await signedComptroller.exitmarket(marketToExit);
-    await txn.wait(1);
-    console.log(txn);
-   } catch (error) {
+    let marketToExit = address.degenWSX;
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
+    const signer = await provider.getSigner();
+    const signedComptroller = new ethers.Contract(address.testnetComptroller, comptrollerABI, signer);
+    try {
+        let txn = await signedComptroller.exitmarket(marketToExit);
+        await txn.wait(1);
+        console.log(txn);
+    } catch (error) {
         console.log(`something went wrong: ${error}`);
-   }
+    }
 });
 
 // Method calls
 
-export const approveWSX = createAsyncThunk('wSX/approve', async ({amount, addressToApprove}: {amount: number, addressToApprove: string}) => {
+export const approveWSX = createAsyncThunk('wSX/approve', async ({ amount, addressToApprove }: { amount: number, addressToApprove: string }) => {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         const signer = await provider.getSigner();
         const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
-        
+
         const txn = await signedWSX.approve(
             addressToApprove,
             ethers.parseEther(amount + '')
@@ -120,16 +120,16 @@ export const approveWSX = createAsyncThunk('wSX/approve', async ({amount, addres
         await txn.wait(1);
         console.log(txn);
     } catch (error) {
-            console.log(`something went wrong: ${error}`)
+        console.log(`something went wrong: ${error}`)
     }
     console.log("Done");
 });
 
-export const approveDegenWSX = createAsyncThunk('degenWSX/approve', async ({amount, addressToApprove}: {amount: number, addressToApprove: string}) => {
+export const approveDegenWSX = createAsyncThunk('degenWSX/approve', async ({ amount, addressToApprove }: { amount: number, addressToApprove: string }) => {
     try {
-        
+
     } catch (error) {
-        
+
     }
 
 })
@@ -169,7 +169,7 @@ export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount:
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedcWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
-    const scaledUpSupplyAmount:number = (supplyAmount * decimalPrecisionScalar);
+    const scaledUpSupplyAmount: number = (supplyAmount * decimalPrecisionScalar);
     console.log(`Supply Amount: raw: ${supplyAmount}, scaledup: ${scaledUpSupplyAmount}`);
     try {
         //Contract call
@@ -201,7 +201,7 @@ export const WSXSlice = createSlice({
         //Actions
 
         builder.addCase(approveWSX.pending, (state, action) => {
-            state.status = "loading";  
+            state.status = "loading";
         })
         builder.addCase(approveWSX.rejected, (state, action) => {
             state.status = "failed";

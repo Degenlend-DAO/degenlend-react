@@ -28,7 +28,7 @@ const decimalPrecisionScalar = 1000000000000000000
 // Views
 export const updateUSDCBalance = createAsyncThunk(
     'usdcBalance/update',
-    async (walletAddress:string) => {
+    async (walletAddress: string) => {
         try {
             const rawBalance = await USDC.balanceOf(walletAddress);
             const balance = web3.utils.fromWei(rawBalance, "Mwei");
@@ -45,12 +45,12 @@ export const updateBorrowBalance = createAsyncThunk(
     async (walletAddress: string) => {
         let borrowBalance = 0;
         try {
-             const rawBorrowBalance = await cUSDC.borrowBalanceCurrent(walletAddress);
-             borrowBalance = rawBorrowBalance / decimalPrecisionScalar // raw balance / 8 decimals (all cTokens are set to 8 decimals)
+            const rawBorrowBalance = await cUSDC.borrowBalanceCurrent(walletAddress);
+            borrowBalance = rawBorrowBalance / decimalPrecisionScalar // raw balance / 8 decimals (all cTokens are set to 8 decimals)
             console.log(`cUSDC Balance: ${borrowBalance}`);
         } catch (error) {
-             borrowBalance = 0;
-             console.log`[Console] error invoking updateUSDCBalance: \n ${error}`
+            borrowBalance = 0;
+            console.log`[Console] error invoking updateUSDCBalance: \n ${error}`
         }
         return borrowBalance;
     }
@@ -75,7 +75,7 @@ export const updateusdcBorrowRate = createAsyncThunk('usdc/updateBorrowAPY', asy
 // Method calls
 
 /// This function enables USDC to be engaged with
-export const approveUSDC = createAsyncThunk('usdc/approve', async ({amount, addressToApprove}: {amount: number, addressToApprove: string}) => {
+export const approveUSDC = createAsyncThunk('usdc/approve', async ({ amount, addressToApprove }: { amount: number, addressToApprove: string }) => {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         const signer = await provider.getSigner();
@@ -87,7 +87,7 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async ({amount, addr
         );
         await tx.wait(1);
         console.log(tx);
-        } catch (error) {
+    } catch (error) {
         console.log(`something went wrong: ${error}`)
     }
 });

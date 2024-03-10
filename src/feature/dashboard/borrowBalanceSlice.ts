@@ -28,7 +28,7 @@ export const borrowBalanceSlice = createSlice({
         builder.addCase(updateBorrowBalance.fulfilled, (state, action) => {
             state.netBorrowBalance = action.payload;
         })
-        
+
         // No case for pending
 
         builder.addCase(updateBorrowBalance.rejected, (state, action) => {

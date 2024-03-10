@@ -15,10 +15,10 @@ const initialState: netAPRState = {
 
 export const updatenetAPR = createAsyncThunk(
     'netAPR/update',
-    async ({supplyRate, borrowRate} : {supplyRate: number, borrowRate: number}) => {
+    async ({ supplyRate, borrowRate }: { supplyRate: number, borrowRate: number }) => {
         // Basically netAPR is supply - borrow rate
         const netAPR = supplyRate - borrowRate
-         if (netAPR < 0 || Number.isNaN(netAPR) ) { return 0 }
+        if (netAPR < 0 || Number.isNaN(netAPR)) { return 0 }
         return netAPR;
     }
 );
