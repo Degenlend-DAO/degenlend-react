@@ -8,6 +8,11 @@ interface netAPRState {
     netAPR: number;
 }
 
+interface updateNetAPRParams {
+    supplyRate: number,
+    borrowRate: number,
+}
+
 const initialState: netAPRState = {
     status: "initial",
     netAPR: 0,
@@ -15,10 +20,11 @@ const initialState: netAPRState = {
 
 export const updatenetAPR = createAsyncThunk(
     'netAPR/update',
-    async ({supplyRate, borrowRate} : {supplyRate: number, borrowRate: number}) => {
+    async ({ supplyRate, borrowRate }: updateNetAPRParams) => {
         // Basically netAPR is supply - borrow rate
+        if (Number.isNaN(supplyRate) || Number.isNaN(borrowRate)) { return 0 }
         const netAPR = supplyRate - borrowRate
-         if (netAPR < 0 || Number.isNaN(netAPR) ) { return 0 }
+        if (netAPR < 0 || Number.isNaN(netAPR)) { return 0 }
         return netAPR;
     }
 );
