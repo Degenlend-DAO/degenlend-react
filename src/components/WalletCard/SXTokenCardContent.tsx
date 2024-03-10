@@ -25,12 +25,12 @@ const SXNetworkCardContent: React.FC = () => {
 
     // function declarations
     const enableWSXHook = () => {
-        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.testnetWSX }) as unknown as UnknownAction);
+        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.testnetWSX }));
         setIsLendingEnabled(true);
     }
 
     const enableDegenWSXHook = () => {
-        dispatch(approveWSX({amount: 100000000000000, addressToApprove: address.degenWSX }) as unknown as UnknownAction);
+        dispatch(approveWSX({amount: 100000000000000, addressToApprove: address.degenWSX }));
         setIsWithdrawlsEnabled(true);
     }
 
