@@ -29,7 +29,7 @@ const Dashboard:React.FC = () => {
         dispatch(updatenetAPR({supplyRate, borrowRate})); //Make sure to include APR Rates 
         dispatch(updateborrowLimit());
         dispatch(updateBorrowBalance(walletAddress));
-        // dispatch(updateSupplyBalance(walletAddress) as unknown as UnknownAction);  // This causes a bug for some reason.  
+        // dispatch(updateSupplyBalance(walletAddress));  // This causes a bug for some reason.  
     });
     
     return     <div>
