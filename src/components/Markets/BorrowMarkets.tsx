@@ -8,19 +8,19 @@ import { Provider, useStore } from 'react-redux';
 const BorrowMarkets = () => {
 
     const store = useStore();
-const { info } = Modal;
+    const { info } = Modal;
 
-const usdcMarketSelected = () => {
-    info({
-        title: <Tooltip title="Leverage your USDC and borrow or trade against it">About USDC Token</Tooltip>,
-        okText: "Return",
-        centered: true,
-        closeIcon: true,
-        maskClosable: true,
-        width: 810,
-        content: <Provider store={store}><USDCCardContent /></Provider>,
-    })
-}
+    const usdcMarketSelected = () => {
+        info({
+            title: <Tooltip title="Leverage your USDC and borrow or trade against it">About USDC Token</Tooltip>,
+            okText: "Return",
+            centered: true,
+            closeIcon: true,
+            maskClosable: true,
+            width: 810,
+            content: <Provider store={store}><USDCCardContent /></Provider>,
+        })
+    }
 
     return (
         <div className="column">
