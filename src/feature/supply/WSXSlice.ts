@@ -30,13 +30,13 @@ export const updateWSXBalance = createAsyncThunk(
         const rawGasBalance = await web3.eth.getBalance(accounts[0]);
         const gasBalance = web3.utils.fromWei(rawGasBalance, "ether");
         console.log(`wsx balance: ${balance}, raw balance: ${rawBalance}, gas balance: ${gasBalance}`);
-        return balance as unknown as number;
+        return Number(balance);
     }
 );
 
 export const updateSupplyBalance = createAsyncThunk(
     'supplyBalance/update',
-    async (myWalletAddress:string) => {
+    async (myWalletAddress: string) => {
 
         const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
         const cWSX = new web3.eth.Contract(erc20ABI, address.cwSX);
@@ -44,7 +44,7 @@ export const updateSupplyBalance = createAsyncThunk(
             const rawBalance = await cWSX.methods.balanceOf(accounts[0]).call();
             const supplyBalance = web3.utils.fromWei(rawBalance, "ether");
             console.log(`cwsx balance: ${supplyBalance}, raw balance: ${rawBalance}`);
-            return supplyBalance as unknown as number;
+            return Number(supplyBalance);
 
         } catch {
             console.log(`[Console] Unable to grab supply balance from the protocol`)
@@ -57,9 +57,9 @@ export const updateSupplyBalance = createAsyncThunk(
 export const updatewsxsupplyRate = createAsyncThunk(
     'wSX/updatesupplyRate',
     async () => {
-    let supplyRate = 0;
-    try {
-            
+        let supplyRate = 0;
+        try {
+
             const supplyRatePerBlock = await cWSX.supplyRatePerBlock();
             console.log(`supply rate per block: ${supplyRatePerBlock}`)
             supplyRate = supplyRatePerBlock / 1e8;
@@ -70,9 +70,9 @@ export const updatewsxsupplyRate = createAsyncThunk(
             return supplyRate;
         }
 
-  })
+    })
 
-export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
+export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () => {
     // Enter degenwSX-degenUSDC Market
 
     let marketsToEnter = [address.cwSX, address.cUSDC];
@@ -87,25 +87,25 @@ export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () =>{
 })
 
 export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
-   let marketToExit = address.cwSX;
+    let marketToExit = address.cwSX;
 
-   try {
-    let txn = await comptroller.exitmarket(marketToExit);
-    await txn.wait(1);
-    console.log(txn);
-   } catch (error) {
+    try {
+        let txn = await comptroller.exitmarket(marketToExit);
+        await txn.wait(1);
+        console.log(txn);
+    } catch (error) {
         console.log(`something went wrong: ${error}`);
-   }
+    }
 });
 
 // Method calls
 
-export const approveWSX = createAsyncThunk('wSX/approve', async ({amount, addressToApprove}: {amount: number, addressToApprove: string}) => {
+export const approveWSX = createAsyncThunk('wSX/approve', async ({ amount, addressToApprove }: { amount: number, addressToApprove: string }) => {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
         const signer = await provider.getSigner();
         const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
-        
+
         const txn = await signedWSX.approve(
             addressToApprove,
             ethers.parseEther(amount + '')
@@ -113,7 +113,7 @@ export const approveWSX = createAsyncThunk('wSX/approve', async ({amount, addres
         await txn.wait(1);
         console.log(txn);
     } catch (error) {
-            console.log(`something went wrong: ${error}`)
+        console.log(`something went wrong: ${error}`)
     }
     console.log("Done");
 });
@@ -184,7 +184,7 @@ export const WSXSlice = createSlice({
         //Actions
 
         builder.addCase(approveWSX.pending, (state, action) => {
-            state.status = "loading";  
+            state.status = "loading";
         })
         builder.addCase(approveWSX.rejected, (state, action) => {
             state.status = "failed";
