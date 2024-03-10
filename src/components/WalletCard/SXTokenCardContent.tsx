@@ -30,7 +30,7 @@ const SXNetworkCardContent: React.FC = () => {
     }
 
     const enableDegenWSXHook = () => {
-        dispatch(approveWSX({amount: 100000000000000, addressToApprove: address.degenWSX }));
+        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.degenWSX }));
         setIsWithdrawlsEnabled(true);
     }
 
@@ -85,20 +85,20 @@ const SXNetworkCardContent: React.FC = () => {
                 <Row gutter={4}>
                     <p>To supply, withdraw, or repay your Wrapped SX, you need to enable it first</p>
                 </Row>
-                {isWithdrawalsEnabled ? 
-                                <Space.Compact style={{ width: '100%' }}>
-                                <InputNumber
-                                    style={{ width: '100%' }}
-                                    stringMode
-                                    size="large"
-                                    onChange={(value) => { withdrawAmount = value! as number }}
-                                    prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>}
-                                    placeholder="Enter an amount"
-                                    controls={false}
-                                />
-                                <Button type="primary" size='large' onClick={withdrawWSXHook}>Withdraw</Button>
-                            </Space.Compact>
-                            : <Button type="primary" size={'large'} onClick={enableDegenWSXHook}> </Button>
+                {isWithdrawalsEnabled ?
+                    <Space.Compact style={{ width: '100%' }}>
+                        <InputNumber
+                            style={{ width: '100%' }}
+                            stringMode
+                            size="large"
+                            onChange={(value) => { withdrawAmount = value! as number }}
+                            prefix={<img width="20" height="20" src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png' alt='WSX Token'></img>}
+                            placeholder="Enter an amount"
+                            controls={false}
+                        />
+                        <Button type="primary" size='large' onClick={withdrawWSXHook}>Withdraw</Button>
+                    </Space.Compact>
+                    : <Button type="primary" size={'large'} onClick={enableDegenWSXHook}> </Button>
                 }
             </div>
         );
