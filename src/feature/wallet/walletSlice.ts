@@ -10,7 +10,7 @@ interface WalletState {
 }
 
 const initialState: WalletState = {
-    address: "0x0000000000000000000000000000000000000000" ,
+    address: "0x0000000000000000000000000000000000000000",
     loading: false,
     error: "",
     isConnected: false,
@@ -39,19 +39,19 @@ export const connectWalletConnect = createAsyncThunk(
             //WC logic
             modal.open()
             const accountAddress = modal.getAddress()
-            return accountAddress as unknown as string;
+            return accountAddress || '';
         } catch (err) {
             console.log(err);
             return "0x0000000000000000000000000000000000000000";
         }
-});
+    });
 
 
 export const disconnectWallet = createAsyncThunk(
     'wallet/disconnect',
     async () => {
         return false;
-});
+    });
 
 export const metaMaskSlice = createSlice({
     name: 'metaMask',
@@ -81,7 +81,7 @@ export const metaMaskSlice = createSlice({
             .addCase(connectWalletConnect.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message!;
-    
+
             })
             .addCase(disconnectWallet.fulfilled, (state, action) => {
                 state.loading = false;
