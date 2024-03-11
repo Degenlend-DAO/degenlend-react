@@ -18,7 +18,7 @@ const SupplyMarkets: React.FC = () => {
             centered: true,
             closeIcon: true,
             maskClosable: true,
-            width: 810,
+            width: '50vw',
             content: <Provider store={store}><SXTokenCardContent /></Provider>,
         });
     }
