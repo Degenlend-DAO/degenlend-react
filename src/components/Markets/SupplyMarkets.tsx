@@ -23,15 +23,18 @@ const SupplyMarkets: React.FC = () => {
         });
     }
 
-
     return (
-        <Col>
-            <Card bordered={true} title="Supply Markets" style={{ width: 450 }} onClick={wsxMarketSelected}>
-                <Card hoverable>
-                    <img src={sxtoken} alt='WSX Token'></img>
-                </Card>
+        <Card
+            hoverable
+            bordered={true}
+            title="Supply Markets"
+            headStyle={{ backgroundColor: 'rgba(37, 102, 216, 1)', border: 0 }}
+            style={{ width: '50%' }}
+            onClick={wsxMarketSelected}>
+            <Card>
+                <img src={sxtoken} alt='WSX Token'></img>
             </Card>
-        </Col>
+        </Card>
     );
 }
 
