@@ -27,7 +27,6 @@ const BorrowMarkets: React.FC = () => {
             bordered={true}
             title="Borrow Markets"
             headStyle={{ backgroundColor: 'rgba(37, 102, 216, 1)', border: 0 }}
-            style={{ width: '50%' }}
             onClick={usdcMarketSelected}>
             <Card>
                 <img width="64" height="64" src={usdctoken} alt='USDC Token'></img>

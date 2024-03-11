@@ -29,7 +29,6 @@ const SupplyMarkets: React.FC = () => {
             bordered={true}
             title="Supply Markets"
             headStyle={{ backgroundColor: 'rgba(37, 102, 216, 1)', border: 0 }}
-            style={{ width: '50%' }}
             onClick={wsxMarketSelected}>
             <Card>
                 <img src={sxtoken} alt='WSX Token'></img>

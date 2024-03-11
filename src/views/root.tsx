@@ -59,10 +59,10 @@ const Root: React.FC = () => <>
     <Content style={contentStyle}>
       <Dashboard />
       <Row gutter={16}>
-        <Col span={12}>
+        <Col span={24} xs={12}>
           <SupplyMarkets />
         </Col>
-        <Col span={12}>
+        <Col span={24} xs={12}>
           <BorrowMarkets />
         </Col>
       </Row>
