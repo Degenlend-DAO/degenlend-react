@@ -4,7 +4,7 @@ import USDCCardContent from '../WalletCard/USDCTokenCardContent';
 import { Provider, useStore } from 'react-redux';
 import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
 
-const BorrowMarkets = () => {
+const BorrowMarkets: React.FC = () => {
 
     const store = useStore();
     const { info } = Modal;
