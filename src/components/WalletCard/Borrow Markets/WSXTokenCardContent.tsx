@@ -7,33 +7,89 @@ import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBala
 import { InfoCircleOutlined } from '@ant-design/icons';
 
 import wsxtoken from '../../../assets/sx_coin_token.png';
+import { EMPTY_ADDRESS } from '../../../utils/constants';
 
 const BorrowWSXCardContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     let WSX = new Intl.NumberFormat('en-US');
     const wsxBalance = useSelector((state: RootState) => state.WSX.wsxBalance);
+    const borrowRate = 0;
+    let borrowAmount = 0;
+    let repayAmount: number = 0;
+    const myWalletAddress = EMPTY_ADDRESS
 
     const [isBorrowingEnabled, setisBorrowingEnabled] = useState<boolean>(false);
     const [isBorrow, setSupply] = useState<boolean>(true);
 
 
+    //Hooks
+    const borrowWSXHook = () => {
+        
+    }
+
+    const repayWSXHook = () => {
+        
+    }
+
+    // Components
     function Content({ isBorrow }: { isBorrow: boolean})
     {
         if (isBorrow) return (
             <div>
                 <Row gutter={4}>
-                    <p>
-
-                    </p>
+                    <p>To supply, withdraw, or repay your USDC, you need to enable it first</p>
                 </Row>
+                <Statistic title="Borrow Rate" value={borrowRate} precision={2} suffix="%" />
+
+                <Space direction='vertical' style={{ width: '100%' }}>
+                    <InputNumber 
+                            style={{ width: '75%' }}
+                            stringMode
+                            id='borrowAmount'
+                            placeholder='Enter an Amount'
+                            size='large'
+                            onChange={(value) => { borrowAmount = value! as number}}
+                            prefix={<img width="20" height="20" src={wsxtoken} alt='USDC Token' />}
+                            variant='outlined'
+                            controls={false}
+                    />
+                    <Button
+                            type='primary'
+                            size='large'
+                            onClick={borrowWSXHook}>Borrow WSX</Button>
+                </Space>
             </div>
         )
         else return (
             <div>
-
+                <Row gutter={4}>
+                    <p>To supply, withdraw, or repay your USDC, you need to enable it first</p>
+                </Row>
+                    <Space direction='vertical' style={{width: '100%'}}>
+                        <InputNumber 
+                            style={{ width: '75%' }}
+                            size='large'
+                            stringMode
+                            id='repayAmount'
+                            onChange={(value) => { repayAmount = value! as number }}
+                            prefix={<img width='20' height='20' src={wsxtoken} alt='wSX Token' />}
+                            placeholder='Enter an Amount'
+                            variant='outlined'
+                            controls={false}
+                        />
+                        <Button
+                            type='primary'
+                            size='large'
+                            onClick={repayWSXHook}> Repay WSX</Button>
+                    </Space>
+                
             </div>
         )
     }
+
+    useEffect(() => {
+
+    })
 
 
     return (
