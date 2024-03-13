@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Flex, Divider, Button, Col, Statistic, Segmented, Input, Tooltip, Space, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../app/Store';
+import { AppDispatch, RootState } from '../../../app/Store';
 import { UnknownAction } from '@reduxjs/toolkit';
-import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBalance, updateusdcBorrowRate } from '../../feature/borrow/USDCSlice';
+import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBalance, updateusdcBorrowRate } from '../../../feature/borrow/USDCSlice';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
+import usdctoken from '../../../assets/usd-coin-usdc-logo-64x64.png';
 
 
 const USDCCardContent: React.FC = () => {
