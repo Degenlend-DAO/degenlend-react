@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Modal, Col, Card, Tooltip, } from 'antd';
-import SXTokenCardContent from '../WalletCard/Supply Markets/SXTokenCardContent';
+import SupplyWSXCardContent from '../WalletCard/Supply Markets/WSXTokenCardContent';
 import { Provider, useStore } from 'react-redux';
 import sxtoken from '../../assets/sx_coin_token.png';
 import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
@@ -21,7 +21,7 @@ const SupplyMarkets: React.FC = () => {
             closeIcon: true,
             maskClosable: true,
             width: '50vw',
-            content: <Provider store={store}><SXTokenCardContent /></Provider>,
+            content: <Provider store={store}><SupplyWSXCardContent /></Provider>,
         });
     }
 

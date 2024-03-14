@@ -8,7 +8,7 @@ import { InfoCircleOutlined } from '@ant-design/icons';
 import { address } from '../../../utils/web3';
 import sxtoken from '../../../assets/sx_coin_token.png';
 
-const SXNetworkCardContent: React.FC = () => {
+const SupplyWSXCardContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     let depositAmount: number = 0;
     let withdrawAmount: number = 0;
@@ -20,6 +20,7 @@ const SXNetworkCardContent: React.FC = () => {
     const [isLendingEnabled, setIsLendingEnabled] = useState<boolean>(false);
     const [isSupply, setSupply] = useState<boolean>(true);
 
+    // hooks
     const enableWSXHook = () => {
         dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.cwSX }));
         setIsLendingEnabled(true);
@@ -32,12 +33,6 @@ const SXNetworkCardContent: React.FC = () => {
     const withdrawWSXHook = () => {
         dispatch(withdrawWSX(withdrawAmount));
     }
-
-    useEffect(() => {
-        dispatch(updatewsxsupplyRate());
-        dispatch(updateWSXBalance());
-        dispatch(updateSupplyBalance(myWalletAddress));
-    })
 
     function Content({ isSupply }: { isSupply: boolean }) {
         if (isSupply) return (
@@ -82,6 +77,14 @@ const SXNetworkCardContent: React.FC = () => {
         );
     }
 
+
+    useEffect(() => {
+        dispatch(updatewsxsupplyRate());
+        dispatch(updateWSXBalance());
+        dispatch(updateSupplyBalance(myWalletAddress));
+    })
+
+
     return (
         <div style={{ textAlign: "center" }}>
             <Row justify="center" align="middle" style={{ marginBottom: 20 }}>
@@ -113,4 +116,4 @@ const SXNetworkCardContent: React.FC = () => {
     );
 }
 
-export default SXNetworkCardContent;
+export default SupplyWSXCardContent;

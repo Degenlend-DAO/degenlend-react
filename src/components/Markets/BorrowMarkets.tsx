@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, Card, Col, Tooltip } from 'antd';
-import USDCCardContent from '../WalletCard/Borrow Markets/USDCTokenCardContent';
+import { Modal, Card, Tooltip } from 'antd';
+import BorrowUSDCCardContent from '../WalletCard/Borrow Markets/USDCTokenCardContent';
 import { Provider, useStore } from 'react-redux';
 import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
 import wsxtoken from '../../assets/sx_coin_token.png';
@@ -19,7 +19,7 @@ const BorrowMarkets: React.FC = () => {
             closeIcon: true,
             maskClosable: true,
             width: '50vw',
-            content: <Provider store={store}><USDCCardContent /></Provider>,
+            content: <Provider store={store}><BorrowUSDCCardContent /></Provider>,
         })
     }
 
