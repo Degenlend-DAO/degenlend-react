@@ -5,26 +5,26 @@ import { initReactI18next } from "react-i18next";
 import formatters from "./formatters";
 
 export const supportedLanguages = {
-    en: "English",
-    es: "Spanish",
-    fr: "French",
-    ar: "Arabic (العربية)",
-}
+  en: "English",
+  es: "Spanish",
+  fr: "French",
+  ar: "Arabic (العربية)",
+};
 
 i18next
-    .use(HttpApi)
-    .use(LanguageDetector)
-    .use(initReactI18next)
-    .init({
-        fallbackLng: "en",
-        supportedLngs: Object.keys(supportedLanguages),
-        interpolation: {
-            escapeValue: false
-        }
-    });
+  .use(HttpApi)
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    fallbackLng: "en",
+    supportedLngs: Object.keys(supportedLanguages),
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
 Object.entries(formatters).forEach(([key, resolver]) => {
-    i18next.services.formatter?.add(key, resolver);
+  i18next.services.formatter?.add(key, resolver);
 });
 
 export default i18next;

@@ -1,17 +1,17 @@
 export default {
-    lowercase,
-    uppercase,
-    datetime,
-    number,
-    currency,
+  lowercase,
+  uppercase,
+  datetime,
+  number,
+  currency,
 } as const;
 
 export function lowercase(value: string) {
-    return value.toLowerCase();
+  return value.toLowerCase();
 }
 
 export function uppercase(value: string) {
-    return value.toUpperCase();
+  return value.toUpperCase();
 }
 
 /**
@@ -22,14 +22,14 @@ export function uppercase(value: string) {
  * @returns The qualified locale code, including region.
  */
 function qualifiedLngFor(lng: string): string {
-    switch (lng) {
-        case "ar":
-            return "ar-EG";
-        case "en":
-            return "en-US";
-        default:
-            return lng;
-    }
+  switch (lng) {
+    case "ar":
+      return "ar-EG";
+    case "en":
+      return "en-US";
+    default:
+      return lng;
+  }
 }
 
 /**
@@ -41,14 +41,11 @@ function qualifiedLngFor(lng: string): string {
  * @returns The formatted datetime.
  */
 export function datetime(
-    value: Date | number,
-    lng: string | undefined,
-    options?: Intl.DateTimeFormatOptions,
+  value: Date | number,
+  lng: string | undefined,
+  options?: Intl.DateTimeFormatOptions,
 ): string {
-    return new Intl.DateTimeFormat(
-        qualifiedLngFor(lng!),
-        options,
-    ).format(value);
+  return new Intl.DateTimeFormat(qualifiedLngFor(lng!), options).format(value);
 }
 
 /**
@@ -60,14 +57,11 @@ export function datetime(
  * @returns The formatted number.
  */
 export function number(
-    value: number,
-    lng: string | undefined,
-    options?: Intl.NumberFormatOptions,
+  value: number,
+  lng: string | undefined,
+  options?: Intl.NumberFormatOptions,
 ): string {
-    return new Intl.NumberFormat(
-        qualifiedLngFor(lng!),
-        options,
-    ).format(value);
+  return new Intl.NumberFormat(qualifiedLngFor(lng!), options).format(value);
 }
 
 /**
@@ -79,12 +73,12 @@ export function number(
  * @returns The formatted currency string.
  */
 export function currency(
-    value: number,
-    lng: string | undefined,
-    options?: Intl.NumberFormatOptions,
+  value: number,
+  lng: string | undefined,
+  options?: Intl.NumberFormatOptions,
 ): string {
-    return number(value, lng, {
-        style: "currency",
-        ...options,
-    });
+  return number(value, lng, {
+    style: "currency",
+    ...options,
+  });
 }
