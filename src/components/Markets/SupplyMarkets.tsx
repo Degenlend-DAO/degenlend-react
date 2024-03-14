@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Modal, Col, Card, Tooltip, } from 'antd';
+import { Switch, Modal, Space, Card, Tooltip, } from 'antd';
 import SupplyWSXCardContent from '../WalletCard/Supply Markets/WSXTokenCardContent';
 import { Provider, useStore } from 'react-redux';
 import sxtoken from '../../assets/sx_coin_token.png';
@@ -47,6 +47,7 @@ const SupplyMarkets: React.FC = () => {
             <Card onClick={wsxMarketSelected} hoverable >
                 <img src={sxtoken} alt='WSX Token'></img>
             </Card>
+            <Space />
             <Card onClick={usdcMarketSelected} hoverable >
                 <img src={usdctoken} alt='USDC Token'></img>
             </Card>

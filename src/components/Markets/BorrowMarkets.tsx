@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Card, Tooltip } from 'antd';
+import { Modal, Card, Tooltip, Space } from 'antd';
 import BorrowUSDCCardContent from '../WalletCard/Borrow Markets/USDCTokenCardContent';
 import { Provider, useStore } from 'react-redux';
 import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
@@ -44,6 +44,7 @@ const BorrowMarkets: React.FC = () => {
             <Card onClick={wsxMarketSelected} hoverable >
                 <img width="64" height="64" src={wsxtoken} alt='Wrapped SX Token'></img>
             </Card>
+            <Space />
             <Card onClick={usdcMarketSelected} hoverable>
                 <img width="64" height="64" src={usdctoken} alt='USDC Token'></img>
             </Card>
