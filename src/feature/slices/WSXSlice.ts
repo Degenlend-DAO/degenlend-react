@@ -136,6 +136,8 @@ export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
     }
 });
 
+// Supply Side Thunks
+
 export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
@@ -149,7 +151,7 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: num
         console.log(txn);
     } catch (error) {
         // txn rejected
-        console.log(`[Console] Something went wrong: ${error}`);
+        console.log(`[Console] Something went wrong: \n \n ${error}`);
     }
 });
 
@@ -170,6 +172,16 @@ export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount:
     }
 });
 
+// Borrow Side Thunks
+export const repayWSX = createAsyncThunk('wSX/repay', async () => {
+    
+});
+
+export const borrowWSX = createAsyncThunk('wSX/borrow', async () => {
+
+});
+
+/// Exporting the slice created
 export const WSXSlice = createSlice({
     name: "WSX",
     initialState,
