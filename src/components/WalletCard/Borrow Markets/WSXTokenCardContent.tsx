@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Row, Divider, Button, Col, Statistic, Segmented, Tooltip, Space, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../app/Store';
-import { UnknownAction } from '@reduxjs/toolkit';
-import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBalance, updateusdcBorrowRate } from '../../../feature/borrow/USDCSlice';
-import { InfoCircleOutlined } from '@ant-design/icons';
+
+// Action Imports
+import { borrowWSX, repayWSX } from '../../../feature/slices/WSXSlice';
 
 import wsxtoken from '../../../assets/sx_coin_token.png';
 import { EMPTY_ADDRESS } from '../../../utils/constants';
@@ -24,11 +24,11 @@ const BorrowWSXCardContent: React.FC = () => {
 
     //Hooks
     const borrowWSXHook = () => {
-        
+        dispatch(borrowWSX);
     }
 
     const repayWSXHook = () => {
-        
+        dispatch(repayWSX);
     }
 
     // Components

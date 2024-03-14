@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input, Tooltip, Space, InputNumber } from 'antd';
+import {Row, Divider, Button, Col, Statistic, Segmented, Space, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
+import { withdrawUSDC, supplyUSDC } from '../../../feature/slices/USDCSlice';
 import { AppDispatch, RootState } from '../../../app/Store';
 import usdctoken from '../../../assets/usd-coin-usdc-logo-64x64.png'
 
 
 const SupplyUSDCCardContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-
-
-    let USDollar = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
     let WSX = new Intl.NumberFormat('en-US');
     const [isBorrowingEnabled, setisBorrowingEnabled] = useState<boolean>(false);
     const usdcBalance = useSelector((state: RootState) => state.USDC.usdcBalance);
@@ -23,10 +18,21 @@ const SupplyUSDCCardContent: React.FC = () => {
 
     const [isSupply, setSupply] = useState<boolean>(true);
 
-    // Hooks
-    const depositUSDCHook = () => {}
+    // Extra Variables
 
-    const withdrawUSDCHook = () => {}
+    let USDollar = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
+    // Hooks
+    const depositUSDCHook = () => {
+        dispatch(supplyUSDC);
+    }
+
+    const withdrawUSDCHook = () => {
+        dispatch(withdrawUSDC);
+    }
 
 
 
