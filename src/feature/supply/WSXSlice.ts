@@ -136,8 +136,6 @@ export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
     }
 });
 
-// Supply Side Thunks
-
 export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
@@ -151,7 +149,7 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: num
         console.log(txn);
     } catch (error) {
         // txn rejected
-        console.log(`[Console] Something went wrong: \n \n ${error}`);
+        console.log(`[Console] Something went wrong: ${error}`);
     }
 });
 
@@ -172,38 +170,6 @@ export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount:
     }
 });
 
-// Borrow Side Thunks
-export const repayWSX = createAsyncThunk('wSX/repay', async () => {
-    
-    const signer = await provider.getSigner();
-    const signeddegenWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
-
-    try {
-            let txn:any = await signeddegenWSX.repayBorrow();
-            await txn.wait(1);
-            console.log(txn);
-    } catch (error) {
-        // txn rejected
-        console.log(`[Console] Something went wrong: ${error}`);
-    }
-});
-
-export const borrowWSX = createAsyncThunk('wSX/borrow', async () => {
-    
-    const signer = await provider.getSigner();
-    const signeddegenWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
-    
-    try {
-            let txn:any = await signeddegenWSX.borrow();
-            await txn.wait(1);
-            console.log(txn);
-    } catch (error) {
-        // txn rejected
-        console.log(`[Console] Something went wrong: ${error}`);
-    }
-});
-
-/// Exporting the slice created
 export const WSXSlice = createSlice({
     name: "WSX",
     initialState,
