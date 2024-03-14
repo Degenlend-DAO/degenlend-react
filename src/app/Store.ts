@@ -5,7 +5,7 @@ import borrowBalanceReducer from '../feature/dashboard/borrowBalanceSlice';
 import borrowLimitReducer from '../feature/dashboard/borrowLimitSlice';
 import netAPYReducer from '../feature/dashboard/netAPYSlice';
 import WSXReducer from '../feature/slices/WSXSlice';
-import USDCReducer from '../feature/borrow/USDCSlice';
+import USDCReducer from '../feature/slices/USDCSlice';
 import { useDispatch } from "react-redux";
 
 export const store = configureStore({
