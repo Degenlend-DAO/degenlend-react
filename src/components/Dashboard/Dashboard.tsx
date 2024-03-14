@@ -67,7 +67,6 @@ const Dashboard: React.FC = () => {
             />
           </Card>
         </Col>
-
         <Col span={6}>
           <Card bordered={false}>
             <Statistic
