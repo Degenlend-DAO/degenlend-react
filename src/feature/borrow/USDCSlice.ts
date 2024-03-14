@@ -95,6 +95,50 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async ({ amount, add
     }
 });
 
+///////////  Supply Market Thunks
+
+export const supplyUSDC = createAsyncThunk('usdc/supply', async ()=> {
+    
+    const mintAmount = 0;
+
+    //Provider must be variable, depending on metamask or walllet connect being connected
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);  
+    const signer = await provider.getSigner();
+    const signeddegenUSDC = new ethers.Contract(address.degenUSDC, cerc20ABI, signer);
+    try {
+        // Contract call 
+        let txn: any = await signeddegenUSDC.mint(mintAmount);
+        txn.wait(1);
+        console.log(txn);
+    } catch (error) {
+        // txn rejected
+            console.log(`[Console] Something went wrong: \n \n ${error}`);
+    }
+});
+
+export const withdrawUSDC = createAsyncThunk('usdc/withdraw', async () => {
+
+    const mintAmount = 0;
+
+    //Provider must be variable, depending on metamask or walllet connect being connected
+    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);  
+    const signer = await provider.getSigner();
+    const signeddegenUSDC = new ethers.Contract(address.degenUSDC, cerc20ABI, signer);
+
+    try {
+        // Contract call 
+        let txn: any = await signeddegenUSDC.redeem(mintAmount);
+        txn.wait(1);
+        console.log(txn);
+    } catch (error) {
+        // txn rejected
+            console.log(`[Console] Something went wrong: \n \n ${error}`);
+    }
+});
+
+
+///////////  Borrow Market Thunks
+
 /// This function repays the USDC balance
 export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
