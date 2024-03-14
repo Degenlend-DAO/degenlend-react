@@ -41,11 +41,11 @@ const BorrowMarkets: React.FC = () => {
             title="Borrow Markets"
             headStyle={{ backgroundColor: 'rgba(37, 102, 216, 1)', border: 0 }}
             >
-            <Card onClick={usdcMarketSelected} hoverable>
-                <img width="64" height="64" src={usdctoken} alt='USDC Token'></img>
-            </Card>
             <Card onClick={wsxMarketSelected} hoverable >
                 <img width="64" height="64" src={wsxtoken} alt='Wrapped SX Token'></img>
+            </Card>
+            <Card onClick={usdcMarketSelected} hoverable>
+                <img width="64" height="64" src={usdctoken} alt='USDC Token'></img>
             </Card>
         </Card>
     );
