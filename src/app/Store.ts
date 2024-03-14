@@ -4,7 +4,7 @@ import supplyBalanceReducer from '../feature/dashboard/supplyBalanceSlice';
 import borrowBalanceReducer from '../feature/dashboard/borrowBalanceSlice';
 import borrowLimitReducer from '../feature/dashboard/borrowLimitSlice';
 import netAPYReducer from '../feature/dashboard/netAPYSlice';
-import WSXReducer from '../feature/slices/WSXSlice';
+import WSXReducer from '../feature/supply/WSXSlice';
 import USDCReducer from '../feature/borrow/USDCSlice';
 import { useDispatch } from "react-redux";
 
