@@ -77,32 +77,6 @@ export const updatewsxsupplyRate = createAsyncThunk(
 
     })
 
-export const enterMarkets = createAsyncThunk('wSX/EnterMarkets', async () => {
-    // Enter degenwSX-degenUSDC Market
-
-    let marketsToEnter = [address.cwSX, address.cUSDC];
-    try {
-        let txn = await comptroller.enterMarkets(marketsToEnter);
-        await txn.wait(1);
-        console.log(txn);
-    } catch (error) {
-        console.log(`something went wrong: ${error}`)
-    }
-    console.log("Done");
-})
-
-export const exitMarkets = createAsyncThunk('wSX/ExitMarket', async () => {
-    let marketToExit = address.cwSX;
-
-    try {
-        let txn = await comptroller.exitmarket(marketToExit);
-        await txn.wait(1);
-        console.log(txn);
-    } catch (error) {
-        console.log(`something went wrong: ${error}`);
-    }
-});
-
 // Method calls
 
 export const approveWSX = createAsyncThunk('wSX/approve', async ({ amount, addressToApprove }: approveWSXParams) => {
