@@ -4,31 +4,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../app/Store';
 
 // Action Imports
-import { borrowWSX, repayWSX } from '../../../feature/slices/WSXSlice';
+import { approveWSX, borrowWSX, repayWSX } from '../../../feature/slices/WSXSlice';
 
 import wsxtoken from '../../../assets/sx_coin_token.png';
-import { EMPTY_ADDRESS } from '../../../utils/constants';
+import { EMPTY_ADDRESS, WSX } from '../../../utils/constants';
 
 const BorrowWSXCardContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    let WSX = new Intl.NumberFormat('en-US');
-    const wsxBalance = useSelector((state: RootState) => state.WSX.wsxBalance);
-    const borrowRate = 0;
-    let borrowAmount = 0;
-    let repayAmount: number = 0;
-    const myWalletAddress = EMPTY_ADDRESS
 
+    /// View Objects
+    const wsxBalance = useSelector((state: RootState) => state.WSX.wsxBalance);
+    const borrowRate = useSelector((state: RootState) => state.WSX.borrowRate);
+    const borrowBalance = useSelector((state: RootState) => state.WSX.borrowBalance);
+    const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
+
+    /// Variable Objects
+    let borrowAmount:number = 0;
+    let approveAmount:number = 0;
+    let repayAmount:number = 0;
+
+    /// State Objects
     const [isBorrowingEnabled, setisBorrowingEnabled] = useState<boolean>(false);
     const [isBorrow, setSupply] = useState<boolean>(true);
 
 
     //Hooks
+
+    const enableWSXHook = () => {
+        setisBorrowingEnabled(true);
+    }
+
+    const approveWSXHook = () => {
+        dispatch(approveWSX({amount: approveAmount, addressToApprove: myWalletAddress }));
+    }
+
     const borrowWSXHook = () => {
-        dispatch(borrowWSX);
+        dispatch(borrowWSX(borrowAmount));
     }
 
     const repayWSXHook = () => {
-        dispatch(repayWSX);
+        dispatch(repayWSX(repayAmount));
     }
 
     // Components
@@ -87,10 +102,7 @@ const BorrowWSXCardContent: React.FC = () => {
         )
     }
 
-    useEffect(() => {
-
-    })
-
+    useEffect(() => { })
 
     return (
         <div style={{ textAlign: "center" }}>

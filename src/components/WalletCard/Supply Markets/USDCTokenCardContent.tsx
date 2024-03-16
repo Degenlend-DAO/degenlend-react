@@ -1,40 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import {Row, Divider, Button, Col, Statistic, Segmented, Space, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { withdrawUSDC, supplyUSDC } from '../../../feature/slices/USDCSlice';
+
 import { AppDispatch, RootState } from '../../../app/Store';
 import usdctoken from '../../../assets/usd-coin-usdc-logo-64x64.png'
+
+import { EMPTY_ADDRESS, USDollar } from '../../../utils/constants';
+import { approveUSDC, supplyUSDC, withdrawUSDC } from '../../../feature/slices/USDCSlice';
 
 
 const SupplyUSDCCardContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    let WSX = new Intl.NumberFormat('en-US');
-    const [isBorrowingEnabled, setisBorrowingEnabled] = useState<boolean>(false);
+
+    // View Objects    
     const usdcBalance = useSelector((state: RootState) => state.USDC.usdcBalance);
-    const supplyBalance = 0;
-    const supplyRate = 0;
+    const supplyRate = useSelector((state: RootState) => state.USDC.supplyRate);
+    const supplyBalance = useSelector((state: RootState) => state.USDC.supplyBalance);
+    const myWalletAddress = EMPTY_ADDRESS;
+
+    // Variable Objects
+    let approveAmount: number = 0;
     let depositAmount: number = 0;
     let withdrawAmount: number = 0;
 
+    // State Objects
+    const [isBorrowingEnabled, setisBorrowingEnabled] = useState<boolean>(false);
     const [isSupply, setSupply] = useState<boolean>(true);
 
-    // Extra Variables
-
-    let USDollar = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
-
     // Hooks
+
+    const approveUSDCHook = () => {
+        dispatch(approveUSDC({ amount: approveAmount, addressToApprove: myWalletAddress }));
+    }
+
     const depositUSDCHook = () => {
-        dispatch(supplyUSDC);
+        dispatch(supplyUSDC(depositAmount));
     }
 
     const withdrawUSDCHook = () => {
-        dispatch(withdrawUSDC);
+        dispatch(withdrawUSDC(withdrawAmount));
     }
-
-
 
     // Components
     function Content({isSupply}: {isSupply: boolean}) {
@@ -58,7 +63,7 @@ const SupplyUSDCCardContent: React.FC = () => {
                     />
                     <Button type="primary" size='large' onClick={depositUSDCHook}>Deposit</Button>
                 </Space>
-                <p>Currently supplying {WSX.format(supplyBalance)} degenwSX</p>
+                <p>Currently supplying {USDollar.format(supplyBalance)} degenwSX</p>
             </div>
         )
         else return (
@@ -81,7 +86,7 @@ const SupplyUSDCCardContent: React.FC = () => {
     }
 
     // Effects
-    useEffect(() => {})
+    useEffect(() => {  })
 
     return (
         <div style={{ textAlign: "center"}}>

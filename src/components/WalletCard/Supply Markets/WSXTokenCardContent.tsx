@@ -2,28 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { Flex, Card, Row, Radio, Divider, Button, Col, Form, Statistic, Segmented, Input, Tooltip, Space, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../app/Store';
-import { approveWSX, updateWSXBalance, updatewsxsupplyRate, updateSupplyBalance, supplyWSX, withdrawWSX } from '../../../feature/slices/WSXSlice';
+import { approveWSX, supplyWSX, withdrawWSX } from '../../../feature/slices/WSXSlice';
 import { UnknownAction } from '@reduxjs/toolkit';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { address } from '../../../utils/web3';
 import sxtoken from '../../../assets/sx_coin_token.png';
+import { WSX } from '../../../utils/constants';
 
 const SupplyWSXCardContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    let depositAmount: number = 0;
-    let withdrawAmount: number = 0;
+
+    // View Objects
     const wsxBalance = useSelector((state: RootState) => state.WSX.wsxBalance);
     const supplyRate = useSelector((state: RootState) => state.WSX.supplyRate);;
     const supplyBalance = useSelector((state: RootState) => state.WSX.supplyBalance);
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
-    let WSX = new Intl.NumberFormat('en-US');
+    
+    /// Variable Objects
+    let approveAmount: number = 0;
+    let depositAmount: number = 0;
+    let withdrawAmount: number = 0;
+    
+    /// State Objects
     const [isLendingEnabled, setIsLendingEnabled] = useState<boolean>(false);
     const [isSupply, setSupply] = useState<boolean>(true);
 
-    // hooks
+    /// Hoooks
     const enableWSXHook = () => {
-        dispatch(approveWSX({ amount: 100000000000000, addressToApprove: address.cwSX }));
         setIsLendingEnabled(true);
+    }
+    
+    const approveWSXHook = () => {
+        dispatch(approveWSX({ amount: approveAmount, addressToApprove: myWalletAddress }));
     }
 
     const depositWSXHook = () => {
@@ -34,6 +44,7 @@ const SupplyWSXCardContent: React.FC = () => {
         dispatch(withdrawWSX(withdrawAmount));
     }
 
+    // Components
     function Content({ isSupply }: { isSupply: boolean }) {
         if (isSupply) return (
             <div>
@@ -77,13 +88,8 @@ const SupplyWSXCardContent: React.FC = () => {
         );
     }
 
-
-    useEffect(() => {
-        dispatch(updatewsxsupplyRate());
-        dispatch(updateWSXBalance());
-        dispatch(updateSupplyBalance(myWalletAddress));
-    })
-
+    // Effects
+    useEffect(() => { })
 
     return (
         <div style={{ textAlign: "center" }}>

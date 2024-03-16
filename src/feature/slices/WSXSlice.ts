@@ -2,9 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX, comptroller } from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
 
+
+// Interfaces                                                        
 interface WSXState {
     status: string,
     wsxBalance: number,
+    borrowBalance: number,
+    borrowRate: number,
     supplyBalance: number,
     supplyRate: number,
 }
@@ -20,10 +24,12 @@ const initialState: WSXState = {
     wsxBalance: 0.00,
     supplyBalance: 0.00,
     supplyRate: 0.00,
+    borrowRate: 0.00,
+    borrowBalance: 0.00,
 
 }
 
-
+// Views
 export const updateWSXBalance = createAsyncThunk(
     'wsxBalance/update',
     async () => {
@@ -77,8 +83,30 @@ export const updatewsxsupplyRate = createAsyncThunk(
 
     })
 
+export const updateBorrowRate = createAsyncThunk('wsx/updateBorrowRate', async () => {
+    try {
+        
+    } catch (error) {
+        
+    }
+
+    return 1;
+});
+
+export const updateBorrowBalance = createAsyncThunk('wsx/updateBorrowBalance', async () => {
+    try {
+        
+    } catch (error) {
+        
+    }
+
+    return 1;
+});
+
 // Method calls
 
+
+// This function enables Wrapped SX to be engaged with
 export const approveWSX = createAsyncThunk('wSX/approve', async ({ amount, addressToApprove }: approveWSXParams) => {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
@@ -110,7 +138,7 @@ export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
     }
 });
 
-// Supply Side Thunks
+///////////  Supply Market Thunks
 
 export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
@@ -146,8 +174,9 @@ export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount:
     }
 });
 
-// Borrow Side Thunks
-export const repayWSX = createAsyncThunk('wSX/repay', async () => {
+///////////  Borrow Market Thunks
+
+export const repayWSX = createAsyncThunk('wSX/repay', async (repayAmount: number) => {
     
     const signer = await provider.getSigner();
     const signeddegenWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
@@ -162,7 +191,7 @@ export const repayWSX = createAsyncThunk('wSX/repay', async () => {
     }
 });
 
-export const borrowWSX = createAsyncThunk('wSX/borrow', async () => {
+export const borrowWSX = createAsyncThunk('wSX/borrow', async (borrowAmount: number) => {
     
     const signer = await provider.getSigner();
     const signeddegenWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
@@ -192,6 +221,13 @@ export const WSXSlice = createSlice({
         })
         builder.addCase(updateSupplyBalance.fulfilled, (state, action) => {
             state.supplyBalance = action.payload;
+        })
+        
+        builder.addCase(updateBorrowRate.fulfilled, (state, action) => {
+            state.borrowRate = action.payload;
+        })
+        builder.addCase(updateBorrowBalance.fulfilled, (state, action) => {
+            state.borrowBalance = action.payload;
         })
 
         //Actions

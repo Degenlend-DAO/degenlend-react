@@ -2,30 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Row, Flex, Divider, Button, Col, Statistic, Segmented, Input, Tooltip, Space, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../app/Store';
-import { approveUSDC, borrowUSDC, repayUSDC, updateUSDCBalance, updateBorrowBalance, updateusdcBorrowRate } from '../../../feature/slices/USDCSlice';
+import { approveUSDC, borrowUSDC, repayUSDC } from '../../../feature/slices/USDCSlice';
 import usdctoken from '../../../assets/usd-coin-usdc-logo-64x64.png';
+import { USDollar } from '../../../utils/constants';
 
 
 const BorrowUSDCCardContent: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    let borrowAmount: number = 0;
-    let approveAmount: number = 10000000;
-    let repayAmount: number = 0;
-    const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
-    const borrowRate = useSelector((state: RootState) => state.USDC.borrowRate);
+
+    /// View Objects
     const usdcBalance = useSelector((state: RootState) => state.USDC.usdcBalance);
+    const borrowRate = useSelector((state: RootState) => state.USDC.borrowRate);
     const borrowBalance = useSelector((state: RootState) => state.USDC.borrowBalance);
-    let USDollar = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
+    const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
+
+    /// Variable Objects
+    let approveAmount: number = 0;
+    let borrowAmount: number = 0;
+    let repayAmount: number = 0;
+
+    /// State Objects
     const [isBorrowingEnabled, setisBorrowingEnabled] = useState<boolean>(false);
     const [isBorrow, setSupply] = useState<boolean>(true);
 
-    const enableUSDCHook = () => {
-        dispatch(approveUSDC({ amount: approveAmount, addressToApprove: myWalletAddress }));
-        setisBorrowingEnabled(true);
 
+    // Hooks
+
+    const enableUSDCHook = () => {
+        setisBorrowingEnabled(true);
+    }
+
+    const approveUSDCHook = () => {
+        dispatch(approveUSDC({ amount: approveAmount, addressToApprove: myWalletAddress }));
     }
 
     const repayUSDCHook = () => {
@@ -35,12 +43,6 @@ const BorrowUSDCCardContent: React.FC = () => {
     const borrowUSDCHook = () => {
         dispatch(borrowUSDC(borrowAmount));
     }
-
-    useEffect(() => {
-        dispatch(updateusdcBorrowRate());
-        dispatch(updateUSDCBalance(myWalletAddress));
-        dispatch(updateBorrowBalance(myWalletAddress));
-    })
 
     function Content({ isBorrow }: { isBorrow: boolean }) {
         if (isBorrow) return (
@@ -64,7 +66,7 @@ const BorrowUSDCCardContent: React.FC = () => {
                     <Button
                         type="primary"
                         size='large'
-                        onClick={borrowUSDCHook}>Borrow</Button>
+                        onClick={borrowUSDCHook}>Borrow USDC</Button>
                 </Space>
             </div>
         )
@@ -98,6 +100,9 @@ const BorrowUSDCCardContent: React.FC = () => {
             </div>
         );
     }
+
+    // Effects
+    useEffect(() => {  })
 
     return (
         <div style={{ textAlign: "center" }}>

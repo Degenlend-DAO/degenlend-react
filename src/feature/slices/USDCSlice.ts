@@ -6,13 +6,14 @@ import { RootState } from '../../app/Store';
 import { Eip1193Provider } from 'web3/lib/commonjs/providers.exports';
 
 
-
+// Interfaces
 interface USDCState {
     status: string,
     usdcBalance: number,
     borrowBalance: number,
     borrowRate: number,
-
+    supplyBalance: number,
+    supplyRate: number,
 }
 
 interface approveUSDCParams {
@@ -21,10 +22,14 @@ interface approveUSDCParams {
 }
 
 const initialState: USDCState = {
+
     status: 'initial',
     borrowRate: 0.00,
     borrowBalance: 0.00,
     usdcBalance: 0.00,
+    supplyBalance: 0,
+    supplyRate: 0
+
 }
 
 
@@ -44,7 +49,7 @@ export const updateUSDCBalance = createAsyncThunk(
 );
 
 export const updateBorrowBalance = createAsyncThunk(
-    'supplyBalance/update',
+    'usdc/updateSupplyBalance',
     async (walletAddress: string) => {
         let borrowBalance = 0;
         try {
@@ -59,7 +64,7 @@ export const updateBorrowBalance = createAsyncThunk(
     }
 );
 
-export const updateusdcBorrowRate = createAsyncThunk('usdc/updateBorrowAPY', async () => {
+export const updateBorrowRate = createAsyncThunk('usdc/updateBorrowAPY', async () => {
 
     let borrowRate = 0;
 
@@ -71,6 +76,21 @@ export const updateusdcBorrowRate = createAsyncThunk('usdc/updateBorrowAPY', asy
     } catch (error) {
         console.log`[Console] error invoking updateusdcBorrowAPY: \n ${error}`
     }
+});
+
+export const updateSupplyRate = createAsyncThunk('usdc/updateSupplyRate', async () => {
+
+    return 1;
+});
+
+export const updateSupplyBalance = createAsyncThunk('usdc/updateSupplyBalance', async () => {
+    try {
+        
+    } catch (error) {
+        
+    }
+
+    return 1;
 });
 
 
@@ -97,7 +117,7 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async ({ amount, add
 
 ///////////  Supply Market Thunks
 
-export const supplyUSDC = createAsyncThunk('usdc/supply', async ()=> {
+export const supplyUSDC = createAsyncThunk('usdc/supply', async (supplyAmount: number) => {
     
     const mintAmount = 0;
 
@@ -116,7 +136,7 @@ export const supplyUSDC = createAsyncThunk('usdc/supply', async ()=> {
     }
 });
 
-export const withdrawUSDC = createAsyncThunk('usdc/withdraw', async () => {
+export const withdrawUSDC = createAsyncThunk('usdc/withdraw', async (withdrawAmount: number) => {
 
     const mintAmount = 0;
 
@@ -171,6 +191,7 @@ export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: n
     }
 });
 
+/// Exporting the slice created
 export const USDCSlice = createSlice({
     name: "USDC",
     initialState,
@@ -179,12 +200,18 @@ export const USDCSlice = createSlice({
         builder.addCase(updateUSDCBalance.fulfilled, (state, action) => {
             state.usdcBalance = action.payload;
         })
-        builder.addCase(updateusdcBorrowRate.fulfilled, (state, action) => {
-            console.log(`updateusdcBorrowRate payload: ${action.payload}`);
+        builder.addCase(updateBorrowRate.fulfilled, (state, action) => {
+            console.log(`updateBorrowRate payload: ${action.payload}`);
             state.borrowRate = action.payload;
+        })
+        builder.addCase(updateSupplyRate.fulfilled, (state, action) => {
+            state.supplyRate = action.payload;
         })
         builder.addCase(updateBorrowBalance.fulfilled, (state, action) => {
             state.borrowBalance = action.payload;
+        })
+        builder.addCase(updateSupplyBalance.fulfilled, (state, action) => {
+            state.supplyBalance = action.payload;
         })
     }
 });
