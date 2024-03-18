@@ -84,8 +84,7 @@ const Dashboard: React.FC = () => {
         <Col span={23}>
           <Card
             bordered={false}
-            bodyStyle={bodyStyle}
-            headStyle={bodyStyle}
+            styles={{ body: bodyStyle, header: bodyStyle }}
             style={bodyStyle}
           >
             <h3>Borrow Limit</h3>

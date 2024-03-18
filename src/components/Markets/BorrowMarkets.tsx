@@ -8,6 +8,11 @@ const BorrowMarkets: React.FC = () => {
   const store = useStore();
   const { info } = Modal;
 
+  const bodyStyle: React.CSSProperties = {
+    backgroundColor: "rgba(37, 102, 216, 1)",
+    border: 0,
+  };
+
   const usdcMarketSelected = () => {
     info({
       title: (
@@ -33,7 +38,7 @@ const BorrowMarkets: React.FC = () => {
       hoverable
       bordered={true}
       title="Borrow Markets"
-      headStyle={{ backgroundColor: "rgba(37, 102, 216, 1)", border: 0 }}
+      styles={{ body: bodyStyle }}
       onClick={usdcMarketSelected}
     >
       <Card>

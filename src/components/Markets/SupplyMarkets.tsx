@@ -8,6 +8,11 @@ const SupplyMarkets: React.FC = () => {
   const store = useStore();
   const { info } = Modal;
 
+  const bodyStyle: React.CSSProperties = {
+    backgroundColor: "rgba(37, 102, 216, 1)",
+    border: 0,
+  };
+
   const wsxMarketSelected = () => {
     info({
       title: (
@@ -47,7 +52,7 @@ const SupplyMarkets: React.FC = () => {
       hoverable
       bordered={true}
       title="Supply Markets"
-      headStyle={{ backgroundColor: "rgba(37, 102, 216, 1)", border: 0 }}
+      styles={{ body: bodyStyle }}
       onClick={wsxMarketSelected}
     >
       <Card>
