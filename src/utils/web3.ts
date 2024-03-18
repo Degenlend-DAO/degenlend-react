@@ -4329,3 +4329,7 @@ export const comptroller = new Contract(address.testnetComptroller, comptrollerA
 export  const cWSX = new Contract(address.cwSX, cerc20ABI, provider);
 // cUSDC
 export  const cUSDC = new Contract(address.cUSDC, cerc20ABI, provider);
+
+export const degenWSX = new Contract(address.degenWSX, cerc20ABI, provider);
+
+export const degenUSDC = new Contract(address.degenUSDC, cerc20ABI, provider);
