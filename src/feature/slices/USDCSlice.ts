@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { USDC, address, cUSDC, cerc20ABI, erc20ABI, provider, web3 } from '../../utils/web3';
+import { USDC, address, cUSDC, cerc20ABI, degenUSDC, erc20ABI, provider, web3 } from '../../utils/web3';
 import { BrowserProvider, Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
@@ -68,19 +68,31 @@ export const updateBorrowRate = createAsyncThunk('usdc/updateBorrowAPY', async (
 
     let borrowRate = 0;
 
-    console.log(`Borrow APY for USDC ${borrowRate} %\n`);
     try {
-        let borrowRate = await cUSDC.borrowRatePerBlock();
+        borrowRate = await degenUSDC.borrowRatePerBlock();
+        console.log(`Borrow APY for USDC ${borrowRate} %\n`);
         borrowRate = borrowRate / Math.pow(10, 8);
         return borrowRate;
     } catch (error) {
         console.log`[Console] error invoking updateusdcBorrowAPY: \n ${error}`
+        return 0;
     }
 });
 
 export const updateSupplyRate = createAsyncThunk('usdc/updateSupplyRate', async () => {
+    let supplyRate = 0;
+    
+    console.log(`Supply Rate for USDC: ${supplyRate}`)
 
-    return 1;
+    try {
+        supplyRate = await degenUSDC.supplyRatePerBlock();
+        
+        return supplyRate;
+    } catch (error) {
+        
+    }
+    
+    return supplyRate;
 });
 
 export const updateSupplyBalance = createAsyncThunk('usdc/updateSupplyBalance', async () => {
