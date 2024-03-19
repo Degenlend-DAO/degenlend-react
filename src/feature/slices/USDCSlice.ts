@@ -49,7 +49,7 @@ export const updateUSDCBalance = createAsyncThunk(
 );
 
 export const updateBorrowBalance = createAsyncThunk(
-    'usdc/updateSupplyBalance',
+    'usdc/updateBorrowBalance',
     async (walletAddress: string) => {
         let borrowBalance = 0;
         try {
