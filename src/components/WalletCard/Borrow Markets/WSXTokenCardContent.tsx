@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../app/Store';
 
 // Action Imports
-import { approveWSX, borrowWSX, repayWSX } from '../../../feature/slices/WSXSlice';
+import { approveWSX, borrowWSX, repayWSX, updateBorrowBalance, updateWSXBalance } from '../../../feature/slices/WSXSlice';
 
 import wsxtoken from '../../../assets/sx_coin_token.png';
 import { EMPTY_ADDRESS, WSX } from '../../../utils/constants';
@@ -102,7 +102,11 @@ const BorrowWSXCardContent: React.FC = () => {
         )
     }
 
-    useEffect(() => { })
+    useEffect(() => { 
+
+        dispatch(updateBorrowBalance());
+        dispatch(updateWSXBalance());
+    })
 
     return (
         <div style={{ textAlign: "center" }}>

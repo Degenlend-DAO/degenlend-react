@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Flex, Divider, Button, Col, Statistic, Segmented, Input, Tooltip, Space, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../app/Store';
-import { approveUSDC, borrowUSDC, repayUSDC } from '../../../feature/slices/USDCSlice';
+import { approveUSDC, borrowUSDC, repayUSDC, updateBorrowBalance, updateUSDCBalance } from '../../../feature/slices/USDCSlice';
 import usdctoken from '../../../assets/usd-coin-usdc-logo-64x64.png';
 import { USDollar } from '../../../utils/constants';
 
@@ -15,6 +15,8 @@ const BorrowUSDCCardContent: React.FC = () => {
     const borrowRate = useSelector((state: RootState) => state.USDC.borrowRate);
     const borrowBalance = useSelector((state: RootState) => state.USDC.borrowBalance);
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
+
+
 
     /// Variable Objects
     let approveAmount: number = 0;
@@ -102,7 +104,11 @@ const BorrowUSDCCardContent: React.FC = () => {
     }
 
     // Effects
-    useEffect(() => {  })
+    useEffect(() => { 
+
+        dispatch(updateUSDCBalance());
+        dispatch(updateBorrowBalance());
+     })
 
     return (
         <div style={{ textAlign: "center" }}>

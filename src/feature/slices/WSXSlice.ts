@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX, comptroller } from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
+import { MANTISSA } from '../../utils/constants';
 
 
 // Interfaces                                                        
@@ -33,9 +34,8 @@ const initialState: WSXState = {
 export const updateWSXBalance = createAsyncThunk(
     'wsxBalance/update',
     async () => {
-        const contractAddress = "0x2D4e10Ee64CCF407C7F765B363348f7F62D2E06e"
         const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
-        const WSX = new web3.eth.Contract(erc20ABI, contractAddress);
+        const WSX = new web3.eth.Contract(erc20ABI, address.testnetWSX);
         const rawBalance = await WSX.methods.balanceOf(accounts[0]).call();
         const balance = web3.utils.fromWei(rawBalance, "ether");
         const rawGasBalance = await web3.eth.getBalance(accounts[0]);
@@ -47,12 +47,12 @@ export const updateWSXBalance = createAsyncThunk(
 
 export const updateSupplyBalance = createAsyncThunk(
     'supplyBalance/update',
-    async (myWalletAddress: string) => {
+    async () => {
 
         const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
-        const cWSX = new web3.eth.Contract(erc20ABI, address.cwSX);
+        const degenWSX = new web3.eth.Contract(erc20ABI, address.cwSX);
         try {
-            const rawBalance = await cWSX.methods.balanceOf(accounts[0]).call();
+            const rawBalance = await degenWSX.methods.balanceOf(accounts[0]).call();
             const supplyBalance = web3.utils.fromWei(rawBalance, "ether");
             console.log(`cwsx balance: ${supplyBalance}, raw balance: ${rawBalance}`);
             return Number(supplyBalance);
@@ -144,11 +144,11 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: num
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedCWSX = new ethers.Contract(address.cwSX, cerc20ABI, signer);
-    const scaledUpSupplyAmount = (supplyAmount * 1e18);
+    const scaledUpSupplyAmount = (supplyAmount * MANTISSA);
     try {
         // Contract call
         // approve this address for spending first 
-        const txn = await signedCWSX.mint(scaledUpSupplyAmount);
+        const txn = await signedCWSX.mint(supplyAmount);
         txn.wait(1);
         console.log(txn);
     } catch (error) {
@@ -157,15 +157,15 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: num
     }
 });
 
-export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (supplyAmount: number) => {
+export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (withdrawAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedcWSX = new ethers.Contract(address.cwSX, cerc20ABI, signer);
-    const scaledUpSupplyAmount = (supplyAmount * 1e8);
+    const scaledUpSupplyAmount = (withdrawAmount * MANTISSA);
 
     try {
         //Contract call
-        const tx = await signedcWSX.redeem(scaledUpSupplyAmount);
+        const tx = await signedcWSX.redeemUnderlying(withdrawAmount);
         await tx.wait(1); // wait until the transaction has 1 confirmation on the blockchain
         console.log(tx);
     } catch (error) {

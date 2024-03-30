@@ -4,6 +4,7 @@ import { BrowserProvider, Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { Eip1193Provider } from 'web3/lib/commonjs/providers.exports';
+import { MANTISSA } from '../../utils/constants';
 
 
 // Interfaces
@@ -36,8 +37,10 @@ const initialState: USDCState = {
 // Views
 export const updateUSDCBalance = createAsyncThunk(
     'usdcBalance/update',
-    async (walletAddress: string) => {
+    async () => {
         try {
+            const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
+            let walletAddress = accounts[0];
             const rawBalance = await USDC.balanceOf(walletAddress);
             const balance = web3.utils.fromWei(rawBalance, "Mwei");
             return Number(balance);
@@ -50,9 +53,11 @@ export const updateUSDCBalance = createAsyncThunk(
 
 export const updateBorrowBalance = createAsyncThunk(
     'usdc/updateBorrowBalance',
-    async (walletAddress: string) => {
+    async () => {
         let borrowBalance = 0;
         try {
+            const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
+            let walletAddress = accounts[0];
             const rawBorrowBalance = await cUSDC.borrowBalanceCurrent(walletAddress);
             borrowBalance = rawBorrowBalance / 10e8 // raw balance / 8 decimals (all cTokens are set to 8 decimals)
             console.log(`cUSDC Balance: ${borrowBalance}`);
@@ -159,7 +164,7 @@ export const withdrawUSDC = createAsyncThunk('usdc/withdraw', async (withdrawAmo
 
     try {
         // Contract call 
-        let txn: any = await signeddegenUSDC.redeem(mintAmount);
+        let txn: any = await signeddegenUSDC.redeemUnderlying(mintAmount);
         txn.wait(1);
         console.log(txn);
     } catch (error) {
@@ -192,9 +197,9 @@ export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: n
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedcUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
-    const scaledUpBorrowAmount = (borrowAmount * 10e18);
+    const scaledUpBorrowAmount = (borrowAmount * MANTISSA);
     try {
-        const txn = await signedcUSDC.borrow(scaledUpBorrowAmount); // This code will work out fine
+        const txn = await signedcUSDC.borrow(borrowAmount); // This code will work out fine
         await txn.wait(1);
         console.log(txn);
     } catch (error) {
