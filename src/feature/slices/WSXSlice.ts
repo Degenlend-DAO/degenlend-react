@@ -68,45 +68,49 @@ export const updateSupplyBalance = createAsyncThunk(
 export const updatewsxsupplyRate = createAsyncThunk(
     'wSX/updatesupplyRate',
     async () => {
-        let supplyRate = 0;
         try {
 
             const supplyRatePerBlock = await cWSX.supplyRatePerBlock();
             console.log(`supply rate per block: ${supplyRatePerBlock}`)
-            supplyRate = supplyRatePerBlock / 1e8;
-            console.log(`Supply rate for wSX ${supplyRate} %`);
-            return supplyRate;
+            return Number(supplyRatePerBlock);
         } catch (error) {
             console.log(`ERROR: ${error}`);
-            return supplyRate;
+            return 0;
         }
 
     })
 
 export const updateBorrowRate = createAsyncThunk('wsx/updateBorrowRate', async () => {
     try {
-        
+        const borrowRatePerBlock = await cWSX.borrowRatePerBlock();
+        console.log(`Borrow rate per block: ${borrowRatePerBlock}`);
+        return Number(borrowRatePerBlock);
     } catch (error) {
-        
+        console.log(`ERROR: ${error}`);
+        return 0;
     }
-
-    return 1;
 });
 
 export const updateBorrowBalance = createAsyncThunk('wsx/updateBorrowBalance', async () => {
+
+    const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
+        const degenWSX = new web3.eth.Contract(erc20ABI, address.cwSX);
+
     try {
-        
+        const rawBalance = await degenWSX.methods.borrowBalanceCurrent(accounts[0]).call();
+        console.log(`Your borrow balance: ${rawBalance} Numbers(${Number(rawBalance)})`);
+        return Number(rawBalance);
     } catch (error) {
-        
+        console.log(`ERROR: ${error}`);
+        return 0;
     }
 
-    return 1;
 });
 
 // Method calls
 
 
-// This function enables Wrapped SX to be engaged with
+///////////  Approve WSX Thunks
 export const approveWSX = createAsyncThunk('wSX/approve', async ({ amount, addressToApprove }: approveWSXParams) => {
     try {
         const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
@@ -125,26 +129,12 @@ export const approveWSX = createAsyncThunk('wSX/approve', async ({ amount, addre
     console.log("Done");
 });
 
-export const confirmWSX = createAsyncThunk('wSX/confirm', async () => {
-    const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
-    const signer = await provider.getSigner();
-    const signedWSX = new ethers.Contract(address.testnetWSX, erc20ABI, signer);
-
-    try {
-        const tx = await signedWSX.transfer();
-        console.log(tx);
-    } catch (error) {
-        console.log(`[Console] Something went wrong: ${error}`);
-    }
-});
-
 ///////////  Supply Market Thunks
 
 export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedCWSX = new ethers.Contract(address.cwSX, cerc20ABI, signer);
-    const scaledUpSupplyAmount = (supplyAmount * MANTISSA);
+    const signedCWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
     try {
         // Contract call
         // approve this address for spending first 
@@ -160,9 +150,7 @@ export const supplyWSX = createAsyncThunk('wSX/supply', async (supplyAmount: num
 export const withdrawWSX = createAsyncThunk('wSX/withdraw', async (withdrawAmount: number) => {
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
-    const signedcWSX = new ethers.Contract(address.cwSX, cerc20ABI, signer);
-    const scaledUpSupplyAmount = (withdrawAmount * MANTISSA);
-
+    const signedcWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
     try {
         //Contract call
         const tx = await signedcWSX.redeemUnderlying(withdrawAmount);
@@ -182,7 +170,7 @@ export const repayWSX = createAsyncThunk('wSX/repay', async (repayAmount: number
     const signeddegenWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
 
     try {
-            let txn:any = await signeddegenWSX.repayBorrow();
+            let txn:any = await signeddegenWSX.repayBorrow(repayAmount);
             await txn.wait(1);
             console.log(txn);
     } catch (error) {
@@ -197,7 +185,7 @@ export const borrowWSX = createAsyncThunk('wSX/borrow', async (borrowAmount: num
     const signeddegenWSX = new ethers.Contract(address.degenWSX, cerc20ABI, signer);
     
     try {
-            let txn:any = await signeddegenWSX.borrow();
+            let txn:any = await signeddegenWSX.borrow(borrowAmount);
             await txn.wait(1);
             console.log(txn);
     } catch (error) {

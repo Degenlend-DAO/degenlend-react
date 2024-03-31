@@ -107,7 +107,7 @@ export const updateSupplyBalance = createAsyncThunk('usdc/updateSupplyBalance', 
         
     }
 
-    return 1;
+    return 0;
 });
 
 
@@ -136,15 +136,13 @@ export const approveUSDC = createAsyncThunk('usdc/approve', async ({ amount, add
 
 export const supplyUSDC = createAsyncThunk('usdc/supply', async (supplyAmount: number) => {
     
-    const mintAmount = 0;
-
     //Provider must be variable, depending on metamask or walllet connect being connected
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);  
     const signer = await provider.getSigner();
     const signeddegenUSDC = new ethers.Contract(address.degenUSDC, cerc20ABI, signer);
     try {
         // Contract call 
-        let txn: any = await signeddegenUSDC.mint(mintAmount);
+        let txn = await signeddegenUSDC.mint(supplyAmount);
         txn.wait(1);
         console.log(txn);
     } catch (error) {
@@ -181,8 +179,6 @@ export const repayUSDC = createAsyncThunk('usdc/repay', async (borrowAmount: num
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedcUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
-    const scaledUpBorrowAmount = (borrowAmount * Math.pow(10, 18)).toString();
-
     try {
         const txn = await signedcUSDC.repayBorrow(borrowAmount);
         await txn.wait(1);
