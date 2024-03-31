@@ -63,7 +63,7 @@ const SupplyUSDCCardContent: React.FC = () => {
                     />
                     <Button type="primary" size='large' onClick={depositUSDCHook}>Deposit</Button>
                 </Space>
-                <p>Currently supplying {USDollar.format(supplyBalance)} degenwSX</p>
+                <p>Currently supplying {USDollar.format(supplyBalance)} degenUSDC</p>
             </div>
         )
         else return (
