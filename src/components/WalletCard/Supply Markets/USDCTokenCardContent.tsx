@@ -6,7 +6,7 @@ import { AppDispatch, RootState } from '../../../app/Store';
 import usdctoken from '../../../assets/usd-coin-usdc-logo-64x64.png'
 
 import { EMPTY_ADDRESS, USDollar } from '../../../utils/constants';
-import { approveUSDC, supplyUSDC, withdrawUSDC } from '../../../feature/slices/USDCSlice';
+import { approveUSDC, supplyUSDC, updateSupplyBalance, updateSupplyRate, updateUSDCBalance, withdrawUSDC } from '../../../feature/slices/USDCSlice';
 
 
 const SupplyUSDCCardContent: React.FC = () => {
@@ -34,6 +34,7 @@ const SupplyUSDCCardContent: React.FC = () => {
     }
 
     const depositUSDCHook = () => {
+        dispatch(approveUSDC({amount: depositAmount, addressToApprove: myWalletAddress }));
         dispatch(supplyUSDC(depositAmount));
     }
 
@@ -86,7 +87,11 @@ const SupplyUSDCCardContent: React.FC = () => {
     }
 
     // Effects
-    useEffect(() => {  })
+    useEffect(() => { 
+        dispatch(updateSupplyBalance());
+        dispatch(updateSupplyRate());
+        dispatch(updateUSDCBalance());
+     })
 
     return (
         <div style={{ textAlign: "center"}}>
