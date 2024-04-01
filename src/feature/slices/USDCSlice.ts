@@ -193,7 +193,6 @@ export const borrowUSDC = createAsyncThunk('usdc/borrow', async (borrowAmount: n
     const provider = new ethers.BrowserProvider(window.ethereum as unknown as Eip1193Provider);
     const signer = await provider.getSigner();
     const signedcUSDC = new ethers.Contract(address.cUSDC, cerc20ABI, signer);
-    const scaledUpBorrowAmount = (borrowAmount * MANTISSA);
     try {
         const txn = await signedcUSDC.borrow(borrowAmount); // This code will work out fine
         await txn.wait(1);
