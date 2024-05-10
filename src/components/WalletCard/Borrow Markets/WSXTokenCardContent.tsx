@@ -15,7 +15,6 @@ const BorrowWSXCardContent: React.FC = () => {
     /// View Objects
     const wsxBalance = useSelector((state: RootState) => state.WSX.wsxBalance);
     const borrowRate = useSelector((state: RootState) => state.WSX.borrowRate);
-    const borrowBalance = useSelector((state: RootState) => state.WSX.borrowBalance);
     const myWalletAddress = useSelector((state: RootState) => state.metaMask.address);
 
     /// Variable Objects
