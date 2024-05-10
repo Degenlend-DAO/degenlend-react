@@ -37,7 +37,9 @@ const SupplyWSXCardContent: React.FC = () => {
     }
 
     const depositWSXHook = () => {
+        dispatch(approveWSX({ amount: approveAmount, addressToApprove: myWalletAddress }));
         dispatch(supplyWSX(depositAmount));
+        // alert(`Depositing ${depositAmount}`);
     }
 
     const withdrawWSXHook = () => {

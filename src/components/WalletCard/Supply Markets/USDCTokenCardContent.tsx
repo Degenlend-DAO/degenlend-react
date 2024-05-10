@@ -34,8 +34,15 @@ const SupplyUSDCCardContent: React.FC = () => {
     }
 
     const depositUSDCHook = () => {
-        dispatch(approveUSDC({amount: depositAmount, addressToApprove: myWalletAddress }));
-        dispatch(supplyUSDC(depositAmount));
+        
+        try {
+            dispatch(approveUSDC({amount: depositAmount, addressToApprove: myWalletAddress }));
+            // dispatch(supplyUSDC(depositAmount));
+            // alert(`Depositing ${depositAmount}`);
+        } catch (exception) {
+            alert(exception)
+        }
+        
     }
 
     const withdrawUSDCHook = () => {
