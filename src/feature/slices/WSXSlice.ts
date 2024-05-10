@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX, comptroller } from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
 import { MANTISSA } from '../../utils/constants';
@@ -20,14 +20,12 @@ interface approveWSXParams {
 }
 
 const initialState: WSXState = {
-
     status: 'initial',
     wsxBalance: 0.00,
     supplyBalance: 0.00,
     supplyRate: 0.00,
     borrowRate: 0.00,
     borrowBalance: 0.00,
-
 }
 
 // Views
