@@ -1,39 +1,54 @@
 import React from 'react';
-import { Modal, Card, Col, Tooltip } from 'antd';
-import USDCCardContent from '../WalletCard/USDCTokenCardContent';
+import { Modal, Card, Tooltip, Space } from 'antd';
+import BorrowUSDCCardContent from '../WalletCard/Borrow Markets/USDCTokenCardContent';
 import { Provider, useStore } from 'react-redux';
+import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
+import wsxtoken from '../../assets/sx_coin_token.png';
+import BorrowWSXCardContent from '../WalletCard/Borrow Markets/WSXTokenCardContent';
 
-
-
-const BorrowMarkets = () => {
+const BorrowMarkets: React.FC = () => {
 
     const store = useStore();
     const { info } = Modal;
 
     const usdcMarketSelected = () => {
         info({
-            title: <Tooltip title="Leverage your USDC and borrow or trade against it">About USDC Token</Tooltip>,
+            title: <Tooltip title="Leverage your USDC and borrow or trade against it">About Borrowing USDC Token</Tooltip>,
             okText: "Return",
             centered: true,
             closeIcon: true,
             maskClosable: true,
-            width: 810,
-            content: <Provider store={store}><USDCCardContent /></Provider>,
+            width: '50vw',
+            content: <Provider store={store}><BorrowUSDCCardContent /></Provider>,
+        })
+    }
+
+    const wsxMarketSelected = () => {
+        info({
+            title: <Tooltip title="Leverage your WSX and borrow or trade against it">About Borrowing WSX Token</Tooltip>,
+            okText: "Return",
+            centered: true,
+            closeIcon: true,
+            maskClosable: true,
+            width: '50vw',
+            content: <Provider store={store}><BorrowWSXCardContent /></Provider>,
         })
     }
 
     return (
-        <div className="column">
-            <Col>
-                <Card bordered={true} title="Borrow Markets" onClick={usdcMarketSelected} style={{ width: 450 }}>
-
-                    <Card hoverable>
-                        <img width="64" height="64" src="https://tokensinvaders.com/wp-content/uploads/2021/02/usd-coin-usdc-logo-1024x1024.png"></img>
-                    </Card>
-
-                </Card>
-            </Col>
-        </div>
+        <Card
+            bordered={true}
+            title="Borrow Markets"
+            headStyle={{ backgroundColor: 'rgba(37, 102, 216, 1)', border: 0 }}
+            >
+            <Card onClick={wsxMarketSelected} hoverable >
+                <img width="64" height="64" src={wsxtoken} alt='Wrapped SX Token'></img>
+            </Card>
+            <Space />
+            <Card onClick={usdcMarketSelected} hoverable>
+                <img width="64" height="64" src={usdctoken} alt='USDC Token'></img>
+            </Card>
+        </Card>
     );
 
 }

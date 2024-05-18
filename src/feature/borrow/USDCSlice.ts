@@ -4,9 +4,9 @@ import { BrowserProvider, Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { Eip1193Provider } from 'web3/lib/commonjs/providers.exports';
-import { erc20ABI } from 'wagmi';
 import { cerc20ABI } from '../../utils/web3/abi/cerc20abi';
 import { USDC, cUSDC } from '../../utils/web3/contract/contracts';
+import { erc20ABI } from '../../utils/web3/abi/erce20abi';
 
 
 

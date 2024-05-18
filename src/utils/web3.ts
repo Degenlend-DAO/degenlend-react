@@ -3,6 +3,9 @@ import { createWeb3Modal, defaultConfig } from '@web3modal/ethers'
 
 import Web3 from "web3";
 import { chains } from './web3/chains/chains';
+import { erc20ABI } from '@metamask/sdk-react-ui';
+import { comptrollerABI } from './web3/abi/comptrollerabi';
+import { cerc20ABI } from './web3/abi/cerc20abi';
 
 
 // Web3 Utilities
@@ -35,3 +38,23 @@ export const modal = createWeb3Modal({
 export const wcProvider = modal.getWalletProvider()!;
 // export const WCProvider = new BrowserProvider(wcProvider);
 // export const wcSigner = WCProvider.getSigner();
+
+// USDC
+export const USDC = new Contract(address.testnetUSDC, erc20ABI, provider);
+
+//WSX
+export const wSX = new Contract(address.testnetWSX, erc20ABI, provider);
+
+
+export const comptroller = new Contract(address.testnetComptroller, comptrollerABI, provider);
+
+// cWSX
+export  const cWSX = new Contract(address.cwSX, cerc20ABI, provider);
+// cUSDC
+export  const cUSDC = new Contract(address.cUSDC, cerc20ABI, provider);
+
+export const degenWSX = new Contract(address.degenWSX, cerc20ABI, provider);
+
+export const degenUSDC = new Contract(address.degenUSDC, cerc20ABI, provider);
+export { cerc20ABI };
+

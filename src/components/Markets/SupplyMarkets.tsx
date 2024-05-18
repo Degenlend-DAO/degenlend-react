@@ -1,62 +1,57 @@
-import React, { useState } from 'react';
-import { Switch, Modal, Col, Card, Tooltip,  } from 'antd';
-import SXTokenCardContent from '../WalletCard/SXTokenCardContent';
-import { enterMarkets, exitMarkets } from '../../feature/supply/WSXSlice';
-import { Provider, useStore, useDispatch } from 'react-redux';
-import { AppDispatch, RootState } from '../../app/Store';
-import { UnknownAction } from '@reduxjs/toolkit';
+import React from 'react';
+import { Switch, Modal, Space, Card, Tooltip, } from 'antd';
+import SupplyWSXCardContent from '../WalletCard/Supply Markets/WSXTokenCardContent';
+import { Provider, useStore } from 'react-redux';
+import sxtoken from '../../assets/sx_coin_token.png';
+import usdctoken from '../../assets/usd-coin-usdc-logo-64x64.png';
+import SupplyUSDCCardContent from '../WalletCard/Supply Markets/USDCTokenCardContent';
 
 
-const SupplyMarkets:React.FC = () => {
-    const [joinMarket, setMarketsJoined] = useState(true);
+const SupplyMarkets: React.FC = () => {
+
     const store = useStore();
     const { info } = Modal;
-    const dispatch = useDispatch<AppDispatch>()
-
-    // Hooks
-
-    const enableMarkets = () => {
-        if (joinMarket === true)
-        {
-            console.log(`Attempting to enter Markets`)
-            dispatch(enterMarkets as unknown as UnknownAction);
-            setMarketsJoined(false); //  if markets are exited, please enter, if markets are entered, please exit.
-        }
-
-        if (joinMarket === false)
-        {
-            console.log(`Attempting to exit Markets`)
-            dispatch(exitMarkets as unknown as UnknownAction);
-            setMarketsJoined(true); //  if markets are exited, please enter, if markets are entered, please exit.
-        }
-        
-    }
 
     const wsxMarketSelected = () => {
         info({
-            title:    <div style={{ display: "flex", justifyContent: "space-between"}}>
-            <><div><Tooltip title="Leverage your WSX and borrow or trade against it">About WSX Token</Tooltip></div><div><Tooltip title="Use the switch to enable wSX as collateral on the platform"><Switch title='Enable or disable this cryptocurrency on the protocol' checkedChildren='Enabled' onChange={enableMarkets} /></Tooltip></div></> </div>,
+            title: <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <><div><Tooltip title="Leverage your WSX and borrow or trade against it">About Supplying WSX Token</Tooltip></div><div><Tooltip title="Use the switch to enable wSX as collateral on the platform"><Switch title='Enable or disable this cryptocurrency on the protocol' checkedChildren='Enabled' /></Tooltip></div></> </div>,
             okText: "Return",
             centered: true,
             closeIcon: true,
             maskClosable: true,
-            width: 810,
-            
-            content: <Provider store={store}><SXTokenCardContent /></Provider>,
+            width: '50vw',
+            content: <Provider store={store}><SupplyWSXCardContent /></Provider>,
         });
     }
 
+    const usdcMarketSelected = () => {
+        info({
+            title: <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <><div><Tooltip title="Leverage your USDC and borrow or trade against it">About Supplying USDC Token</Tooltip></div><div><Tooltip title="Use the switch to enable wSX as collateral on the platform"><Switch title='Enable or disable this cryptocurrency on the protocol' checkedChildren='Enabled' /></Tooltip></div></> </div>,
+        okText: "Return",
+        centered: true,
+        closeIcon: true,
+        maskClosable: true,
+        width: '50vw',
+        content: <Provider store={store}> <SupplyUSDCCardContent /> </Provider>,
+        })
+    }
 
     return (
-        <div className="column">
-        <Col>
-            <Card bordered={true} title="Supply Markets" style={{ width: 450 }} onClick={wsxMarketSelected}>
-                <Card hoverable>
-                        <img src='https://s2.coinmarketcap.com/static/img/coins/64x64/8377.png'></img>
-                </Card>
+        <Card
+            bordered={true}
+            title="Supply Markets"
+            headStyle={{ backgroundColor: 'rgba(37, 102, 216, 1)', border: 0 }}
+            >
+            <Card onClick={wsxMarketSelected} hoverable >
+                <img src={sxtoken} alt='WSX Token'></img>
             </Card>
-        </Col>
-    </div>
+            <Space />
+            <Card onClick={usdcMarketSelected} hoverable >
+                <img src={usdctoken} alt='USDC Token'></img>
+            </Card>
+        </Card>
     );
 }
 

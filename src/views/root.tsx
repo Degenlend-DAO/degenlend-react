@@ -9,17 +9,15 @@ import InterestRateModel from '../contracts/JumpRateModelV2.json'
 import Maximillion from '../contracts/Maximillion.json'
 import PriceOracle from '../contracts/PriceOracle.json'
 
-
 // Design Library
 import { Layout, Button, Row, Col, Space } from 'antd'
 import { CaretRightOutlined } from '@ant-design/icons'
 
-
 // Components
-import Dashboard from '../components/Dashboard/dashboard';
 import BorrowMarkets from '../components/Markets/BorrowMarkets';
 import SupplyMarkets from '../components/Markets/SupplyMarkets';
-import TopNavigationBar from '../components/Header/topNavigationBar';
+import Dashboard from '../components/Dashboard/Dashboard';
+import TopNavigationBar from '../components/Header/TopNavigationBar';
 
 
 const { Header, Footer, Content } = Layout;
@@ -59,10 +57,10 @@ const Root: React.FC = () => <>
     <Content style={contentStyle}>
       <Dashboard />
       <Row gutter={16}>
-        <Col span={12}>
+        <Col span={24} xs={12}>
           <SupplyMarkets />
         </Col>
-        <Col span={12}>
+        <Col span={24} xs={12}>
           <BorrowMarkets />
         </Col>
       </Row>

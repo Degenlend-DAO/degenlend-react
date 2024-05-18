@@ -1,6 +1,6 @@
 import { address, modal } from './../../utils/web3';
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { EMPTY_ADDRESS } from '../../utils/constants'
 
 interface WalletState {
     address: string;
@@ -10,7 +10,7 @@ interface WalletState {
 }
 
 const initialState: WalletState = {
-    address: "0x0000000000000000000000000000000000000000",
+    address: EMPTY_ADDRESS,
     loading: false,
     error: "",
     isConnected: false,
@@ -20,13 +20,12 @@ export const connectMetaMask = createAsyncThunk<string, void>(
     'metaMask/connect',
     async () => {
         try {
-
             const accounts = await (window as any).ethereum!.request({ method: 'eth_requestAccounts' });
-            address.account = accounts[0]; // Sets account address 
+            address.account = accounts[0];
             console.log(accounts[0]);
             return accounts[0];
         } catch (err) {
-            return "0x0000000000000000000000000000000000000000";
+            return EMPTY_ADDRESS;
         }
     }
 );
@@ -36,13 +35,12 @@ export const connectWalletConnect = createAsyncThunk(
     'walletconnect/connect',
     async () => {
         try {
-            //WC logic
             modal.open()
             const accountAddress = modal.getAddress()
-            return accountAddress as unknown as string;
+            return accountAddress || '';
         } catch (err) {
             console.log(err);
-            return "0x0000000000000000000000000000000000000000";
+            return EMPTY_ADDRESS;
         }
     });
 
@@ -86,7 +84,7 @@ export const metaMaskSlice = createSlice({
             .addCase(disconnectWallet.fulfilled, (state, action) => {
                 state.loading = false;
                 state.isConnected = false;
-                state.address = "0x0000000000000000000000000000000000000000"; // Resets the token address
+                state.address = EMPTY_ADDRESS;
             })
     }
 });

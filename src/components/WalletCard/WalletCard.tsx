@@ -6,7 +6,8 @@ import { UnknownAction } from '@reduxjs/toolkit';
 import { updateSupplyBalance } from '../../feature/dashboard/supplyBalanceSlice';
 import { updateBorrowBalance } from '../../feature/dashboard/borrowBalanceSlice';
 import { connectMetaMask, connectWalletConnect, disconnectWallet } from '../../feature/wallet/walletSlice';
-
+import metamasklogo from '../../assets/metamask-logo.jpg';
+import walletconnectlogo from '../../assets/walletconnect-logo.png';
 
 const WalletCard: React.FC = () => {
     const walletAddress = useSelector((state: RootState) => state.metaMask.address);
@@ -53,9 +54,9 @@ const WalletCard: React.FC = () => {
         height: 100
     }
 
-    const MetaMaskIcon = () => <Icon component={() => <img alt="Metamask" src="http://tinyurl.com/8jttsvbw" style={dropdownStyle} />} />;
+    const MetaMaskIcon = () => <Icon component={() => <img alt="Metamask" src={metamasklogo} style={dropdownStyle} />} />;
 
-    const WalletConnectIcon = () => <Icon component={() => <img alt="WalletConnect" src="http://tinyurl.com/2smfxt43" style={dropdownStyle} />} />;
+    const WalletConnectIcon = () => <Icon component={() => <img alt="WalletConnect" src={walletconnectlogo} style={dropdownStyle} />} />;
 
     const walletOptions: MenuProps['items'] = [
         {
