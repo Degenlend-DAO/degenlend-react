@@ -1,7 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { web3, erc20ABI, cerc20ABI, address, provider, USDC, wSX, cWSX, comptroller } from '../../utils/web3';
+import { address, cWSX, provider, web3} from '../../utils/web3';
 import { Eip1193Provider, ethers } from 'ethers';
 import { MANTISSA } from '../../utils/constants';
+import { erc20ABI } from '@metamask/sdk-react-ui';
+import { cerc20ABI } from '../../utils/web3/abi/cerc20abi';
 
 
 // Interfaces                                                        

@@ -1,6 +1,6 @@
-import { web3, erc20ABI, cerc20ABI, address, provider, comptroller, comptrollerABI } from './../../utils/web3';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { Eip1193Provider, ethers } from 'ethers';
+import { address, comptroller } from '../../utils/web3';
 
 
 interface ComptrollerState {

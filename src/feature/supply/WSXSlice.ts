@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   web3,
-  erc20ABI,
   cerc20ABI,
   address,
   provider,
@@ -11,6 +10,7 @@ import {
   comptroller,
 } from "../../utils/web3";
 import { Eip1193Provider, ethers } from "ethers";
+import { erc20ABI } from "@metamask/sdk-react-ui";
 
 interface WSXState {
   status: string;

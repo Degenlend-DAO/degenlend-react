@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { USDC, address, cUSDC, cerc20ABI, degenUSDC, erc20ABI, provider, web3 } from '../../utils/web3';
 import { BrowserProvider, Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/Store';
 import { Eip1193Provider } from 'web3/lib/commonjs/providers.exports';
 import { MANTISSA } from '../../utils/constants';
+import { USDC, cUSDC } from '../../utils/web3/contract/contracts';
+import { erc20ABI } from '@metamask/sdk-react-ui';
+import { degenUSDC, address, cerc20ABI, web3 } from '../../utils/web3';
 
 
 // Interfaces

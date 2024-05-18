@@ -8,13 +8,9 @@ import SupplyUSDCCardContent from '../WalletCard/Supply Markets/USDCTokenCardCon
 
 
 const SupplyMarkets: React.FC = () => {
-  const store = useStore();
-  const { info } = Modal;
 
-  const bodyStyle: React.CSSProperties = {
-    backgroundColor: "rgba(37, 102, 216, 1)",
-    border: 0,
-  };
+    const store = useStore();
+    const { info } = Modal;
 
     const wsxMarketSelected = () => {
         info({
@@ -29,20 +25,18 @@ const SupplyMarkets: React.FC = () => {
         });
     }
 
-  return (
-    <Card
-      hoverable
-      bordered={true}
-      title="Supply Markets"
-      styles={{ body: bodyStyle }}
-      onClick={wsxMarketSelected}
-    >
-      <Card>
-        <img src={sxtoken} alt="WSX Token"></img>
-      </Card>
-    </Card>
-  );
-};
+    const usdcMarketSelected = () => {
+        info({
+            title: <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <><div><Tooltip title="Leverage your USDC and borrow or trade against it">About Supplying USDC Token</Tooltip></div><div><Tooltip title="Use the switch to enable wSX as collateral on the platform"><Switch title='Enable or disable this cryptocurrency on the protocol' checkedChildren='Enabled' /></Tooltip></div></> </div>,
+        okText: "Return",
+        centered: true,
+        closeIcon: true,
+        maskClosable: true,
+        width: '50vw',
+        content: <Provider store={store}> <SupplyUSDCCardContent /> </Provider>,
+        })
+    }
 
     return (
         <Card
