@@ -19,6 +19,7 @@ import SupplyMarkets from '../components/Markets/SupplyMarkets';
 import Dashboard from '../components/Dashboard/Dashboard';
 import TopNavigationBar from '../components/Header/TopNavigationBar';
 import Bottom from '../components/Bottom/Bottom';
+import FrequentlyAskedQuestions from '../components/Frequently Asked Questions/FrequentlyAskedQuestions';
 
 
 const { Header, Footer, Content } = Layout;
@@ -59,6 +60,7 @@ const Root: React.FC = () => <>
           <BorrowMarkets />
         </Col>
       </Row>
+      <FrequentlyAskedQuestions />
     </Content>
     <Bottom />
   </Layout>
