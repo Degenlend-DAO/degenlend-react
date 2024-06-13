@@ -18,6 +18,7 @@ import BorrowMarkets from '../components/Markets/BorrowMarkets';
 import SupplyMarkets from '../components/Markets/SupplyMarkets';
 import Dashboard from '../components/Dashboard/Dashboard';
 import TopNavigationBar from '../components/Header/TopNavigationBar';
+import Bottom from '../components/Bottom/Bottom';
 
 
 const { Header, Footer, Content } = Layout;
@@ -43,12 +44,6 @@ const contentStyle: React.CSSProperties = {
   paddingInline: 80,
 };
 
-const footerStyle: React.CSSProperties = {
-  textAlign: 'center',
-  color: '#000000',
-  backgroundColor: 'lightgrey',
-};
-
 const Root: React.FC = () => <>
   <Layout>
     <Header style={headerStyle}>
@@ -65,9 +60,7 @@ const Root: React.FC = () => <>
         </Col>
       </Row>
     </Content>
-    <Footer style={footerStyle}>
-      Created by Prediction Labs Team
-    </Footer>
+    <Bottom />
   </Layout>
 </>
 
