@@ -209,6 +209,12 @@ export const USDCSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+
+        // the problem here is that whenever these activities were loading, the state of the platform did not reflect that
+
+        // TODO: Add status for loading state
+
+
         builder.addCase(updateUSDCBalance.fulfilled, (state, action) => {
             state.usdcBalance = action.payload;
         })
