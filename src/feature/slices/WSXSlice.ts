@@ -192,12 +192,18 @@ export const borrowWSX = createAsyncThunk('wSX/borrow', async (borrowAmount: num
     }
 });
 
+
+
+
 /// Exporting the slice created
 export const WSXSlice = createSlice({
     name: "WSX",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+                // the problem here is that whenever these activities were loading, the state of the platform did not reflect that
+
+        // TODO: Add status for loading state
         builder.addCase(updateWSXBalance.fulfilled, (state, action) => {
             state.wsxBalance = action.payload;
 
